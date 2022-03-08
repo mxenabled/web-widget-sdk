@@ -47,4 +47,4 @@ class WebWidgetSDK {
   }
 }
 
-window.ww = WebWidgetSDK
+window.WebWidgetSDK = WebWidgetSDK

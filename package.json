@@ -11,5 +11,8 @@
     "url": "git@gitlab.mx.com:Sean.Brown/mx-web-widget-sdk.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "2.5.1"
+  }
 }
