@@ -1,8 +1,8 @@
 const requiredOptions = ['id', 'url']
 
 const defaultValues = {
-  height: 400,
-  width: 500,
+  height: '100%',
+  width: '100%',
   title: 'MX Web Widget',
 }
 
@@ -29,9 +29,13 @@ class WebWidgetSDK {
   }
 
   #validateOptions() {
+    if (!this.options) {
+      throw new Error('Missing options object')
+    }
+
     requiredOptions.forEach((option) => {
       if (!this.options[option]) {
-        throw new Error(`No ${option} provided`)
+        throw new Error(`Missing required param ${option}`)
       }
     })
   }
@@ -53,20 +57,7 @@ class WebWidgetSDK {
       'message',
       (event) => {
         console.log('window message received', event)
-        // if (event.origin !== 'http://example.org:8080') return
-
-        // ...
-      },
-      false,
-    )
-
-    document.addEventListener(
-      'message',
-      (event) => {
-        console.log('document message received', event)
-        // if (event.origin !== 'http://example.org:8080') return
-
-        // ...
+        this.options.onEvent(event)
       },
       false,
     )
