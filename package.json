@@ -2,7 +2,7 @@
   "name": "@mxenabled/web-widget-sdk",
   "version": "1.0.0",
   "description": "MX Web Widget SDK",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build:dist": "./node_modules/.bin/babel src --out-dir dist --presets=@babel/env",
     "test": "echo \"Error: no test specified\" && exit 1"
