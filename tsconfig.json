@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+  },
+  "include": ["src/**/*.ts", "tests/**/*"],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

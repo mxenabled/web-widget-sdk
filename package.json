@@ -4,6 +4,7 @@
   "description": "MX Web Widget SDK",
   "main": "dist/index.js",
   "scripts": {
+    "build": "npx tsc",
     "build:dist": "./node_modules/.bin/babel src --out-dir dist --presets=@babel/env",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +18,8 @@
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.5",
     "@babel/preset-env": "^7.16.11",
-    "prettier": "2.5.1"
+    "@babel/preset-typescript": "^7.16.7",
+    "prettier": "2.5.1",
+    "typescript": "^4.6.2"
   }
 }
