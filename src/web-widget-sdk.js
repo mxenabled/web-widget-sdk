@@ -7,20 +7,23 @@ const defaultValues = {
 }
 
 class WebWidgetSDK {
-  constructor(options) {
+  constructor(options = {}) {
+    // If an instance already exists, return it ensuring nothing runs more than once
     if (!WebWidgetSDK._instance) {
       WebWidgetSDK._instance = this
 
       this.options = options
 
+      // If we are missing a required option, throw an error
       this.#validateOptions()
-      this.#setupPostMessages()
-      this.#buildIframe()
 
-      console.log('no instance yet', this)
+      // Set up our post message listener to handle 'mx' messages
+      this.#setupPostMessages()
+
+      // Contrust and append iframe to DOM using id
+      this.#setupIFrame()
     }
 
-    console.log('instance already exists', this)
     return WebWidgetSDK._instance
   }
 
@@ -29,7 +32,7 @@ class WebWidgetSDK {
   }
 
   #validateOptions() {
-    if (!this.options) {
+    if (Object.keys(this.options).length === 0) {
       throw new Error('Missing options object')
     }
 
@@ -40,7 +43,7 @@ class WebWidgetSDK {
     })
   }
 
-  #buildIframe() {
+  #setupIFrame() {
     const iframe = document.createElement('iframe')
 
     iframe.src = this.options.url
@@ -56,8 +59,11 @@ class WebWidgetSDK {
     window.addEventListener(
       'message',
       (event) => {
-        console.log('window message received', event)
-        this.options.onEvent(event)
+        // Ensure we only capture mx post messages
+        if (event.data.mx) {
+          console.log('window message received', event)
+          this.options.onEvent(event.data.type, event.data.metadata)
+        }
       },
       false,
     )
