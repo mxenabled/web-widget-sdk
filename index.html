@@ -15,12 +15,12 @@
           url: "http://localhost:3000/md/connect/r8mvydmqzn23xm6AApq3q5j35qZn7sjx4qmcq6stw9jc2hgArpc0fv8wnqrvs22r9z0w5dypz5wxlpbw564jm3scs0c1n4fAv6bhwzvx3fympAfjqA0hvlsmb79rwb4071dtt5tvw1A211yk6pcpccyt8wz0k0vyn7001bwrnky2tnzA7dr41517rmj6h9k4vnh1y93ms0s91xrvj0v399qj20vA6ssy3tfww8h5257m9gqfvcsf0b87jcf43lwAbxbvdr0dbzqdq27t2wvx2gqnzAwcr4gbv47bA779xq16fy8glfAh2dA3grsv7gr9tq6vxn37vlvjg71prxkArgrfrftpnbzdgz752n9k/eyJ1aV9tZXNzYWdlX3ZlcnNpb24iOjR9",
           height: 900,
           width: 700,
-          onEvent: (type, metadata) => {
-              console.log("MX EVENT: ", type, metadata)
+          onMessage: (event) => {
+              console.log("MX EVENT: ", event)
           }
         }
 
-        const widget = new WebWidgetSDK(options)
+        const widget = new Widget(options)
       });
     </script>
   </head>

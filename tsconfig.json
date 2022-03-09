@@ -9,8 +9,10 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
+    "target": "es6",
+    "module": "es6",
   },
-  "include": ["src/**/*.ts", "tests/**/*", "src/index.js"],
+  "include": ["src/**/*.ts", "tests/**/*", "src/index.ts"],
   "exclude": [
     "node_modules",
     "dist"
