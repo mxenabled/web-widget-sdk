@@ -13,5 +13,3 @@
 ### Importing the SDK into your project
 
 ### Interacting with the Widget
-
-### OAuth redirects
