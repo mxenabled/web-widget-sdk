@@ -1,6 +1,14 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
+    "alwaysStrict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
   },
   "include": ["src/**/*.ts", "tests/**/*"],
   "exclude": [

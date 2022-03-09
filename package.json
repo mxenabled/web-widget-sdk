@@ -4,7 +4,7 @@
   "description": "MX Web Widget SDK",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npx tsc",
+    "build": "tsc",
     "build:dist": "./node_modules/.bin/babel src --out-dir dist --presets=@babel/env",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
