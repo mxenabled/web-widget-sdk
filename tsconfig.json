@@ -10,7 +10,7 @@
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
   },
-  "include": ["src/**/*.ts", "tests/**/*"],
+  "include": ["src/**/*.ts", "tests/**/*", "src/index.js"],
   "exclude": [
     "node_modules",
     "dist"
