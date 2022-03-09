@@ -47,7 +47,7 @@ class Widget {
 
     iframe.src = this.options.url
     Object.keys(this.options.style).forEach((prop) => {
-      console.log("prop", prop)
+      iframe.style[prop] = this.options.style[prop]
     })
 
     const node = document.querySelector(this.options.id)
