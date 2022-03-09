@@ -20,7 +20,7 @@ class WebWidgetSDK {
       // Set up our post message listener to handle 'mx' messages
       this.#setupPostMessages()
 
-      // Contrust and append iframe to DOM using id
+      // Construct and append iframe to DOM using id
       this.#setupIFrame()
     }
 
