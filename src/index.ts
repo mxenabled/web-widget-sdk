@@ -2,37 +2,20 @@
 type WidgetOptions = {
   id: string
   url: string
-  style: Partial<CSSStyleDeclaration>
+  style?: Partial<CSSStyleDeclaration>
   onMessage?: (data: unknown) => void
 }
 
 class Widget {
   private options: WidgetOptions
+  private style: Partial<CSSStyleDeclaration>
 
-  constructor(options: Partial<WidgetOptions>) {
+  constructor(options: WidgetOptions) {
     
-    let id: string
-    if (typeof options.id === 'string') {
-      id = options.id
-    } else {
-      throw new Error("missing id prop")
-    }
-    
-    let url: string
-    if (typeof options.url === 'string') {
-      url = options.url
-    } else {
-      throw new Error("missing url prop")
-    }
-
-    this.options = {
-      style: {
-        height: '100%',
-        width: '100%',
-      },
-      ...options,
-      id,
-      url
+    this.options = options
+    this.style = options.style || {
+      height: '100%',
+      width: '100%',
     }
 
     this.setupPostMessages()
@@ -46,8 +29,8 @@ class Widget {
     const iframe = document.createElement('iframe')
 
     iframe.src = this.options.url
-    Object.keys(this.options.style).forEach((prop) => {
-      iframe.style[prop] = this.options.style[prop]
+    Object.keys(this.style).forEach((prop) => {
+      iframe.style[prop] = this.style[prop]
     })
 
     const node = document.querySelector(this.options.id)
