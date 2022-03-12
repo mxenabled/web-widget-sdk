@@ -13,8 +13,9 @@ abstract class Widget<Configuration = {}> {
   constructor(options: WidgetOptions<Configuration>) {
     this.options = options
     this.style = options.style || {
-      height: '100%',
-      width: '100%',
+      border: "none",
+      height: "100%",
+      width: "100%",
     }
 
     this.setupPostMessages()

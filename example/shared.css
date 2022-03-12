@@ -1,0 +1,21 @@
+.container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+#connect {
+  height: 700px;
+  width: 400px;
+}
+
+#logs {
+  cursor: default;
+  font-family: monospace;
+  font-size: 14px;
+  height: 700px;
+  margin-left: 10px;
+  padding-left: 10px;
+  white-space: pre;
+  width: 400px;
+}

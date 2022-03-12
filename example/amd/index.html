@@ -7,22 +7,18 @@
 
     <title>MX Web Widget SDK AMD Example</title>
 
+    <link rel="stylesheet" href="shared.css">
+
     <script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
-    <script src="../dist/amd/mx-web-widget-sdk.js"></script>
+    <script src="shared.js"></script>
+    <script src="mx-web-widget-sdk.js"></script>
     <script>
       requirejs(["@mxenabled/web-widget-sdk"], function (sdk) {
         const options = {
           id: "#connect",
           proxy: "http://localhost:8089/connect_widget/USR-081ff65e-3087-4cc2-a2c4-365354e1e6cb",
-          style: {
-            height: "700px",
-            width: "400px",
-            border: "1px solid #d7d7d7",
-            margin: "0 auto",
-            display: "block",
-          },
           onMessage: (event) => {
-            console.log("Event:", event)
+            logEvent(event)
           }
         }
 
@@ -32,6 +28,9 @@
   </head>
 
   <body>
-    <div id="connect"></div>
+    <div class="container">
+      <div id="connect"></div>
+      <div id="logs"></div>
+    </div>
   </body>
 </html>
