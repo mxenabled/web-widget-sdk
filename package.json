@@ -4,7 +4,8 @@
   "description": "MX Web Widget SDK",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc"
+    "build:amd": "tsc --declaration --module amd --outFile dist/mx-web-widget-sdk-amd.js",
+    "build": "[ -d dist ] && rm -r dist; npm run build:amd"
   },
   "repository": {
     "type": "git",

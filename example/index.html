@@ -5,26 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>MX Web Widget SDK Example</title>
+    <title>MX Web Widget SDK AMD Example</title>
 
-    <script src="../dist/index.js"></script>
+    <script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+    <script src="../dist/mx-web-widget-sdk-amd.js"></script>
     <script>
-      window.addEventListener("load", () => {
+      requirejs(["@mxenabled/web-widget-sdk"], function (sdk) {
         const options = {
           id: "#connect",
-          url: "http://localhost:3000/md/connect/04hgysng5984n1ccjsvzw7g4wmZshvn39scm572kn0Akyzw2sm4x70cbscnxAbkf0s8z5tkkl31xpl6Ag91xyclkh1gdp60vs4c2h2v0A3p3bgz22pyvxdnxn455Aj4xg0m688f1crklk0p0n0y21pp940h7rmfx92zw83ymv000prbm5ct5xbsn3kg88rr9lblh2j4qjtbdyywpAff2fm2b91wk7x7A22w156bdpzbfr7cA53m8qw4p085cll3dd5rAdy76dq4fbtAcbtp2gkrj2ylltk6bbAdl1hqjw3t3pl2g7xbAtgnyhz0bh8cn282fz2bhfpz0fzv66jr8g9xp2dbpsthAwAk0fvg5/eyJ1aV9tZXNzYWdlX3ZlcnNpb24iOjR9",
+          proxy: "http://localhost:8089/connect_widget/USR-081ff65e-3087-4cc2-a2c4-365354e1e6cb",
           style: {
-            height: "100%",
-            width: "100%",
-            border: "none"
+            height: "700px",
+            width: "400px",
+            border: "1px solid #d7d7d7",
+            margin: "0 auto",
+            display: "block",
           },
           onMessage: (event) => {
-            console.log("MX EVENT: ", event)
+            console.log("Event:", event)
           }
         }
 
-        const widget = new Widget(options)
-      });
+        const widget = new sdk.ConnectWidget(options)
+      })
     </script>
   </head>
 
