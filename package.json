@@ -4,7 +4,10 @@
   "description": "MX Web Widget SDK",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc"
+    "clean": "[ -d dist ] && rm -r dist || true",
+    "build": "npm run clean && npm run build:amd && npm run build:system",
+    "build:amd": "echo Building AMD; tsc --declaration --module amd --outFile dist/amd/mx-web-widget-sdk.js",
+    "build:system": "echo Building SystemJS; tsc --declaration --module system --outFile dist/system/mx-web-widget-sdk.js"
   },
   "repository": {
     "type": "git",
