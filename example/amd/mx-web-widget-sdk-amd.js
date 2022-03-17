@@ -1,1 +1,0 @@
-../../dist/amd/mx-web-widget-sdk.js
