@@ -15,7 +15,7 @@ function logEvent(event) {
 
   const label = document.createElement("span")
   label.className = "label"
-  label.innerHTML = "[ " + humanFriendlyTime() + " ]"
+  label.textContent = "[ " + humanFriendlyTime() + " ]"
 
   const contents = document.createElement("span")
   contents.className = "contents"
