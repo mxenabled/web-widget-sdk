@@ -17,6 +17,9 @@
   },
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "@mxenabled/widget-post-message-definitions": "^1.0.7"
+  },
   "devDependencies": {
     "prettier": "^2.5.1",
     "typescript": "^4.6.2"

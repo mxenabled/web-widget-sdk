@@ -1,4 +1,5 @@
 import { getSsoUrl, Props, Type, ConnectWidgetConfigurationProps } from "./sso"
+import { dispatchConnectPostMessageEvent } from "@mxenabled/widget-post-message-definitions"
 
 export type WidgetOptions<Configuration> = Props<Configuration> & {
   id: string
@@ -62,7 +63,8 @@ abstract class Widget<Configuration = {}> {
     window.addEventListener("message", (event) => {
       // Ensure we only capture mx post messages
       if (event.data.mx) {
-        this.options.onMessage?.(event.data)
+        dispatchConnectPostMessageEvent(event, this.options)
+        // this.options.onMessage?.(event.data)
       }
     })
   }
