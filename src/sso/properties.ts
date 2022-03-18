@@ -1,9 +1,12 @@
-import { Type, InternalWidgetConfigurationProps, WidgetConfigurationProps } from "./widget_configuration"
+import {
+  Type,
+  InternalWidgetConfigurationProps,
+  WidgetConfigurationProps,
+} from "./widget_configuration"
 
-export type Props<CustomWidgetConfigurationProps> =
-  & SsoUrlProps
-  & InternalWidgetConfigurationProps
-  & CustomWidgetConfigurationProps
+export type Props<CustomWidgetConfigurationProps> = SsoUrlProps &
+  InternalWidgetConfigurationProps &
+  CustomWidgetConfigurationProps
 
 export type ApiRequestOptions = {
   url: RequestInfo
@@ -17,9 +20,7 @@ export type ApiResponseBody = {
   }
 }
 
-export type SsoUrlProps =
-  & SsoUrlMethodProps
-  & SsoUrlRequestProps
+export type SsoUrlProps = SsoUrlMethodProps & SsoUrlRequestProps
 
 export type SsoUrlMethodProps =
   | SsoUrlMethodUrlProps
@@ -43,28 +44,34 @@ export type SsoUrlMethodProxyServerProps = {
 
 export type SsoUrlRequestProps = {
   onSsoUrlLoadError?: (error: Error) => void
-  ssoRequestBuilder?: (props: WidgetConfigurationProps & InternalWidgetConfigurationProps) => ApiRequestOptions
+  ssoRequestBuilder?: (
+    props: WidgetConfigurationProps & InternalWidgetConfigurationProps,
+  ) => ApiRequestOptions
   ssoRequestPreprocess?: (opts: ApiRequestOptions) => ApiRequestOptions
   ssoRequestPostprocess?: (res: ApiResponseBody) => string
 }
 
 export function isSsoUrlMethodUrl(props: SsoUrlProps): props is SsoUrlMethodUrlProps {
-  return "url" in props
-    && typeof props.url === "string"
+  return "url" in props && typeof props.url === "string"
 }
 
-export function isSsoUrlMethodProxyServer(props: SsoUrlProps): props is SsoUrlMethodProxyServerProps {
-  return "proxy" in props
-    && typeof props.proxy === "string"
+export function isSsoUrlMethodProxyServer(
+  props: SsoUrlProps,
+): props is SsoUrlMethodProxyServerProps {
+  return "proxy" in props && typeof props.proxy === "string"
 }
 
-export function isSsoUrlMethodPlatformApi(props: SsoUrlProps): props is SsoUrlMethodPlatformApiProps {
-  return "clientId" in props
-    && typeof props.clientId === "string"
-    && "apiKey" in props
-    && typeof props.apiKey === "string"
-    && "userGuid" in props
-    && typeof props.userGuid === "string"
-    && "environment" in props
-    && typeof props.environment === "string"
+export function isSsoUrlMethodPlatformApi(
+  props: SsoUrlProps,
+): props is SsoUrlMethodPlatformApiProps {
+  return (
+    "clientId" in props &&
+    typeof props.clientId === "string" &&
+    "apiKey" in props &&
+    typeof props.apiKey === "string" &&
+    "userGuid" in props &&
+    typeof props.userGuid === "string" &&
+    "environment" in props &&
+    typeof props.environment === "string"
+  )
 }

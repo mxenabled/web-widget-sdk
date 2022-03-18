@@ -16,7 +16,9 @@ export function defaultSsoRequestPostprocess(body: ApiResponseBody): string {
   return body.widget_url.url
 }
 
-export function defaultSsoRequestBuilder<Configuration>(props: Props<Configuration>): ApiRequestOptions {
+export function defaultSsoRequestBuilder<Configuration>(
+  props: Props<Configuration>,
+): ApiRequestOptions {
   const url = getRequestUrl(props)
   const options = getRequestOptions(props)
   return { url, options }
@@ -63,7 +65,7 @@ function getRequestOptions<Configuration>(props: Props<Configuration>): RequestI
   const mode = "cors"
   const method = "POST"
   const body = JSON.stringify({
-    widget_url: getWidgetConfigurationFromProps(props)
+    widget_url: getWidgetConfigurationFromProps(props),
   })
 
   return { method, headers, body, mode }

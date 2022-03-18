@@ -24,9 +24,7 @@ export enum Type {
   TrendsWidget = "trends_widget",
 }
 
-type CWM =
-  | "verification"
-  | "aggregation"
+type CWM = "verification" | "aggregation"
 
 export type ConnectWidgetMode =
   | `${CWM}`
@@ -42,10 +40,13 @@ export type ConnectWidgetMode =
 
 // Taken from https://stackoverflow.com/a/63715429, thank you!!
 type Camelize<T> = { [K in keyof T as CamelizeString<K>]: T[K] }
-type CamelizeString<T extends PropertyKey, C extends string = ""> =
-  T extends string ? string extends T ? string :
-    T extends `${infer F}_${infer R}` ?
-      CamelizeString<Capitalize<R>, `${C}${F}`> : `${C}${T}` : T;
+type CamelizeString<T extends PropertyKey, C extends string = ""> = T extends string
+  ? string extends T
+    ? string
+    : T extends `${infer F}_${infer R}`
+    ? CamelizeString<Capitalize<R>, `${C}${F}`>
+    : `${C}${T}`
+  : T
 
 export type InternalWidgetConfigurationProps = Camelize<InternalWidgetConfiguration>
 export type InternalWidgetConfiguration = WidgetConfiguration & {
@@ -75,7 +76,9 @@ export type ConnectWidgetConfiguration = WidgetConfiguration & {
   wait_for_full_aggregation?: boolean
 }
 
-export function getWidgetConfigurationFromProps(props: ConnectWidgetConfigurationProps & InternalWidgetConfigurationProps) {
+export function getWidgetConfigurationFromProps(
+  props: ConnectWidgetConfigurationProps & InternalWidgetConfigurationProps,
+) {
   return {
     client_redirect_url: props.clientRedirectUrl,
     color_scheme: props.colorScheme,

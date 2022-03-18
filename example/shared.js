@@ -15,13 +15,11 @@ function logEvent(event) {
 
   const label = document.createElement("span")
   label.className = "label"
-  label.innerHTML = "[ " + humanFriendlyTime() + " ]"
+  label.textContent = "[ " + humanFriendlyTime() + " ]"
 
   const contents = document.createElement("span")
   contents.className = "contents"
-  contents.innerHTML = event instanceof Object
-    ? highlightJSON(event)
-    : event
+  contents.innerHTML = event instanceof Object ? highlightJSON(event) : event
 
   line.appendChild(label)
   line.appendChild(contents)

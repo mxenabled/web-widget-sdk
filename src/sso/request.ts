@@ -11,14 +11,10 @@ export function getSsoUrl<Options>(props: Props<Options>): Promise<string | void
     return Promise.resolve(props.url)
   }
 
-  const ssoRequestBuilder = props.ssoRequestBuilder ||
-    defaultSsoRequestBuilder
-  const ssoRequestPreprocess = props.ssoRequestPreprocess ||
-    defaultSsoRequestPreprocess
-  const ssoRequestPostprocess = props.ssoRequestPostprocess ||
-    defaultSsoRequestPostprocess
-  const onSsoUrlLoadError = props.onSsoUrlLoadError ||
-    defaultOnSsoUrlLoadError
+  const ssoRequestBuilder = props.ssoRequestBuilder || defaultSsoRequestBuilder
+  const ssoRequestPreprocess = props.ssoRequestPreprocess || defaultSsoRequestPreprocess
+  const ssoRequestPostprocess = props.ssoRequestPostprocess || defaultSsoRequestPostprocess
+  const onSsoUrlLoadError = props.onSsoUrlLoadError || defaultOnSsoUrlLoadError
 
   const req = ssoRequestPreprocess(ssoRequestBuilder(props))
 

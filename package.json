@@ -4,6 +4,8 @@
   "description": "MX Web Widget SDK",
   "main": "dist/index.js",
   "scripts": {
+    "format": "npm run prettier -- -w",
+    "prettier": "prettier src example",
     "clean": "[ -d dist ] && rm -r dist || true",
     "build": "npm run clean && npm run build:amd && npm run build:system",
     "build:amd": "echo Building AMD; tsc --declaration --module amd --outFile dist/amd/mx-web-widget-sdk.js",
@@ -16,7 +18,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "prettier": "2.5.1",
+    "prettier": "^2.5.1",
     "typescript": "^4.6.2"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "trailingComma": "all",
+    "singleQuote": false
   }
 }
