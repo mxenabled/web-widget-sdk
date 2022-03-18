@@ -19,9 +19,11 @@
   width: 700px;
 }
 
-#logs, pre, code {
+#logs,
+pre,
+code {
   background: white !important;
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   font-size: 14px !important;
   line-height: 1.5;
   overflow: scroll;
@@ -55,7 +57,9 @@ table {
   margin: 10px auto;
 }
 
-table, tr, td {
+table,
+tr,
+td {
   border-collapse: collapse;
   cursor: default;
 }

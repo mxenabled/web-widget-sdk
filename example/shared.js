@@ -19,9 +19,7 @@ function logEvent(event) {
 
   const contents = document.createElement("span")
   contents.className = "contents"
-  contents.innerHTML = event instanceof Object
-    ? highlightJSON(event)
-    : event
+  contents.innerHTML = event instanceof Object ? highlightJSON(event) : event
 
   line.appendChild(label)
   line.appendChild(contents)
