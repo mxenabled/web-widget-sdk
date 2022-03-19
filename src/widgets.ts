@@ -1,17 +1,31 @@
-import { getSsoUrl, Props, Type, ConnectWidgetConfigurationProps } from "./sso"
-import { dispatchConnectPostMessageEvent } from "@mxenabled/widget-post-message-definitions"
+import { getSsoUrl, Props as UrlLoadingProps, Type, ConnectWidgetConfigurationProps } from "./sso"
 
-export type WidgetOptions<Configuration> = Props<Configuration> & {
+import {
+  ConnectPostMessageCallbackProps,
+  PulsePostMessageCallbackProps,
+  WidgetPostMessageCallbackProps,
+  dispatchConnectPostMessageEvent,
+  dispatchPulsePostMessageEvent,
+  dispatchWidgetPostMessageEvent,
+} from "@mxenabled/widget-post-message-definitions"
+
+type BaseOptions = {
   id: string
   style?: Partial<CSSStyleDeclaration>
-  onMessage?: (data: unknown) => void
 }
 
-abstract class Widget<Configuration = {}> {
-  protected options: WidgetOptions<unknown>
+export type WidgetOptions<Configuration, CallbackProps> = BaseOptions &
+  UrlLoadingProps<Configuration> &
+  CallbackProps
+
+abstract class Widget<
+  Configuration = {},
+  CallbackProps = WidgetPostMessageCallbackProps<MessageEvent>,
+> {
+  protected options: WidgetOptions<unknown, WidgetPostMessageCallbackProps<MessageEvent>>
   protected style: Partial<CSSStyleDeclaration>
 
-  constructor(options: WidgetOptions<Configuration>) {
+  constructor(options: WidgetOptions<Configuration, CallbackProps>) {
     this.options = options
     this.style = options.style || {
       border: "none",
@@ -29,6 +43,10 @@ abstract class Widget<Configuration = {}> {
     }
 
     throw new Error("Missing required widgetType option")
+  }
+
+  get dispatcher() {
+    return dispatchWidgetPostMessageEvent
   }
 
   /**
@@ -63,8 +81,7 @@ abstract class Widget<Configuration = {}> {
     window.addEventListener("message", (event) => {
       // Ensure we only capture mx post messages
       if (event.data.mx) {
-        dispatchConnectPostMessageEvent(event, this.options)
-        // this.options.onMessage?.(event.data)
+        this.dispatcher(event, this.options)
       }
     })
   }
@@ -82,9 +99,16 @@ export class BudgetsWidget extends Widget {
   }
 }
 
-export class ConnectWidget extends Widget<ConnectWidgetConfigurationProps> {
+export class ConnectWidget extends Widget<
+  ConnectWidgetConfigurationProps,
+  ConnectPostMessageCallbackProps<MessageEvent>
+> {
   get widgetType() {
     return Type.ConnectWidget
+  }
+
+  get dispatcher() {
+    return dispatchConnectPostMessageEvent
   }
 }
 
@@ -136,9 +160,16 @@ export class MiniFinstrongWidget extends Widget {
   }
 }
 
-export class MiniPulseCarouselWidget extends Widget {
+export class MiniPulseCarouselWidget extends Widget<
+  {},
+  PulsePostMessageCallbackProps<MessageEvent>
+> {
   get widgetType() {
     return Type.MiniPulseCarouselWidget
+  }
+
+  get dispatcher() {
+    return dispatchPulsePostMessageEvent
   }
 }
 
@@ -148,9 +179,13 @@ export class MiniSpendingWidget extends Widget {
   }
 }
 
-export class PulseWidget extends Widget {
+export class PulseWidget extends Widget<{}, PulsePostMessageCallbackProps<MessageEvent>> {
   get widgetType() {
     return Type.PulseWidget
+  }
+
+  get dispatcher() {
+    return dispatchPulsePostMessageEvent
   }
 }
 
