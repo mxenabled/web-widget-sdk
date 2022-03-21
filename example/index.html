@@ -16,7 +16,7 @@
     <script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/prism.min.js"></script>
     <script src="shared.js"></script>
-    <script src="../dist/amd/mx-web-widget-sdk.js"></script>
+    <script src="../dist/bundle/mx-web-widget-sdk-amd.js"></script>
 
     <script>
       requirejs(["@mxenabled/web-widget-sdk"], function (sdk) {
@@ -24,7 +24,7 @@
           id: "#widget",
           proxy: "http://localhost:8089/connect_widget/USR-081ff65e-3087-4cc2-a2c4-365354e1e6cb",
           onMessage: (event) => {
-            logEvent(event)
+            logEvent(event.data)
           },
         }
 

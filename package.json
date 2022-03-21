@@ -7,9 +7,9 @@
     "format": "npm run prettier -- -w",
     "prettier": "prettier src example",
     "clean": "[ -d dist ] && rm -r dist || true",
-    "build": "npm run clean && npm run build:amd && npm run build:system",
-    "build:amd": "echo Building AMD; tsc --declaration --module amd --outFile dist/amd/mx-web-widget-sdk.js",
-    "build:system": "echo Building SystemJS; tsc --declaration --module system --outFile dist/system/mx-web-widget-sdk.js"
+    "build": "npm run clean && npm run build:tsc && npm run build:amd",
+    "build:tsc": "tsc",
+    "build:amd": "browserify -t [ babelify --global --presets [ @babel/preset-env ] ] dist/index-amd.js -o dist/bundle/mx-web-widget-sdk-amd.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,15 @@
   },
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "@mxenabled/widget-post-message-definitions": "^1.0.7"
+  },
   "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "babelify": "^10.0.0",
+    "browserify": "^17.0.0",
     "prettier": "^2.5.1",
     "typescript": "^4.6.2"
   },
@@ -26,5 +34,10 @@
     "semi": false,
     "trailingComma": "all",
     "singleQuote": false
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
   }
 }
