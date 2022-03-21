@@ -21,7 +21,7 @@
     <script>
       requirejs(["@mxenabled/web-widget-sdk"], function (sdk) {
         const options = {
-          id: "#widget",
+          widgetContainer: "#widget",
           proxy: "http://localhost:8089/connect_widget/USR-081ff65e-3087-4cc2-a2c4-365354e1e6cb",
           onMessage: (event) => {
             logEvent(event.data)
