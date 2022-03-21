@@ -10,7 +10,7 @@ import {
 } from "@mxenabled/widget-post-message-definitions"
 
 type BaseOptions = {
-  id: string
+  widgetContainer: string
   style?: Partial<CSSStyleDeclaration>
 }
 
@@ -33,8 +33,10 @@ abstract class Widget<
       width: "100%",
     }
 
-    this.setupPostMessages()
+    this.handlePostMessageEvents = this.handlePostMessageEvents.bind(this)
+
     this.setupIFrame()
+    this.setupListener()
   }
 
   get widgetType(): Type {
@@ -68,22 +70,47 @@ abstract class Widget<
       iframe.style[prop] = this.style[prop]
     })
 
-    const node = document.querySelector(this.options.id)
-    if (node) {
-      node.appendChild(iframe)
+    const widgetContainer = document.querySelector(this.options.widgetContainer)
+    if (widgetContainer) {
+      widgetContainer.appendChild(iframe)
     }
+  }
+
+  private handlePostMessageEvents(event) {
+      // Ensure we only capture mx post messages
+      if (event.data.mx) {
+        this.dispatcher(event, this.options)
+      }
+  }
+
+  /**
+   * Clean up event listener
+   */
+  private tearDownListener() {
+    window.removeEventListener("message", this.handlePostMessageEvents, false)
   }
 
   /**
    * Set up our post message listener to handle 'mx' messages
    */
-  private setupPostMessages() {
-    window.addEventListener("message", (event) => {
-      // Ensure we only capture mx post messages
-      if (event.data.mx) {
-        this.dispatcher(event, this.options)
+  private setupListener() {
+    window.addEventListener("message", this.handlePostMessageEvents, false)
+  }
+
+  /**
+   * Public method to tear down our post message listener and iframe container
+   */
+  unmount() {
+    const widgetContainer = document.querySelector(this.options.widgetContainer)
+
+    if (widgetContainer) {
+      const parent = widgetContainer.parentNode
+
+      if (parent) {
+        this.tearDownListener()
+        parent.removeChild(widgetContainer)
       }
-    })
+    }
   }
 }
 
