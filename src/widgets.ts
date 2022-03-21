@@ -35,7 +35,7 @@ abstract class Widget<
 
     this.handlePostMessageEvents = this.handlePostMessageEvents.bind(this)
 
-    this.setupIFrame()
+    this.setupIframe()
     this.setupListener()
   }
 
@@ -52,9 +52,26 @@ abstract class Widget<
   }
 
   /**
+   * Public method to tear down our post message listener and iframe container
+   */
+  unmount() {
+    this.teardownListener()
+    this.teardownIframe()
+  }
+
+  /**
+   * Filters for 'mx' events and passes them to the appropriate handler
+   */
+  private handlePostMessageEvents(event) {
+    if (event.data.mx) {
+      this.dispatcher(event, this.options)
+    }
+  }
+
+  /**
    * Construct and append iframe to DOM using id
    */
-  private setupIFrame() {
+  private setupIframe() {
     const iframe = document.createElement("iframe")
 
     getSsoUrl({
@@ -71,46 +88,43 @@ abstract class Widget<
     })
 
     const widgetContainer = document.querySelector(this.options.widgetContainer)
-    if (widgetContainer) {
-      widgetContainer.appendChild(iframe)
+
+    if (!widgetContainer) {
+      throw new Error(`Unable to find widget container: ${this.options.widgetContainer}`)
+    }
+
+    widgetContainer.appendChild(iframe)
+  }
+
+  /**
+   * Removes iframe and container from DOM
+   */
+  private teardownIframe() {
+    const widgetContainer = document.querySelector(this.options.widgetContainer)
+
+    if (!widgetContainer) {
+      throw new Error("Could not find widget container to teardown")
+    }
+
+    const parent = widgetContainer.parentNode
+
+    if (parent) {
+      parent.removeChild(widgetContainer)
     }
   }
 
-  private handlePostMessageEvents(event) {
-      // Ensure we only capture mx post messages
-      if (event.data.mx) {
-        this.dispatcher(event, this.options)
-      }
-  }
-
   /**
-   * Clean up event listener
-   */
-  private tearDownListener() {
-    window.removeEventListener("message", this.handlePostMessageEvents, false)
-  }
-
-  /**
-   * Set up our post message listener to handle 'mx' messages
+   * Set up our post message listener
    */
   private setupListener() {
     window.addEventListener("message", this.handlePostMessageEvents, false)
   }
 
   /**
-   * Public method to tear down our post message listener and iframe container
+   * Clean up post message event listener
    */
-  unmount() {
-    const widgetContainer = document.querySelector(this.options.widgetContainer)
-
-    if (widgetContainer) {
-      const parent = widgetContainer.parentNode
-
-      if (parent) {
-        this.tearDownListener()
-        parent.removeChild(widgetContainer)
-      }
-    }
+  private teardownListener() {
+    window.removeEventListener("message", this.handlePostMessageEvents, false)
   }
 }
 
