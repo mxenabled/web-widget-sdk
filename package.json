@@ -77,7 +77,6 @@
         "double"
       ],
       "no-trailing-spaces": "error",
-      "react-hooks/exhaustive-deps": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
