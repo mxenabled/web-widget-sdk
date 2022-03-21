@@ -1,3 +1,6 @@
+/* global Prism */
+/* eslint @typescript-eslint/no-unused-vars: "off" */
+
 /**
  * @param {Object | String} event
  */

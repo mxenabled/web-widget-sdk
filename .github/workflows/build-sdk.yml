@@ -15,6 +15,6 @@ jobs:
 
     - run: npm install
     - run: npm run prettier -- --check
-    # TODO - run: npm run lint
+    - run: npm run lint
     - run: npm run build
     # TODO - run: npm run test
