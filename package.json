@@ -9,7 +9,16 @@
     "clean": "[ -d dist ] && rm -r dist || true",
     "build": "npm run clean && npm run build:tsc && npm run build:amd",
     "build:tsc": "tsc",
-    "build:amd": "browserify -t [ babelify --global --presets [ @babel/preset-env ] ] dist/index-amd.js -o dist/bundle/mx-web-widget-sdk-amd.js"
+    "build:amd": "browserify -t [ babelify --global --presets [ @babel/preset-env ] ] dist/index-amd.js -o dist/bundle/mx-web-widget-sdk-amd.js",
+    "watch": "npm-watch"
+  },
+  "watch": {
+    "build": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "ts"
+    }
   },
   "repository": {
     "type": "git",
@@ -26,6 +35,7 @@
     "@babel/preset-env": "^7.16.11",
     "babelify": "^10.0.0",
     "browserify": "^17.0.0",
+    "npm-watch": "^0.11.0",
     "prettier": "^2.5.1",
     "typescript": "^4.6.2"
   },
