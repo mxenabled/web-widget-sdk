@@ -19,7 +19,7 @@ export type WidgetOptions<Configuration, CallbackProps> = BaseOptions &
   CallbackProps
 
 abstract class Widget<
-  Configuration = {},
+  Configuration = unknown,
   CallbackProps = WidgetPostMessageCallbackProps<MessageEvent>,
 > {
   protected options: WidgetOptions<unknown, WidgetPostMessageCallbackProps<MessageEvent>>
@@ -199,7 +199,7 @@ export class MiniFinstrongWidget extends Widget {
 }
 
 export class MiniPulseCarouselWidget extends Widget<
-  {},
+  unknown,
   PulsePostMessageCallbackProps<MessageEvent>
 > {
   get widgetType() {
@@ -217,7 +217,7 @@ export class MiniSpendingWidget extends Widget {
   }
 }
 
-export class PulseWidget extends Widget<{}, PulsePostMessageCallbackProps<MessageEvent>> {
+export class PulseWidget extends Widget<unknown, PulsePostMessageCallbackProps<MessageEvent>> {
   get widgetType() {
     return Type.PulseWidget
   }
