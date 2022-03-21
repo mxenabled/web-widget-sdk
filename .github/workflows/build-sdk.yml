@@ -1,0 +1,20 @@
+name: Build SDK
+
+on: push
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 16
+        cache: npm
+
+    - run: npm install
+    - run: npm run prettier -- --check
+    # TODO - run: npm run lint
+    - run: npm run build
+    # TODO - run: npm run test
