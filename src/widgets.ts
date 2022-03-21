@@ -24,6 +24,8 @@ abstract class Widget<
 > {
   protected options: WidgetOptions<unknown, WidgetPostMessageCallbackProps<MessageEvent>>
   protected style: Partial<CSSStyleDeclaration>
+  // Filters for 'mx' events before dispatching to proper handlers
+  protected messageCallback: (event: MessageEvent) => void
 
   constructor(options: WidgetOptions<Configuration, CallbackProps>) {
     this.options = options
@@ -33,7 +35,11 @@ abstract class Widget<
       width: "100%",
     }
 
-    this.handlePostMessageEvents = this.handlePostMessageEvents.bind(this)
+    this.messageCallback = (event) => {
+      if (event.data.mx) {
+        this.dispatcher(event, this.options)
+      }
+    }
 
     this.setupIframe()
     this.setupListener()
@@ -57,15 +63,6 @@ abstract class Widget<
   unmount() {
     this.teardownListener()
     this.teardownIframe()
-  }
-
-  /**
-   * Filters for 'mx' events and passes them to the appropriate handler
-   */
-  private handlePostMessageEvents(event) {
-    if (event.data.mx) {
-      this.dispatcher(event, this.options)
-    }
   }
 
   /**
@@ -117,14 +114,14 @@ abstract class Widget<
    * Set up our post message listener
    */
   private setupListener() {
-    window.addEventListener("message", this.handlePostMessageEvents, false)
+    window.addEventListener("message", this.messageCallback, false)
   }
 
   /**
    * Clean up post message event listener
    */
   private teardownListener() {
-    window.removeEventListener("message", this.handlePostMessageEvents, false)
+    window.removeEventListener("message", this.messageCallback, false)
   }
 }
 
