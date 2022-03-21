@@ -10,7 +10,7 @@ import {
 } from "@mxenabled/widget-post-message-definitions"
 
 type BaseOptions = {
-  id: string
+  widgetContainer: string
   style?: Partial<CSSStyleDeclaration>
 }
 
@@ -24,6 +24,8 @@ abstract class Widget<
 > {
   protected options: WidgetOptions<unknown, WidgetPostMessageCallbackProps<MessageEvent>>
   protected style: Partial<CSSStyleDeclaration>
+  // Filters for 'mx' events before dispatching to proper handlers
+  protected messageCallback: (event: MessageEvent) => void
 
   constructor(options: WidgetOptions<Configuration, CallbackProps>) {
     this.options = options
@@ -33,8 +35,14 @@ abstract class Widget<
       width: "100%",
     }
 
-    this.setupPostMessages()
-    this.setupIFrame()
+    this.messageCallback = (event) => {
+      if (event.data.mx) {
+        this.dispatcher(event, this.options)
+      }
+    }
+
+    this.setupIframe()
+    this.setupListener()
   }
 
   get widgetType(): Type {
@@ -50,9 +58,17 @@ abstract class Widget<
   }
 
   /**
+   * Public method to tear down our post message listener and iframe container
+   */
+  unmount() {
+    this.teardownListener()
+    this.teardownIframe()
+  }
+
+  /**
    * Construct and append iframe to DOM using id
    */
-  private setupIFrame() {
+  private setupIframe() {
     const iframe = document.createElement("iframe")
 
     getSsoUrl({
@@ -68,22 +84,44 @@ abstract class Widget<
       iframe.style[prop] = this.style[prop]
     })
 
-    const node = document.querySelector(this.options.id)
-    if (node) {
-      node.appendChild(iframe)
+    const widgetContainer = document.querySelector(this.options.widgetContainer)
+
+    if (!widgetContainer) {
+      throw new Error(`Unable to find widget container: ${this.options.widgetContainer}`)
+    }
+
+    widgetContainer.appendChild(iframe)
+  }
+
+  /**
+   * Removes iframe and container from DOM
+   */
+  private teardownIframe() {
+    const widgetContainer = document.querySelector(this.options.widgetContainer)
+
+    if (!widgetContainer) {
+      throw new Error("Could not find widget container to teardown")
+    }
+
+    const parent = widgetContainer.parentNode
+
+    if (parent) {
+      parent.removeChild(widgetContainer)
     }
   }
 
   /**
-   * Set up our post message listener to handle 'mx' messages
+   * Set up our post message listener
    */
-  private setupPostMessages() {
-    window.addEventListener("message", (event) => {
-      // Ensure we only capture mx post messages
-      if (event.data.mx) {
-        this.dispatcher(event, this.options)
-      }
-    })
+  private setupListener() {
+    window.addEventListener("message", this.messageCallback, false)
+  }
+
+  /**
+   * Clean up post message event listener
+   */
+  private teardownListener() {
+    window.removeEventListener("message", this.messageCallback, false)
   }
 }
 
