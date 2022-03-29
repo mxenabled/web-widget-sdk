@@ -29,20 +29,8 @@ Portal](https://dashboard.mx.com) site.
 
 ### Installing the SDK
 
-Open a terminal and run the commands below at the root of your project to
-install and setup the SDK:
-
-Using npm
-
-```
-npm install --save @mxenabled/web-widget-sdk
-```
-
-Using yarn
-
-```
-yarn add @mxenabled/web-widget-sdk
-```
+TODO: Install via es6 module system instructions.
+TODO: Install via AMD module system instructions.
 
 ### Generating your Widget SSO URL
 
@@ -56,6 +44,7 @@ passed to a Widget component via the `url` prop.
 The SDK also has the option of making the SSO request on your behalf to your
 backend service that is able to make requests to our API. If used, the proxy
 URL should passed to a Widget component via the `proxy` prop.
+
 ### Importing the SDK into your project and rendering a widget using modules with Asynchronous Module Definition (AMD)
 
 Once the steps above have been completed, you will be able to import components
