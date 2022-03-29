@@ -37,19 +37,18 @@ TODO: Install via AMD module system instructions.
 See [SSO Widget URL documentation][api_request_widget_url] for instructions. If
 loading the Connect Widget, follow the instructions located in [Connect SSO
 Widget URL documentation][api_request_connect_url]. The SSO URL should be
-passed to a Widget component via the `url` prop.
+passed to a Widget class via the `url` option.
 
 #### Proxy server
 
 The SDK also has the option of making the SSO request on your behalf to your
 backend service that is able to make requests to our API. If used, the proxy
-URL should passed to a Widget component via the `proxy` prop.
+URL should passed to a Widget class via the `proxy` option.
 
 ### Importing the SDK into your project and rendering a widget using modules with Asynchronous Module Definition (AMD)
 
-Once the steps above have been completed, you will be able to import components
-from the `@mxenabled/web-widget-sdk` package and render them in your
-application:
+Once the steps above have been completed, you will be able to import 
+the `@mxenabled/web-widget-sdk` package and render them in your application:
 
 ```html
 <script src="mx-web-widget-sdk-amd.js"></script>
@@ -70,37 +69,21 @@ application:
 ```
 ### Interacting with the widget
 
-You can listen to post message events by passing callback props in the widget
-component. The prop names follow this naming scheme:
+You can listen to post message events by passing callback functions in the widget
+options object to the class. The option names follow this naming scheme:
 
 * For widget events: `on<event name>`,
 * For entity events: `on<entity><action>`
 
 For example, the `mx/connect/selectInstitution` event is made available via
-`onSelectInstitution` in the `ConnectWidget` component. Refer to [this
+`onSelectInstitution` in the `ConnectWidget` class. Refer to [this
 document](docs/widget_callback_props.md) for a list of events and their
 payloads.
 
-```html
-<script src="mx-web-widget-sdk-amd.js"></script>
-
-<script>
-  requirejs(["@mxenabled/web-widget-sdk"], function (sdk) {
-    const options = {
-      widgetContainer: "#widget",
-      proxy: "http://localhost:8089/{widget_type}/{user_guid}",
-      onSelectedInstitution: (payload) => console.log(`Selecting ${payload.name}`)
-    }
-
-    const widget = new sdk.ConnectWidget(options)
-  })
-</script>
-```
-
-### Widget props
+### Widget options
 
 You can configure the state and behaviour of the widget with the following
-component props:
+class options:
 
 - `language`: Load the widget in the specified language. Defaults to `en-US`.
   See [language
@@ -112,7 +95,7 @@ component props:
   URL](#generating-your-widget-sso-url) for additional information. **This prop
   is required.**
 
-#### Connect specific props
+#### Connect specific options
 
 - `colorScheme`: Load the widget in the specified colorScheme; options are
   `light` and `dark`. Defaults to `light`.
@@ -142,9 +125,9 @@ component props:
   postMessage. This allows clients to have transactional data by the time the
   widget is closed.
 
-### Available widget components
+### Available widget classes
 
-This SDK exposes the following components:
+This SDK exposes the following classes:
 
 - `AccountsWidget`
 - `BudgetsWidget`
