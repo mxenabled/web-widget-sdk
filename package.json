@@ -8,6 +8,7 @@
     "prettier": "prettier src test example",
     "clean": "[ -d dist ] && rm -r dist || true",
     "lint": "eslint src example",
+    "test:integration": "cypress run",
     "build": "npm run clean && npm run build:tsc && npm run build:test && npm run build:amd",
     "build:tsc": "tsc",
     "build:test": "npm run build:tsc -- --noEmit test/**/*.ts",
