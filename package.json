@@ -5,11 +5,12 @@
   "main": "dist/index.js",
   "scripts": {
     "format": "npm run prettier -- -w",
-    "prettier": "prettier src example",
+    "prettier": "prettier src test example",
     "clean": "[ -d dist ] && rm -r dist || true",
     "lint": "eslint src example",
-    "build": "npm run clean && npm run build:tsc && npm run build:amd",
+    "build": "npm run clean && npm run build:tsc && npm run build:test && npm run build:amd",
     "build:tsc": "tsc",
+    "build:test": "npm run build:tsc -- --noEmit test/**/*.ts",
     "build:amd": "browserify -t [ babelify --global --presets [ @babel/preset-env ] ] dist/index-amd.js -o dist/bundle/mx-web-widget-sdk-amd.js",
     "watch": "npm-watch"
   },
@@ -37,6 +38,7 @@
     "@typescript-eslint/parser": "^5.16.0",
     "babelify": "^10.0.0",
     "browserify": "^17.0.0",
+    "cypress": "^9.5.3",
     "eslint": "^8.11.0",
     "npm-watch": "^0.11.0",
     "prettier": "^2.5.1",
