@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.mx.com:Sean.Brown/mx-web-widget-sdk.git"
+    "url": "https://github.com/mxenabled/react-native-widget-sdk"
   },
   "license": "MIT",
   "dependencies": {
