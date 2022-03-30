@@ -1,6 +1,6 @@
 {
   "name": "@mxenabled/web-widget-sdk",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "MX Web Widget SDK",
   "main": "dist/index.js",
   "scripts": {
@@ -23,10 +23,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.mx.com:Sean.Brown/mx-web-widget-sdk.git"
+    "url": "https://github.com/mxenabled/web-widget-sdk"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@mxenabled/widget-post-message-definitions": "^1.0.7"
   },
