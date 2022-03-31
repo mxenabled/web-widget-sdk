@@ -8,8 +8,8 @@
   ],
   "scripts": {
     "format": "npm run prettier -- -w",
-    "prettier": "prettier src test examples",
-    "lint": "eslint src test examples",
+    "prettier": "prettier src test",
+    "lint": "eslint src test",
     "watch": "npm-watch",
     "clean": "npm run clean:ts && npm run clean:bundle",
     "clean:ts": "[ -d output ] && rm -r output || true",
