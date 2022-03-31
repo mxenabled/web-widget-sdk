@@ -1,0 +1,18 @@
+{
+  "chromeWebSecurity": false,
+  "defaultCommandTimeout": 10000,
+  "downloadsFolder": "test/artifacts/downloads/",
+  "fixturesFolder": "test/fixtures/",
+  "integrationFolder": "test/integration/",
+  "pluginsFile": false,
+  "retries": {
+    "runMode": 2,
+    "openMode": 0
+  },
+  "screenshotsFolder": "test/artifacts/screenshots/",
+  "supportFile": "test/setup/cypress.ts",
+  "testFiles": "**/*_test.ts",
+  "trashAssetsBeforeRuns": false,
+  "videosFolder": "test/artifacts/videos/",
+  "viewportHeight": 1000
+}
