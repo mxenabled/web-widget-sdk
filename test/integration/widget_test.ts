@@ -8,11 +8,11 @@ describe("Widget", () => {
   })
 
   describe("Post Message Callbacks", () => {
-    it("mx/load", () => {
+    it("dispatches mx/load", () => {
       cy.get("[data-log-id=onLoad]").should("exist")
     })
 
-    it("mx/connect/loaded", () => {
+    it("dispatches mx/connect/loaded", () => {
       cy.get("[data-log-id=onLoaded]").should("exist")
     })
   })
