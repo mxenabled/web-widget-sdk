@@ -35,8 +35,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@mxenabled/widget-post-message-definitions": "^1.0.7",
-    "browser-cjs": "^1.0.3"
+    "@mxenabled/widget-post-message-definitions": "^1.0.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",
@@ -47,6 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
     "babelify": "^10.0.0",
+    "browser-cjs": "^1.0.3",
     "browserify": "^17.0.0",
     "cypress": "^9.5.3",
     "eslint": "^8.11.0",
