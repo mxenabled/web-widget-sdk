@@ -5,6 +5,10 @@
   "fixturesFolder": "test/fixtures/",
   "integrationFolder": "test/integration/",
   "pluginsFile": false,
+  "retries": {
+    "runMode": 2,
+    "openMode": 0
+  },
   "screenshotsFolder": "test/artifacts/screenshots/",
   "supportFile": "test/setup/cypress.ts",
   "testFiles": "**/*_test.ts",
