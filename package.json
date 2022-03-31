@@ -8,14 +8,17 @@
   ],
   "scripts": {
     "format": "npm run prettier -- -w",
-    "prettier": "prettier src examples",
-    "lint": "eslint src examples",
+    "prettier": "prettier src test examples",
+    "lint": "eslint src test examples",
     "watch": "npm-watch",
     "clean:ts": "[ -d dist ] && rm -r output || true",
     "clean:bundle": "[ -d dist ] && rm -r dist || true",
     "compile": "npx tsc --outDir output --project tsconfig.json",
     "bundle": "npx rollup -c",
-    "build": "npm run clean:ts && npm run clean:bundle && npm run compile && npm run bundle"
+    "build": "npm run clean:ts && npm run clean:bundle && npm run compile && npm run bundle",
+    "test:integration": "cypress run",
+    "build:tsc": "tsc",
+    "build:test": "npm run build:tsc -- --noEmit test/**/*.ts"
   },
   "watch": {
     "build": {
@@ -44,6 +47,7 @@
     "@typescript-eslint/parser": "^5.16.0",
     "babelify": "^10.0.0",
     "browserify": "^17.0.0",
+    "cypress": "^9.5.3",
     "eslint": "^8.11.0",
     "npm-watch": "^0.11.0",
     "prettier": "^2.5.1",

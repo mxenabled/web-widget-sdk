@@ -70,6 +70,7 @@ abstract class Widget<
    */
   private setupIframe() {
     const iframe = document.createElement("iframe")
+    iframe.setAttribute("data-test-id", "mx-widget-iframe")
 
     getSsoUrl({
       ...this.options,
