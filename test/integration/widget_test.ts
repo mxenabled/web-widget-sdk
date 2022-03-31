@@ -1,6 +1,6 @@
 describe("Widget", () => {
   beforeEach(() => {
-    cy.loadAndWaitWidget()
+    cy.loadAndWaitForWidget()
   })
 
   it("loads the widget in an iframe", () => {
