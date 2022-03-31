@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>MX Web Widget SDK Using ES Example</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Example styles -->
+        <link rel="stylesheet" href="../shared/shared.css" />
+        <!-- Code Highlighting styles -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/themes/prism.min.css" />
+
+        <!-- Code Highlighting library -->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/prism.min.js"></script>
+        <!-- Code Highlighting library -->
+        <script src="../shared/shared.js"></script>
+    </head>
+    <body>
+        <noscript>
+            You need to enable JavaScript to run this app.
+        </noscript>
+
+        <table>
+            <tr>
+                <td>
+                    <h1>Connect Widget</h1>
+                </td>
+                <td>
+                    <h1>Post Message Events</h1>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="widget"></div>
+                </td>
+                <td>
+                    <div id="logs"></div>
+                </td>
+            </tr>
+        </table>
+
+        <script type="module">
+            import { ConnectWidget } from '../../dist/es/index.js';
+
+            const options = {
+                widgetContainer: "#widget",
+                proxy: "http://localhost:8089/connect_widget/USR-a335343e-896d-4f84-a8af-7173025d27d7",
+                onMessage: (event) => {
+                    logEvent(event.data)
+                },
+                onStepChange: (payload) => {
+                    console.log(`User guid: ${payload.user_guid}`)
+                    console.log(`Session guid: ${payload.session_guid}`)
+                    console.log(`Previous: ${payload.previous}`)
+                    console.log(`Current: ${payload.current}`)
+                },
+                }
+
+            const widget = new ConnectWidget(options)
+        </script>
+    </body>
+</html>
