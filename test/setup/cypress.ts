@@ -19,7 +19,7 @@ Cypress.Commands.add("loadAndWaitForWidget", () => {
 
 Cypress.Commands.add("widgetIframe", () => {
   return cy
-    .get("iframe")
+    .get("[data-test-id=mx-widget-iframe]")
     .its("0.contentDocument")
     .its("body")
     .should("not.be.undefined")
