@@ -12,6 +12,7 @@
   "screenshotsFolder": "test/artifacts/screenshots/",
   "supportFile": "test/setup/cypress.ts",
   "testFiles": "**/*_test.ts",
+  "trashAssetsBeforeRuns": false,
   "videosFolder": "test/artifacts/videos/",
   "viewportHeight": 1000
 }
