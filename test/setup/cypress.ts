@@ -5,21 +5,21 @@ export {}
 declare global {
   namespace Cypress {
     interface Chainable {
-      loadAndWaitForExampleApplication(): Chainable
-      iframe(selector?: string): Chainable
+      loadAndWaitWidget(): Chainable
+      widgetIframe(selector?: string): Chainable
     }
   }
 }
 
-Cypress.Commands.add("loadAndWaitForExampleApplication", () => {
-  cy.visit("example/index.html")
+Cypress.Commands.add("loadAndWaitWidget", () => {
+  cy.visit("test/integration/index.html")
   cy.intercept("/raja/data*").as("rajaDataRequest")
   return cy.wait("@rajaDataRequest")
 })
 
-Cypress.Commands.add("iframe", (selector = "iframe") => {
+Cypress.Commands.add("widgetIframe", () => {
   return cy
-    .get(selector)
+    .get("iframe")
     .its("0.contentDocument")
     .its("body")
     .should("not.be.undefined")
