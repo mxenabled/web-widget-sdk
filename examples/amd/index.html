@@ -7,19 +7,15 @@
 
     <title>MX Web Widget SDK AMD Example</title>
 
-    <link rel="stylesheet" href="shared.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/themes/prism.min.css"
-    />
+    <link rel="stylesheet" href="../shared/shared.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/themes/prism.min.css" />
 
     <script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/prism.min.js"></script>
-    <script src="shared.js"></script>
-    <script src="../dist/bundle/mx-web-widget-sdk-amd.js"></script>
+    <script src="../shared/shared.js"></script>
 
     <script>
-      requirejs(["@mxenabled/web-widget-sdk"], function (sdk) {
+      requirejs(['../../dist/amd/index.js'], function(sdk) {
         const options = {
           widgetContainer: "#widget",
           proxy: "http://localhost:8089/connect_widget/USR-a335343e-896d-4f84-a8af-7173025d27d7",
@@ -39,10 +35,14 @@
     </script>
   </head>
   <body>
+    <noscript>
+        You need to enable JavaScript to run this app.
+    </noscript>
+
     <table>
       <tr>
         <td>
-          <h1>Widget</h1>
+          <h1>Connect Widget</h1>
         </td>
         <td>
           <h1>Post Message Events</h1>
@@ -54,28 +54,6 @@
         </td>
         <td>
           <div id="logs"></div>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <h1>AMD Example</h1>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <pre
-            id="code"
-          ><code class="language-javascript">requirejs(["@mxenabled/web-widget-sdk"], function (sdk) {
-  const options = {
-    id: "#widget",
-    proxy: "http://localhost:8089/connect_widget/USR-081ff65e-3087-4cc2-a2c4-365354e1e6cb",
-    onMessage: (event) => {
-      logEvent(event)
-    }
-  }
-
-  const widget = new sdk.ConnectWidget(options)
-})</code></pre>
         </td>
       </tr>
     </table>
