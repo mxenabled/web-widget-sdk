@@ -3,15 +3,19 @@
   "version": "0.0.1",
   "description": "MX Web Widget SDK",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "format": "npm run prettier -- -w",
     "prettier": "prettier src example",
-    "clean": "[ -d dist ] && rm -r dist || true",
     "lint": "eslint src example",
-    "build": "npm run clean && npm run build:tsc && npm run build:amd",
-    "build:tsc": "tsc",
-    "build:amd": "browserify -t [ babelify --global --presets [ @babel/preset-env ] ] dist/index-amd.js -o dist/bundle/mx-web-widget-sdk-amd.js",
-    "watch": "npm-watch"
+    "watch": "npm-watch",
+    "clean:ts": "[ -d dist ] && rm -r output || true",
+    "clean:bundle": "[ -d dist ] && rm -r dist || true",
+    "compile": "npx tsc --outDir output --project tsconfig.json",
+    "bundle": "npx rollup -c",
+    "build": "npm run clean:ts && npm run clean:bundle && npm run compile && npm run bundle"
   },
   "watch": {
     "build": {
@@ -33,6 +37,8 @@
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.8",
     "@babel/preset-env": "^7.16.11",
+    "@rollup/plugin-node-resolve": "^13.1.3",
+    "@rollup/plugin-typescript": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
     "babelify": "^10.0.0",
@@ -40,6 +46,7 @@
     "eslint": "^8.11.0",
     "npm-watch": "^0.11.0",
     "prettier": "^2.5.1",
+    "rollup": "^2.70.1",
     "typescript": "^4.6.2"
   },
   "prettier": {
