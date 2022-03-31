@@ -31,7 +31,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@mxenabled/widget-post-message-definitions": "^1.0.7"
+    "@mxenabled/widget-post-message-definitions": "^1.0.7",
+    "browser-cjs": "^1.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",
