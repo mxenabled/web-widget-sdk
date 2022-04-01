@@ -16,10 +16,9 @@
     <script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/prism.min.js"></script>
     <script src="shared.js"></script>
-    <script src="../dist/bundle/mx-web-widget-sdk-amd.js"></script>
 
     <script>
-      requirejs(["@mxenabled/web-widget-sdk"], function (sdk) {
+      requirejs(["../dist/amd/index.js"], function (sdk) {
         const options = {
           widgetContainer: "#widget",
           proxy: "http://localhost:8089/connect_widget/USR-a335343e-896d-4f84-a8af-7173025d27d7",
@@ -65,7 +64,7 @@
         <td colspan="2">
           <pre
             id="code"
-          ><code class="language-javascript">requirejs(["@mxenabled/web-widget-sdk"], function (sdk) {
+          ><code class="language-javascript">requirejs(["../dist/amd/index.js"], function (sdk) {
   const options = {
     id: "#widget",
     proxy: "http://localhost:8089/connect_widget/USR-081ff65e-3087-4cc2-a2c4-365354e1e6cb",
