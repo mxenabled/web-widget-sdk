@@ -95,12 +95,16 @@ function handler(apiHost: string, clientId: string, apiKey: string): RequestList
 }
 
 function main() {
-  const apiHost = process.env["MX_API_HOST"]
-  const apiKey = process.env["API_KEY"]
-  const clientId = process.env["CLIENT_ID"]
+  const apiHost = process.env["INTEGRATION_TEST_API_HOST"]
+  const apiKey = process.env["INTEGRATION_TEST_API_KEY"]
+  const clientId = process.env["INTEGRATION_TEST_CLIENT_ID"]
   if (!apiHost || !apiKey || !clientId) {
     logError("missing environment data")
-    return
+    logError("the following environment variables are required to run this server:")
+    logError("  - INTEGRATION_TEST_API_HOST")
+    logError("  - INTEGRATION_TEST_API_KEY")
+    logError("  - INTEGRATION_TEST_CLIENT_ID")
+    process.exit(1)
   }
 
   const port = process.env["PORT"] || 8089
