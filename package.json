@@ -15,8 +15,8 @@
     "compile:sdk": "tsc --outDir build",
     "compile:test": "tsc --noEmit test/**/*.ts",
     "format": "npm run prettier -- -w",
-    "lint": "eslint src example test",
     "prettier": "prettier src example test",
+    "lint": "eslint src example test",
     "test:integration": "cypress run",
     "test:server": "ts-node test/application/server.ts",
     "watch": "npm-watch"
