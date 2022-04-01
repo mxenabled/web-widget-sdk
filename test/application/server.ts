@@ -1,11 +1,11 @@
 import { IncomingMessage, ServerResponse, RequestListener, createServer } from "http"
 import axios from "axios"
 
-function logInfo(msg) {
+function logInfo(msg: string) {
   process.stdout.write(`[${new Date().toISOString()}] [info] ${msg}\n`)
 }
 
-function logError(msg) {
+function logError(msg: string) {
   process.stderr.write(`[${new Date().toISOString()}] [error] ${msg}\n`)
 }
 

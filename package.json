@@ -18,7 +18,7 @@
     "prettier": "prettier src example test",
     "lint": "eslint src example test",
     "test:integration": "cypress run",
-    "test:server": "ts-node test/application/server.ts",
+    "test:server": "ts-node -O {\\\"module\\\":\\\"commonjs\\\"} test/application/server.ts",
     "watch": "npm-watch"
   },
   "watch": {
