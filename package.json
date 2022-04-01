@@ -6,19 +6,19 @@
     "dist"
   ],
   "scripts": {
-    "format": "npm run prettier -- -w",
-    "prettier": "prettier src test",
-    "lint": "eslint src test",
-    "watch": "npm-watch",
+    "build": "npm run clean && npm run compile && npm run bundle",
+    "bundle": "rollup -c",
     "clean": "npm run clean:build && npm run clean:dist",
     "clean:build": "[ -d build ] && rm -r build || true",
     "clean:dist": "[ -d dist ] && rm -r dist || true",
-    "compile": "tsc --outDir build",
-    "bundle": "rollup -c",
-    "build": "npm run clean && npm run compile && npm run bundle",
+    "compile": "npm run compile:sdk && npm run compile:test",
+    "compile:sdk": "tsc --outDir build",
+    "compile:test": "tsc --noEmit test/**/*.ts",
+    "format": "npm run prettier -- -w",
+    "prettier": "prettier src example test",
+    "lint": "eslint src example test",
     "test:integration": "cypress run",
-    "build:tsc": "tsc",
-    "build:test": "npm run build:tsc -- --noEmit test/**/*.ts"
+    "watch": "npm-watch"
   },
   "watch": {
     "build": {
