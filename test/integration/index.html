@@ -8,10 +8,9 @@
     <title>MX Web Widget SDK Integration Test</title>
 
     <script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
-    <script src="../../dist/bundle/mx-web-widget-sdk-amd.js"></script>
 
     <script>
-      requirejs(["@mxenabled/web-widget-sdk"], function (sdk) {
+      requirejs(["../../dist/amd/index.js"], function (sdk) {
         const show = (id, obj) => {
           const output = document.querySelector("#output")
           if (!output) {

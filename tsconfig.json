@@ -1,22 +1,19 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "lib": ["es6", "dom", "dom.iterable"],
+    "suppressImplicitAnyIndexErrors": true,
     "alwaysStrict": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
+    "module": "es6",
+    "moduleResolution": "node",
     "strictNullChecks": true,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
-    "target": "es6"
+    "removeComments": true,
+    "strict": true,
+    "target": "es6",
   },
-  "include": [
-    "src/**/*.ts",
-    "src/index.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src/**/*.ts", "src/index.ts"],
 }
