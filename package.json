@@ -2,7 +2,6 @@
   "name": "@mxenabled/web-widget-sdk",
   "version": "0.0.1",
   "description": "MX Web Widget SDK",
-  "main": "dist/index.js",
   "files": [
     "dist"
   ],
