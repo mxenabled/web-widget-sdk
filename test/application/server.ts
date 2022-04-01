@@ -45,18 +45,16 @@ function buildRequestHeaders(
   }
 }
 
-function handler(apiHost: string, clientId: string, apiKey: string): RequestListener {
+function handler(
+  apiHost: string,
+  clientId: string,
+  apiKey: string,
+  userGuid: string,
+): RequestListener {
   return async (req, res) => {
     logInfo(`handling ${req.method} ${req.url}`)
 
-    const parts = (req.url || "").split("/")
-    const userGuid = parts[1]
-    if (!userGuid) {
-      res.writeHead(400)
-      res.end("bad request, missing user guid in url")
-      logError("bad request, missing user guid in url")
-      return
-    } else if (req.method === "OPTIONS") {
+    if (req.method === "OPTIONS") {
       setResponseAccessControlHeaders(res)
       res.writeHead(200)
       res.end()
@@ -98,17 +96,19 @@ function main() {
   const apiHost = process.env["INTEGRATION_TEST_API_HOST"]
   const apiKey = process.env["INTEGRATION_TEST_API_KEY"]
   const clientId = process.env["INTEGRATION_TEST_CLIENT_ID"]
-  if (!apiHost || !apiKey || !clientId) {
+  const userGuid = process.env["INTEGRATION_TEST_USER_GUID"]
+  if (!apiHost || !apiKey || !clientId || !userGuid) {
     logError("missing environment data")
     logError("the following environment variables are required to run this server:")
     logError("  - INTEGRATION_TEST_API_HOST")
     logError("  - INTEGRATION_TEST_API_KEY")
     logError("  - INTEGRATION_TEST_CLIENT_ID")
+    logError("  - INTEGRATION_TEST_USER_GUID")
     process.exit(1)
   }
 
   const port = process.env["PORT"] || 8089
-  const server = createServer(handler(apiHost, clientId, apiKey))
+  const server = createServer(handler(apiHost, clientId, apiKey, userGuid))
 
   logInfo("starting server")
   server.listen(port)
