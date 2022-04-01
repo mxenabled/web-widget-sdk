@@ -98,7 +98,7 @@ function main() {
   const clientId = process.env["INTEGRATION_TEST_CLIENT_ID"]
   const userGuid = process.env["INTEGRATION_TEST_USER_GUID"]
   if (!apiHost || !apiKey || !clientId || !userGuid) {
-    logError("missing environment data")
+    logError("unable to start server")
     logError("the following environment variables are required to run this server:")
     logError("  - INTEGRATION_TEST_API_HOST")
     logError("  - INTEGRATION_TEST_API_KEY")
