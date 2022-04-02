@@ -13,7 +13,7 @@
     "clean:dist": "[ -d dist ] && rm -r dist || true",
     "compile": "npm run compile:sdk && npm run compile:test",
     "compile:sdk": "tsc --outDir build",
-    "compile:test": "tsc --noEmit $(find test -type f -name *.ts)",
+    "compile:test": "tsc --types node,cypress --noEmit $(find test -type f -name *.ts)",
     "format": "npm run prettier -- -w",
     "prettier": "prettier src example test",
     "lint": "eslint src example test",

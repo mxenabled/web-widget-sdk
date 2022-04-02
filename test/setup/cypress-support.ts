@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 /* eslint @typescript-eslint/no-namespace: "off" */
 
 export {}
