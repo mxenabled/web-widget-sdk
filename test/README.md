@@ -13,7 +13,6 @@ Below are commands you can use to run the integration tests:
 - `npm run test:cypress` to just execute the Cypress tests.
 - `npm run test:server` to just run the proxy server.
 
-
 ## Configuring the proxy server
 
 The proxy server needs your user and API information in order to work, all of
@@ -24,10 +23,8 @@ which can be configured via environment variables:
 - `INTEGRATION_TEST_CLIENT_ID`, the client's id.
 - `INTEGRATION_TEST_USER_GUID`, the user's guid.
 
-
 ## Additional configuration
 
 If you want to run the proxy server in another port, you can do so by setting
-the `PORT` environment variable, (for example, `PORT=8042 npm run
-test:integration`). By default, the proxy server will run on port 8089. You can
+the `PORT` environment variable, (for example, `PORT=8042 npm run test:integration`). By default, the proxy server will run on port 8089. You can
 also set a `VERBOSE` environment variable to run the server in verbose mode.
