@@ -29,5 +29,5 @@ which can be configured via environment variables:
 
 If you want to run the proxy server in another port, you can do so by setting
 the `PORT` environment variable, (for example, `PORT=8042 npm run
-test:integration`). You can also set a `VERBOSE` environment variable to run
-the server in verbose mode.
+test:integration`). By default, the proxy server will run on port 8089. You can
+also set a `VERBOSE` environment variable to run the server in verbose mode.
