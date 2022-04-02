@@ -1,27 +1,5 @@
-/* eslint @typescript-eslint/no-namespace: "off" */
+module.exports = (on, config) => {
+  config.baseUrl = `http://localhost:${process.env["PORT"] || 8090}`
 
-export {}
-
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      loadAndWaitForWidget(): Chainable
-      widgetIframe(selector?: string): Chainable
-    }
-  }
+  return config
 }
-
-Cypress.Commands.add("loadAndWaitForWidget", () => {
-  cy.visit("test/application/index.html")
-  cy.intercept("/raja/data*").as("rajaDataRequest")
-  return cy.wait("@rajaDataRequest")
-})
-
-Cypress.Commands.add("widgetIframe", () => {
-  return cy
-    .get("[data-test-id=mx-widget-iframe]")
-    .its("0.contentDocument")
-    .its("body")
-    .should("not.be.undefined")
-    .then(cy.wrap)
-})

@@ -13,11 +13,12 @@
     "clean:dist": "[ -d dist ] && rm -r dist || true",
     "compile": "npm run compile:sdk && npm run compile:test",
     "compile:sdk": "tsc --outDir build",
-    "compile:test": "tsc --noEmit test/**/*.ts",
+    "compile:test": "tsc --noEmit $(find test -type f -name *.ts)",
     "format": "npm run prettier -- -w",
     "prettier": "prettier src example test",
     "lint": "eslint src example test",
-    "test:integration": "cypress run",
+    "test:integration": "start-server-and-test test:server ${PORT:-8089} test:cypress",
+    "test:cypress": "cypress run",
     "test:server": "ts-node -O {\\\"module\\\":\\\"commonjs\\\"} test/application/server.ts",
     "watch": "npm-watch"
   },
@@ -53,6 +54,7 @@
     "npm-watch": "^0.11.0",
     "prettier": "^2.5.1",
     "rollup": "^2.70.1",
+    "start-server-and-test": "^1.14.0",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.2"
   },
