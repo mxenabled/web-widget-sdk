@@ -27,7 +27,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.options("/get-sso-url", (req, res, next) => {
+app.options("/get-sso-url", (req, res) => {
   res.send(200)
 })
 
