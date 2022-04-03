@@ -1,150 +1,51 @@
-import { IncomingMessage, ServerResponse, RequestListener, createServer } from "http"
-import { readFileSync } from "fs"
+import * as express from "express"
 import axios from "axios"
 
-function logTrace(msg: string) {
-  if (!process.env["VERBOSE"]) {
-    return
-  }
-
-  process.stdout.write(`[${new Date().toISOString()}] [trace] ${msg}\n`)
+const apiHost = process.env["INTEGRATION_TEST_API_HOST"]
+const apiKey = process.env["INTEGRATION_TEST_API_KEY"]
+const clientId = process.env["INTEGRATION_TEST_CLIENT_ID"]
+const userGuid = process.env["INTEGRATION_TEST_USER_GUID"]
+if (!apiHost || !apiKey || !clientId || !userGuid) {
+  console.log("unable to start server")
+  console.log("the following environment variables are required to run this server:")
+  console.log("  - INTEGRATION_TEST_API_HOST")
+  console.log("  - INTEGRATION_TEST_API_KEY")
+  console.log("  - INTEGRATION_TEST_CLIENT_ID")
+  console.log("  - INTEGRATION_TEST_USER_GUID")
+  process.exit(1)
 }
 
-function logInfo(msg: string) {
-  process.stdout.write(`[${new Date().toISOString()}] [info] ${msg}\n`)
-}
+const app = express()
+app.use(express.static(__dirname))
+app.use("/dist", express.static(`${__dirname}/../../dist/`))
+app.use(express.json())
 
-function logError(msg: string) {
-  process.stderr.write(`[${new Date().toISOString()}] [error] ${msg}\n`)
-}
-
-function setResponseAccessControlHeaders(res: ServerResponse) {
+app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*")
   res.setHeader("Access-Control-Allow-Methods", "*")
   res.setHeader("Access-Control-Allow-Headers", "*")
-}
+  next()
+})
 
-async function getRequestBody(req: IncomingMessage) {
-  const parts: Uint8Array[] = []
-  for await (const chunk of req) {
-    parts.push(chunk)
-  }
+app.options("/get-sso-url", (req, res, next) => {
+  res.send(200)
+})
 
-  return Buffer.concat(parts).toString()
-}
-
-function buildRequestUrl(apiHost: string, userGuid: string) {
-  return `${apiHost}/users/${userGuid}/widget_urls`
-}
-
-function buildRequestOptions(req: IncomingMessage, clientId: string, apiKey: string) {
-  return { headers: buildRequestHeaders(req, clientId, apiKey) }
-}
-
-function buildRequestHeaders(
-  req: IncomingMessage,
-  clientId: string,
-  apiKey: string,
-): Record<string, string> {
-  return {
-    Accept: "application/vnd.mx.api.v1+json",
-    Authorization: `Basic ${Buffer.from(`${clientId}:${apiKey}`).toString("base64")}`,
+app.post("/get-sso-url", async (req, res, next) => {
+  const url = `${apiHost}/users/${userGuid}/widget_urls`
+  const headers = {
     "Accept-Language": req.headers["accept-language"] || "en",
-    "Content-Type": "application/json",
-  }
-}
-
-function mapUrlToFile(url?: string): string | void {
-  if (url === "" || url === "/" || url === "/index.html") {
-    return `${__dirname}/index.html`
-  } else if (url && url.startsWith("/dist")) {
-    return `${__dirname}/../..${url}`
-  }
-}
-
-function handler(
-  apiHost: string,
-  clientId: string,
-  apiKey: string,
-  userGuid: string,
-): RequestListener {
-  return async (req, res) => {
-    logTrace(`handling ${req.method} ${req.url}`)
-
-    const file = mapUrlToFile(req.url)
-    if (req.method === "GET" && !file) {
-      res.writeHead(404)
-      res.end("not found")
-      logError("not found")
-      return
-    } else if (req.method === "GET" && file) {
-      const data = readFileSync(file)
-      res.writeHead(200)
-      res.end(data)
-      return
-    } else if (req.method === "HEAD") {
-      res.writeHead(200)
-      res.end()
-      return
-    } else if (req.method === "OPTIONS") {
-      setResponseAccessControlHeaders(res)
-      res.writeHead(200)
-      res.end()
-      return
-    } else if (req.method !== "POST") {
-      res.writeHead(400)
-      res.end(`bad request, unable to handle ${req.method} method`)
-      logError(`bad request, unable to handle ${req.method} method`)
-      return
-    }
-
-    const url = buildRequestUrl(apiHost, userGuid)
-    const options = buildRequestOptions(req, clientId, apiKey)
-    const body = await getRequestBody(req)
-    if (!body) {
-      res.writeHead(400)
-      res.end("bad request, missing body")
-      logError("bad request, missing body")
-      return
-    }
-
-    try {
-      const apiRes = await axios.post(url, body, options)
-      setResponseAccessControlHeaders(res)
-      res.writeHead(200)
-      res.end(JSON.stringify(apiRes.data))
-    } catch (error) {
-      res.writeHead(500)
-      res.end(`unable to make API request: ${error}`)
-      logError(`unable to make API request: ${error}`)
-      return
-    }
-
-    logTrace(`finished ${req.method} ${req.url}`)
-  }
-}
-
-function main() {
-  const apiHost = process.env["INTEGRATION_TEST_API_HOST"]
-  const apiKey = process.env["INTEGRATION_TEST_API_KEY"]
-  const clientId = process.env["INTEGRATION_TEST_CLIENT_ID"]
-  const userGuid = process.env["INTEGRATION_TEST_USER_GUID"]
-  if (!apiHost || !apiKey || !clientId || !userGuid) {
-    logError("unable to start server")
-    logError("the following environment variables are required to run this server:")
-    logError("  - INTEGRATION_TEST_API_HOST")
-    logError("  - INTEGRATION_TEST_API_KEY")
-    logError("  - INTEGRATION_TEST_CLIENT_ID")
-    logError("  - INTEGRATION_TEST_USER_GUID")
-    process.exit(1)
+    Accept: req.headers["accept"] || "application/vnd.mx.api.v1+json",
+    Authorization: `Basic ${Buffer.from(`${clientId}:${apiKey}`).toString("base64")}`,
+    "Content-Type": req.headers["content-type"] || "application/json",
   }
 
-  const port = process.env["PORT"] || 8089
-  const server = createServer(handler(apiHost, clientId, apiKey, userGuid))
+  try {
+    const apiRes = await axios.post(url, req.body, { headers })
+    res.json(apiRes.data)
+  } catch (error) {
+    next(error)
+  }
+})
 
-  logInfo("starting server")
-  server.listen(port)
-  logInfo(`listening on port ${port}`)
-}
-
-main()
+app.listen(process.env["PORT"] || 8089)
