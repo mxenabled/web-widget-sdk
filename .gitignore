@@ -1,4 +1,6 @@
 build
+cypress/downloads
+cypress/screenshots
+cypress/videos
 dist
 node_modules
-test/artifacts
