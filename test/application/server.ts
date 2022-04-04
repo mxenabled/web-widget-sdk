@@ -7,11 +7,11 @@ const clientId = process.env["INTEGRATION_TEST_CLIENT_ID"]
 const userGuid = process.env["INTEGRATION_TEST_USER_GUID"]
 if (!apiHost || !apiKey || !clientId || !userGuid) {
   console.log("unable to start server")
-  console.log("the following environment variables are required to run this server:")
-  console.log("  - INTEGRATION_TEST_API_HOST")
-  console.log("  - INTEGRATION_TEST_API_KEY")
-  console.log("  - INTEGRATION_TEST_CLIENT_ID")
-  console.log("  - INTEGRATION_TEST_USER_GUID")
+  console.log("the following environment variables are required but were not found:")
+  if (!apiHost) console.log("  - INTEGRATION_TEST_API_HOST")
+  if (!apiKey) console.log("  - INTEGRATION_TEST_API_KEY")
+  if (!clientId) console.log("  - INTEGRATION_TEST_CLIENT_ID")
+  if (!userGuid) console.log("  - INTEGRATION_TEST_USER_GUID")
   process.exit(1)
 }
 
