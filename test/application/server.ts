@@ -1,5 +1,14 @@
 import { IncomingMessage, ServerResponse, RequestListener, createServer } from "http"
+import { readFileSync } from "fs"
 import axios from "axios"
+
+function logTrace(msg: string) {
+  if (!process.env["VERBOSE"]) {
+    return
+  }
+
+  process.stdout.write(`[${new Date().toISOString()}] [trace] ${msg}\n`)
+}
 
 function logInfo(msg: string) {
   process.stdout.write(`[${new Date().toISOString()}] [info] ${msg}\n`)
@@ -45,6 +54,14 @@ function buildRequestHeaders(
   }
 }
 
+function mapUrlToFile(url?: string): string | void {
+  if (url === "" || url === "/" || url === "/index.html") {
+    return `${__dirname}/index.html`
+  } else if (url && url.startsWith("/dist")) {
+    return `${__dirname}/../..${url}`
+  }
+}
+
 function handler(
   apiHost: string,
   clientId: string,
@@ -52,9 +69,24 @@ function handler(
   userGuid: string,
 ): RequestListener {
   return async (req, res) => {
-    logInfo(`handling ${req.method} ${req.url}`)
+    logTrace(`handling ${req.method} ${req.url}`)
 
-    if (req.method === "OPTIONS") {
+    const file = mapUrlToFile(req.url)
+    if (req.method === "GET" && !file) {
+      res.writeHead(404)
+      res.end("not found")
+      logError("not found")
+      return
+    } else if (req.method === "GET" && file) {
+      const data = readFileSync(file)
+      res.writeHead(200)
+      res.end(data)
+      return
+    } else if (req.method === "HEAD") {
+      res.writeHead(200)
+      res.end()
+      return
+    } else if (req.method === "OPTIONS") {
       setResponseAccessControlHeaders(res)
       res.writeHead(200)
       res.end()
@@ -88,7 +120,7 @@ function handler(
       return
     }
 
-    logInfo(`finished ${req.method} ${req.url}`)
+    logTrace(`finished ${req.method} ${req.url}`)
   }
 }
 
