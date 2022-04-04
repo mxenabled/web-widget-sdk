@@ -23,12 +23,15 @@ abstract class Widget<
   CallbackProps = WidgetPostMessageCallbackProps<MessageEvent>,
 > {
   protected options: WidgetOptions<unknown, WidgetPostMessageCallbackProps<MessageEvent>>
+  protected iframe: HTMLIFrameElement
   protected style: Partial<CSSStyleDeclaration>
+
   // Filters for 'mx' events before dispatching to proper handlers
   protected messageCallback: (event: MessageEvent) => void
 
   constructor(options: WidgetOptions<Configuration, CallbackProps>) {
     this.options = options
+    this.iframe = document.createElement("iframe")
     this.style = options.style || {
       border: "none",
       height: "100%",
@@ -69,20 +72,19 @@ abstract class Widget<
    * Construct and append iframe to DOM using id
    */
   private setupIframe() {
-    const iframe = document.createElement("iframe")
-    iframe.setAttribute("data-test-id", "mx-widget-iframe")
+    this.iframe.setAttribute("data-test-id", "mx-widget-iframe")
 
     getSsoUrl({
       ...this.options,
       widgetType: this.widgetType,
     }).then((url) => {
       if (url) {
-        iframe.src = url
+        this.iframe.src = url
       }
     })
 
     Object.keys(this.style).forEach((prop) => {
-      iframe.style[prop] = this.style[prop]
+      this.iframe.style[prop] = this.style[prop]
     })
 
     const widgetContainer = document.querySelector(this.options.widgetContainer)
@@ -91,7 +93,7 @@ abstract class Widget<
       throw new Error(`Unable to find widget container: ${this.options.widgetContainer}`)
     }
 
-    widgetContainer.appendChild(iframe)
+    widgetContainer.appendChild(this.iframe)
   }
 
   /**
@@ -101,14 +103,10 @@ abstract class Widget<
     const widgetContainer = document.querySelector(this.options.widgetContainer)
 
     if (!widgetContainer) {
-      throw new Error("Could not find widget container to teardown")
+      throw new Error(`Unable to find widget container: ${this.options.widgetContainer}`)
     }
 
-    const parent = widgetContainer.parentNode
-
-    if (parent) {
-      parent.removeChild(widgetContainer)
-    }
+    widgetContainer.removeChild(this.iframe)
   }
 
   /**
