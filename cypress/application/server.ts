@@ -1,10 +1,13 @@
+import "dotenv/config"
 import * as express from "express"
 import axios from "axios"
+import * as path from "path"
 
 const apiHost = process.env["INTEGRATION_TEST_API_HOST"]
 const apiKey = process.env["INTEGRATION_TEST_API_KEY"]
 const clientId = process.env["INTEGRATION_TEST_CLIENT_ID"]
 const userGuid = process.env["INTEGRATION_TEST_USER_GUID"]
+
 if (!apiHost || !apiKey || !clientId || !userGuid) {
   console.log("unable to start server")
   console.log("the following environment variables are required but were not found:")
@@ -25,6 +28,18 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Methods", "*")
   res.setHeader("Access-Control-Allow-Headers", "*")
   next()
+})
+
+app.get("/test/amd", async (req, res) => {
+  res.sendFile(path.join(__dirname, "/amd.html"))
+})
+
+app.get("/test/cjs", async (req, res) => {
+  res.sendFile(path.join(__dirname, "/cjs.html"))
+})
+
+app.get("/test/es", async (req, res) => {
+  res.sendFile(path.join(__dirname, "/es.html"))
 })
 
 app.options("/get-sso-url", (req, res) => {
