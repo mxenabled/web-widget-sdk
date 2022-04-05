@@ -152,6 +152,8 @@ This SDK exposes the following classes:
 
 ---
 
+[![Build SDK](https://github.com/mxenabled/web-widget-sdk/actions/workflows/build-sdk.yml/badge.svg)](https://github.com/mxenabled/web-widget-sdk/actions/workflows/build-sdk.yml)
+
 [api_request_widget_url]: https://docs.mx.com/api#widgets_mx_widgets_request_widget_url "Request a widget URL"
 [api_request_connect_url]: https://docs.mx.com/api#connect_request_a_url "Request a Connect URL"
 [react_native_style]: https://reactnative.dev/docs/style "React Native Style"
