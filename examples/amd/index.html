@@ -7,7 +7,7 @@
 
     <title>MX Web Widget SDK AMD Example</title>
 
-    <link rel="stylesheet" href="shared.css" />
+    <link rel="stylesheet" href="../shared/styles.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/themes/prism.min.css"
@@ -15,10 +15,10 @@
 
     <script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/prism.min.js"></script>
-    <script src="shared.js"></script>
+    <script src="../shared/scripts.js"></script>
 
     <script>
-      requirejs(["../dist/amd/index.js"], function (sdk) {
+      requirejs(["../../dist/amd/index.js"], function (sdk) {
         const options = {
           widgetContainer: "#widget",
           proxy: "http://localhost:8089/connect_widget/USR-a335343e-896d-4f84-a8af-7173025d27d7",
