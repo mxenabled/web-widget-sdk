@@ -5,7 +5,7 @@ export {}
 declare global {
   namespace Cypress {
     interface Chainable {
-      loadAndWaitForWidget(): Chainable
+      loadAndWaitForWidget(module: string): Chainable
       widgetIframe(selector?: string): Chainable
     }
   }
