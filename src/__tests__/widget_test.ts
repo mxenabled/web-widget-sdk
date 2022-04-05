@@ -45,7 +45,7 @@ describe("ConnectWidget", () => {
 
       widget.unmount()
 
-      expect(widgetContainer?.children?.length).toBe(0)
+      expect(widgetContainer?.children.length).toBe(0)
     })
   })
 })
