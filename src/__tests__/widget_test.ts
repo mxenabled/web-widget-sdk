@@ -1,11 +1,10 @@
 import { ConnectWidget } from "../../src"
 
 describe("ConnectWidget", () => {
-  let widgetContainer: HTMLDivElement | undefined
+  let widgetContainer = document.createElement("div")
 
   beforeEach(() => {
     widgetContainer = document.createElement("div")
-    widgetContainer.id = "widget"
     document.body.appendChild(widgetContainer)
   })
 
@@ -27,7 +26,7 @@ describe("ConnectWidget", () => {
 
     test("it appends the iframe to the widget container element", () => {
       new ConnectWidget({
-        widgetContainer: "#widget",
+        widgetContainer,
         url: "https://test.com",
       })
 
@@ -39,7 +38,7 @@ describe("ConnectWidget", () => {
   describe("unmount", () => {
     test("it removes the iframe from the container element", () => {
       const widget = new ConnectWidget({
-        widgetContainer: "#widget",
+        widgetContainer,
         url: "https://test.com",
       })
 

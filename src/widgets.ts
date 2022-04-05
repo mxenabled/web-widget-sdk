@@ -10,7 +10,7 @@ import {
 } from "@mxenabled/widget-post-message-definitions"
 
 type BaseOptions = {
-  widgetContainer: string
+  widgetContainer: string | Element
   style?: Partial<CSSStyleDeclaration>
 }
 
@@ -24,6 +24,7 @@ abstract class Widget<
 > {
   protected options: WidgetOptions<unknown, WidgetPostMessageCallbackProps<MessageEvent>>
   protected iframe: HTMLIFrameElement
+  protected widgetContainer: Element
   protected style: Partial<CSSStyleDeclaration>
 
   // Filters for 'mx' events before dispatching to proper handlers
@@ -42,6 +43,20 @@ abstract class Widget<
       if (event.data.mx) {
         this.dispatcher(event, this.options)
       }
+    }
+
+    if (typeof options.widgetContainer === "string") {
+      const widgetContainer = document.querySelector(options.widgetContainer)
+      if (!widgetContainer) {
+        throw new Error(`Unable to find widget container: ${this.options.widgetContainer}`)
+      }
+      this.widgetContainer = widgetContainer
+    } else if (options.widgetContainer instanceof Element) {
+      this.widgetContainer = options.widgetContainer
+    } else {
+      throw new Error(
+        "Invalid value for widgetContainer property, expecting a string or an Element",
+      )
     }
 
     this.setupIframe()
@@ -87,26 +102,14 @@ abstract class Widget<
       this.iframe.style[prop] = this.style[prop]
     })
 
-    const widgetContainer = document.querySelector(this.options.widgetContainer)
-
-    if (!widgetContainer) {
-      throw new Error(`Unable to find widget container: ${this.options.widgetContainer}`)
-    }
-
-    widgetContainer.appendChild(this.iframe)
+    this.widgetContainer.appendChild(this.iframe)
   }
 
   /**
    * Removes iframe and container from DOM
    */
   private teardownIframe() {
-    const widgetContainer = document.querySelector(this.options.widgetContainer)
-
-    if (!widgetContainer) {
-      throw new Error(`Unable to find widget container: ${this.options.widgetContainer}`)
-    }
-
-    widgetContainer.removeChild(this.iframe)
+    this.widgetContainer.removeChild(this.iframe)
   }
 
   /**
