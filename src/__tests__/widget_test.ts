@@ -61,4 +61,49 @@ describe("ConnectWidget", () => {
       spy.mockRestore()
     })
   })
+
+  describe("post message dispatching", () => {
+    test("message is dispatched to the appropriate callback", () => {
+      const onLoad = jest.fn()
+      new ConnectWidget({ url, widgetContainer, onLoad })
+
+      window.dispatchEvent(
+        new MessageEvent("message", {
+          data: {
+            mx: true,
+            type: "mx/load",
+            metadata: {},
+          },
+        }),
+      )
+
+      expect(onLoad).toHaveBeenCalledWith({ type: "mx/load" })
+    })
+
+    test("message payload is included", () => {
+      const onLoaded = jest.fn()
+      new ConnectWidget({ url, widgetContainer, onLoaded })
+
+      window.dispatchEvent(
+        new MessageEvent("message", {
+          data: {
+            mx: true,
+            type: "mx/connect/loaded",
+            metadata: {
+              user_guid: "USR-123",
+              session_guid: "SES-123",
+              initial_step: "mfa",
+            },
+          },
+        }),
+      )
+
+      expect(onLoaded).toHaveBeenCalledWith({
+        initial_step: "mfa",
+        session_guid: "SES-123",
+        type: "mx/connect/loaded",
+        user_guid: "USR-123",
+      })
+    })
+  })
 })
