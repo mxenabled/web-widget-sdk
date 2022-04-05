@@ -1,7 +1,7 @@
-import "dotenv/config"
 import * as express from "express"
-import axios from "axios"
 import * as path from "path"
+import axios from "axios"
+import "dotenv/config"
 
 const apiHost = process.env["INTEGRATION_TEST_API_HOST"]
 const apiKey = process.env["INTEGRATION_TEST_API_KEY"]
