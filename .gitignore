@@ -1,3 +1,4 @@
+.env
 build
 coverage
 cypress/downloads
