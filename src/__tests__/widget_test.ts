@@ -1,6 +1,6 @@
-import { BudgetsWidget, ConnectWidget, PulseWidget } from "../../src"
+import * as widgets from "../../src"
+import { ConnectWidget } from "../../src"
 
-const widgetClassses = [BudgetsWidget, ConnectWidget, PulseWidget]
 const url = "https://widgets.moneydesktop.com/md/..."
 
 let widgetContainer = document.createElement("div")
@@ -15,7 +15,8 @@ afterEach(() => {
   }
 })
 
-widgetClassses.forEach((widgetClass) => {
+Object.keys(widgets).forEach((widget) => {
+  const widgetClass = widgets[widget]
   describe(widgetClass.name, () => {
     describe("initialization", () => {
       test("an error is thrown when the container element is not found", () => {
