@@ -29,6 +29,10 @@ app.use((req, res, next) => {
   next()
 })
 
+app.head("/", (req, res) => {
+  res.send(200)
+})
+
 app.options("/get-sso-url", (req, res) => {
   res.send(200)
 })

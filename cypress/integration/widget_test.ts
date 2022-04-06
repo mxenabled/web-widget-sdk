@@ -1,7 +1,7 @@
 const modules = ["amd", "es", "cjs"]
 
 modules.forEach((module) => {
-  describe(`Widget ${module}`, () => {
+  describe(`Widget SDK loaded via ${module} bundle`, () => {
     beforeEach(() => {
       cy.loadAndWaitForWidget(module)
     })
