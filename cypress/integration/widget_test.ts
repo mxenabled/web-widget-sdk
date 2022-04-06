@@ -1,4 +1,6 @@
-["amd", "es", "cjs"].forEach((module) => {
+const modules = ["amd", "es", "cjs"]
+
+modules.forEach((module) => {
   describe(`Widget ${module}`, () => {
     beforeEach(() => {
       cy.loadAndWaitForWidget(module)
