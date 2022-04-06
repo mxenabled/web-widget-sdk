@@ -1,3 +1,4 @@
+.env
 build
 coverage
 cypress/downloads
@@ -5,4 +6,3 @@ cypress/screenshots
 cypress/videos
 dist
 node_modules
-.env

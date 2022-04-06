@@ -1,9 +1,7 @@
-const modules = ["amd", "es", "cjs"]
-
-for (let i = 0; i < modules.length; i++) {
-  describe(`Widget ${modules[i]}`, () => {
+["amd", "es", "cjs"].forEach((module) => {
+  describe(`Widget ${module}`, () => {
     beforeEach(() => {
-      cy.loadAndWaitForWidget(modules[i])
+      cy.loadAndWaitForWidget(module)
     })
 
     it("loads the widget in an iframe", () => {
@@ -20,4 +18,4 @@ for (let i = 0; i < modules.length; i++) {
       })
     })
   })
-}
+})

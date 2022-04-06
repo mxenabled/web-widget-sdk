@@ -1,5 +1,4 @@
 import * as express from "express"
-import * as path from "path"
 import axios from "axios"
 import "dotenv/config"
 
@@ -28,18 +27,6 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Methods", "*")
   res.setHeader("Access-Control-Allow-Headers", "*")
   next()
-})
-
-app.get("/test/amd", async (req, res) => {
-  res.sendFile(path.join(__dirname, "/amd.html"))
-})
-
-app.get("/test/cjs", async (req, res) => {
-  res.sendFile(path.join(__dirname, "/cjs.html"))
-})
-
-app.get("/test/es", async (req, res) => {
-  res.sendFile(path.join(__dirname, "/es.html"))
 })
 
 app.options("/get-sso-url", (req, res) => {
