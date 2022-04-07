@@ -1,6 +1,6 @@
 {
   "name": "@mxenabled/web-widget-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "MX Web Widget SDK",
   "files": [
     "dist"
