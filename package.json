@@ -1,6 +1,6 @@
 {
   "name": "@mxenabled/web-widget-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "MX Web Widget SDK",
   "files": [
     "dist"
@@ -54,6 +54,7 @@
     "axios": "^0.26.1",
     "babelify": "^10.0.0",
     "cypress": "^9.5.3",
+    "dotenv": "^16.0.0",
     "eslint": "^8.11.0",
     "express": "^4.17.3",
     "jest": "^27.5.1",

@@ -5,14 +5,14 @@ export {}
 declare global {
   namespace Cypress {
     interface Chainable {
-      loadAndWaitForWidget(): Chainable
+      loadAndWaitForWidget(module: string): Chainable
       widgetIframe(selector?: string): Chainable
     }
   }
 }
 
-Cypress.Commands.add("loadAndWaitForWidget", () => {
-  cy.visit(Cypress.config("baseUrl"))
+Cypress.Commands.add("loadAndWaitForWidget", (module) => {
+  cy.visit(`${Cypress.config("baseUrl")}/${module}.html`)
   cy.intercept("/raja/data*").as("rajaDataRequest")
   return cy.wait("@rajaDataRequest")
 })
