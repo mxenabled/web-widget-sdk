@@ -25,8 +25,16 @@ Object.keys(widgets).forEach((widget) => {
         }).toThrow("Unable to find widget container: #notfound")
       })
 
-      test("it appends the iframe to the widget container element", () => {
+      test("it appends the iframe to the widget container element when widgetContainer is a DOM element", () => {
         new widgetClass({ url, widgetContainer })
+
+        expect(widgetContainer?.children.length).toBe(1)
+        expect(widgetContainer?.children[0].tagName).toBe("IFRAME")
+      })
+
+      test("it appends the iframe to the widget container element when widgetContainer is a CSS selector", () => {
+        widgetContainer.id = "widget"
+        new widgetClass({ url, widgetContainer: "#widget" })
 
         expect(widgetContainer?.children.length).toBe(1)
         expect(widgetContainer?.children[0].tagName).toBe("IFRAME")
