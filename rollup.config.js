@@ -16,6 +16,11 @@ export default {
       dir: "dist/amd",
       format: "amd",
     },
+    {
+      dir: "dist/umd",
+      format: "umd",
+      name: "widgetSdk",
+    },
   ],
   plugins: [typescript(), nodeResolve()],
 }
