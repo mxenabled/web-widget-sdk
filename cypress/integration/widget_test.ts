@@ -1,4 +1,4 @@
-const modules = ["amd", "es", "cjs"]
+const modules = ["amd", "es", "cjs", "umd"]
 
 modules.forEach((module) => {
   describe(`Widget SDK loaded via ${module} bundle`, () => {
