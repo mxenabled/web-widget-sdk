@@ -9,7 +9,7 @@ type Body = {
 
 const handlers = [
   rest.post<Body>("https://api.mx.com/users/:userGuid/widget_urls", (req, res, ctx) => {
-    const widget = req.body?.widget_url?.widget_type?.replace("_widget", "")
+    const widget = req.body?.widget_url?.widget_type
 
     if (!widget) {
       return res(ctx.status(400), ctx.json({ error: true }))
@@ -19,7 +19,7 @@ const handlers = [
       ctx.status(200),
       ctx.json({
         widget_url: {
-          type: `${widget}_widget`,
+          type: widget,
           url: `https://widgets.moneydesktop.com/md/${widget}/$ssotoken$`,
         },
       }),
@@ -27,7 +27,7 @@ const handlers = [
   }),
 
   rest.post<Body>("https://client.com/mx-sso-proxy", (req, res, ctx) => {
-    const widget = req.body?.widget_url?.widget_type?.replace("_widget", "")
+    const widget = req.body?.widget_url?.widget_type
 
     if (!widget) {
       return res(ctx.status(400), ctx.json({ error: true }))
@@ -37,7 +37,7 @@ const handlers = [
       ctx.status(200),
       ctx.json({
         widget_url: {
-          type: `${widget}_widget`,
+          type: widget,
           url: `https://widgets.moneydesktop.com/md/${widget}/$ssotoken$`,
         },
       }),
