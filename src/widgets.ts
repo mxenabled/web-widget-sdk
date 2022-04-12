@@ -48,14 +48,16 @@ abstract class Widget<
     if (typeof options.widgetContainer === "string") {
       const widgetContainer = document.querySelector(options.widgetContainer)
       if (!widgetContainer) {
-        throw new Error(`Unable to find widget container: ${this.options.widgetContainer}`)
+        throw new Error(
+          `Unable to find widget container. Ensure that an element matching a selector for '${this.options.widgetContainer}' is available in the DOM before you initialize the widget.`,
+        )
       }
       this.widgetContainer = widgetContainer
     } else if (options.widgetContainer instanceof Element) {
       this.widgetContainer = options.widgetContainer
     } else {
       throw new Error(
-        "Invalid value for widgetContainer property, expecting a string or an Element",
+        "Invalid or missing value for widgetContainer property, expecting a query selector string or a DOM Element.",
       )
     }
 
@@ -68,7 +70,9 @@ abstract class Widget<
       return this.options.widgetType
     }
 
-    throw new Error("Missing required widgetType option")
+    throw new Error(
+      "Missing value for widgetType property, expecting a string (eg. connect_widget).",
+    )
   }
 
   get dispatcher() {

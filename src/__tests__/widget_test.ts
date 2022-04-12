@@ -29,7 +29,9 @@ Object.keys(widgets).forEach((widget) => {
       test("an error is thrown when the container element is not found", () => {
         expect(() => {
           new widgetClass({ url, widgetContainer: "#notfound" })
-        }).toThrow("Unable to find widget container: #notfound")
+        }).toThrow(
+          "Unable to find widget container. Ensure that an element matching a selector for '#notfound' is available in the DOM before you initialize the widget.",
+        )
       })
 
       test("it appends the iframe to the widget container element when widgetContainer is a DOM element", () => {
