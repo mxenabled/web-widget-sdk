@@ -1,7 +1,26 @@
-import * as widgets from "../../src"
-import { ConnectWidget } from "../../src"
+import {
+  AccountsWidget,
+  BudgetsWidget,
+  ConnectWidget,
+  ConnectionsWidget,
+  DebtsWidget,
+  FinstrongWidget,
+  GoalsWidget,
+  HelpWidget,
+  MasterWidget,
+  MiniBudgetsWidget,
+  MiniFinstrongWidget,
+  MiniPulseCarouselWidget,
+  MiniSpendingWidget,
+  PulseWidget,
+  SettingsWidget,
+  SpendingWidget,
+  TransactionsWidget,
+  TrendsWidget,
+} from "../../src"
 
 import { waitFor } from "../../jest/utils"
+import { rest, server } from "../../jest/server"
 
 const url = "https://widgets.moneydesktop.com/md/..."
 const proxy = "https://client.com/mx-sso-proxy"
@@ -22,8 +41,27 @@ afterEach(() => {
   }
 })
 
-Object.keys(widgets).forEach((widget) => {
-  const widgetClass = widgets[widget]
+const widgets = [
+  AccountsWidget,
+  BudgetsWidget,
+  ConnectWidget,
+  ConnectionsWidget,
+  DebtsWidget,
+  FinstrongWidget,
+  GoalsWidget,
+  HelpWidget,
+  MasterWidget,
+  MiniBudgetsWidget,
+  MiniFinstrongWidget,
+  MiniPulseCarouselWidget,
+  MiniSpendingWidget,
+  PulseWidget,
+  SettingsWidget,
+  SpendingWidget,
+  TransactionsWidget,
+  TrendsWidget,
+]
+widgets.forEach((widgetClass) => {
   describe(widgetClass.name, () => {
     describe("initialization", () => {
       test("an error is thrown when the container element is not found", () => {
@@ -142,6 +180,50 @@ Object.keys(widgets).forEach((widget) => {
             `https://widgets.moneydesktop.com/md/${widget.widgetType}/$ssotoken$`,
           )
         })
+
+        test("an error results in the onSsoUrlLoadError callback being triggered", (done) => {
+          expect.assertions(1)
+
+          server.use(
+            rest.post("https://api.mx.com/users/:userGuid/widget_urls", (req, res, ctx) =>
+              res(ctx.status(500), ctx.json({ message: "NO!" })),
+            ),
+          )
+
+          new widgetClass({
+            apiKey,
+            clientId,
+            environment,
+            userGuid,
+            widgetContainer,
+            onSsoUrlLoadError: (_error) => {
+              expect(true).toBe(true)
+              done()
+            },
+          })
+        })
+
+        test("it passes the request back to the host before execution via the ssoRequestPreprocess callback", async () => {
+          new widgetClass({
+            apiKey,
+            clientId,
+            environment,
+            userGuid,
+            widgetContainer,
+            ssoRequestPreprocess: (req) => {
+              const body = JSON.parse(req.options.body?.toString() || "")
+              body.widget_url.widget_type = "something_else"
+              req.options.body = JSON.stringify(body)
+              return req
+            },
+          })
+
+          await waitFor(() => !!widgetContainer?.getElementsByTagName("iframe")[0]?.src)
+
+          expect(widgetContainer?.getElementsByTagName("iframe")[0]?.src).toContain(
+            "https://widgets.moneydesktop.com/md/something_else/",
+          )
+        })
       })
 
       describe("Proxy server", () => {
@@ -152,6 +234,44 @@ Object.keys(widgets).forEach((widget) => {
 
           expect(widgetContainer?.getElementsByTagName("iframe")[0]?.src).toBe(
             `https://widgets.moneydesktop.com/md/${widget.widgetType}/$ssotoken$`,
+          )
+        })
+
+        test("an error results in the onSsoUrlLoadError callback being triggered", (done) => {
+          expect.assertions(1)
+
+          server.use(
+            rest.post("https://client.com/mx-sso-proxy", (req, res, ctx) =>
+              res(ctx.status(500), ctx.json({ message: "NO!" })),
+            ),
+          )
+
+          new widgetClass({
+            proxy,
+            widgetContainer,
+            onSsoUrlLoadError: (_error) => {
+              expect(true).toBe(true)
+              done()
+            },
+          })
+        })
+
+        test("it passes the request back to the host before execution via the ssoRequestPreprocess callback", async () => {
+          new widgetClass({
+            proxy,
+            widgetContainer,
+            ssoRequestPreprocess: (req) => {
+              const body = JSON.parse(req.options.body?.toString() || "")
+              body.widget_url.widget_type = "something_else"
+              req.options.body = JSON.stringify(body)
+              return req
+            },
+          })
+
+          await waitFor(() => !!widgetContainer?.getElementsByTagName("iframe")[0]?.src)
+
+          expect(widgetContainer?.getElementsByTagName("iframe")[0]?.src).toContain(
+            "https://widgets.moneydesktop.com/md/something_else/",
           )
         })
       })
