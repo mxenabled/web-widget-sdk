@@ -20,7 +20,7 @@ const respondWithSsoUrl = (
   res: ResponseComposition<DefaultRequestBody>,
   ctx: RestContext,
 ) => {
-  const widget = req.body?.widget_url?.widget_type
+  const widget = req.body?.widget_url.widget_type
 
   if (!widget) {
     return res(ctx.status(400), ctx.json({ error: true }))
