@@ -18,7 +18,7 @@ export type WidgetOptions<Configuration, CallbackProps> = BaseOptions &
   UrlLoadingProps<Configuration> &
   CallbackProps
 
-abstract class Widget<
+export abstract class Widget<
   Configuration = unknown,
   CallbackProps = WidgetPostMessageCallbackProps<MessageEvent>,
 > {
