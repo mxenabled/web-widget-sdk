@@ -1,9 +1,15 @@
-const modules = ["amd", "es", "cjs", "umd"]
+const tests = {
+  "amd (local)": "Widget SDK loaded via local AMD module",
+  "cjs (local)": "Widget SDK loaded via local CommonJs module",
+  "es (local)": "Widget SDK loaded via local ES module",
+  "umd (cdn)": "Widget SDK loaded via UMD module from CDN",
+  "umd (local)": "Widget SDK loaded via local UMD module",
+}
 
-modules.forEach((module) => {
-  describe(`Widget SDK loaded via ${module} bundle`, () => {
+Object.keys(tests).forEach((testFile) => {
+  describe(tests[testFile], () => {
     beforeEach(() => {
-      cy.loadAndWaitForWidget(module)
+      cy.loadAndWaitForWidget(testFile)
     })
 
     it("loads the widget in an iframe", () => {
