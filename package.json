@@ -16,6 +16,7 @@
     "compile:cypress": "tsc --noEmit --types cypress,node $(find cypress -type f -name *.ts)",
     "compile:jest": "tsc --noEmit --types jest,node $(find jest -type f -name *.ts)",
     "format": "npm run prettier -- -w",
+    "prepack": "npm run build",
     "prettier": "prettier src example jest cypress",
     "lint": "eslint src example jest cypress",
     "test": "jest --verbose --coverage",
