@@ -11,6 +11,7 @@ import {
 
 type BaseOptions = {
   widgetContainer: string | Element
+  iframeTitle?: string
   style?: Partial<CSSStyleDeclaration>
 }
 
@@ -92,6 +93,7 @@ export abstract class Widget<
    */
   private setupIframe() {
     this.iframe.setAttribute("data-test-id", "mx-widget-iframe")
+    this.iframe.setAttribute("title", this.options.iframeTitle || "Widget Iframe")
 
     getSsoUrl({
       ...this.options,

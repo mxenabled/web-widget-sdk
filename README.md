@@ -91,6 +91,7 @@ class options:
   for additional information.
 - `proxy`: SSO proxy server URL.
 - `style`: Styles applied to the view containing the widget.
+- `iframeTitle`: Allows for the title attribute of the iframe to be set.
 - `url`: Widget SSO URL. See [Generating your Widget SSO
   URL](#generating-your-widget-sso-url) for additional information. **This prop
   is required.**
