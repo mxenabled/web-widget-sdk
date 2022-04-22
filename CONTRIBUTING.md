@@ -19,7 +19,7 @@ Clone this repo and install [Node v16](https://nodejs.org/en/download/). Below
 are commands we use to perform various tasks:
 
 - `npm install`, install depedencies.
-- `npm run build`, run compiler.
+- `npm run compile`, run compiler.
 - `npm run build`, run compiler and bundle all modules.
 - `npm run test`, run unit tests.
 - `npm run test:integration`, run integration tests.
