@@ -108,8 +108,6 @@ export abstract class Widget<
       this.iframe.style[prop] = this.style[prop]
     })
 
-    console.log("options", this.options)
-
     this.widgetContainer.appendChild(this.iframe)
   }
 
