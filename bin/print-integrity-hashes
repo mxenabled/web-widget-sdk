@@ -1,0 +1,34 @@
+#!/bin/bash
+
+if [ "$1" != "--no-build" ]
+then
+  echo -n "Running build to ensure asset files are up to date ... "
+
+  tmp=$(mktemp)
+  npm run build &> "$tmp"
+  if (( $? ))
+  then
+    echo
+    echo "Build failed:"
+    cat "$tmp"
+    exit 1
+  else
+    echo done
+    echo
+  fi
+
+  rm "$tmp"
+fi
+
+set -eo pipefail
+
+printf "%-30s %s\n" Source Hash
+for src in dist/*/*; do
+  ext="${src##*.}"
+  if [ ! -f $src ] || [ "$ext" != "js" ]; then
+    continue
+  fi
+
+  hash=$(cat "$src" | openssl dgst -sha384 -binary | openssl base64 -A)
+  printf "%-30s %s\n" "$src" "$hash"
+done

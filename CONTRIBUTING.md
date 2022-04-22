@@ -25,6 +25,8 @@ are commands we use to perform various tasks:
 - `npm run test:integration`, run integration tests.
 - `npm run lint`, run linter.
 - `npm run format`, run code formatter.
+- `npm run print-integrity-hashes`, print integrity hashes for all distributed
+  SDK assets.
 
 
 ## Publishing a new version
