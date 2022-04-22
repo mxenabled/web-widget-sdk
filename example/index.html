@@ -21,6 +21,7 @@
       requirejs(["../dist/amd/index.js"], function (sdk) {
         const options = {
           widgetContainer: "#widget",
+          iframeTitle: "Example Widget",
           proxy: "http://localhost:8089/connect_widget/USR-a335343e-896d-4f84-a8af-7173025d27d7",
           onMessage: (event) => {
             logEvent(event.data)
