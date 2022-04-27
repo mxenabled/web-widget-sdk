@@ -92,23 +92,22 @@ export abstract class Widget<
    * Construct and append iframe to DOM using id
    */
   private setupIframe() {
-    this.iframe.setAttribute("data-test-id", "mx-widget-iframe")
-    this.iframe.setAttribute("title", this.options.iframeTitle || "Widget Iframe")
-
     getSsoUrl({
       ...this.options,
       widgetType: this.widgetType,
     }).then((url) => {
       if (url) {
-        this.iframe.src = url
+        this.iframe.setAttribute("data-test-id", "mx-widget-iframe")
+        this.iframe.setAttribute("title", this.options.iframeTitle || "Widget Iframe")
+        this.iframe.setAttribute("src", url)
+
+        Object.keys(this.style).forEach((prop) => {
+          this.iframe.style[prop] = this.style[prop]
+        })
+
+        this.widgetContainer.appendChild(this.iframe)
       }
     })
-
-    Object.keys(this.style).forEach((prop) => {
-      this.iframe.style[prop] = this.style[prop]
-    })
-
-    this.widgetContainer.appendChild(this.iframe)
   }
 
   /**
