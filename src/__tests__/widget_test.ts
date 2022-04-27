@@ -72,16 +72,20 @@ widgets.forEach((widgetClass) => {
         )
       })
 
-      test("it appends the iframe to the widget container element when widgetContainer is a DOM element", () => {
+      test("it appends the iframe to the widget container element when widgetContainer is a DOM element", async () => {
         new widgetClass({ url, widgetContainer })
+
+        await waitFor(() => !!widgetContainer?.getElementsByTagName("iframe")[0]?.src)
 
         expect(widgetContainer?.children.length).toBe(1)
         expect(widgetContainer?.children[0].tagName).toBe("IFRAME")
       })
 
-      test("it appends the iframe to the widget container element when widgetContainer is a CSS selector", () => {
+      test("it appends the iframe to the widget container element when widgetContainer is a CSS selector", async () => {
         widgetContainer.id = "widget"
         new widgetClass({ url, widgetContainer: "#widget" })
+
+        await waitFor(() => !!widgetContainer?.getElementsByTagName("iframe")[0]?.src)
 
         expect(widgetContainer?.children.length).toBe(1)
         expect(widgetContainer?.children[0].tagName).toBe("IFRAME")
@@ -100,19 +104,25 @@ widgets.forEach((widgetClass) => {
     })
 
     describe("unmount", () => {
-      test("it removes the iframe from the container element", () => {
+      test("it removes the iframe from the container element", async () => {
         const widget = new widgetClass({ url, widgetContainer })
+
+        await waitFor(() => !!widgetContainer?.getElementsByTagName("iframe")[0]?.src)
+
         widget.unmount()
 
         expect(widgetContainer?.children.length).toBe(0)
       })
 
-      test("post message event listener is removed", () => {
+      test("post message event listener is removed", async () => {
         const spy = jest.spyOn(window, "removeEventListener").mockImplementation(() => ({
           removeEventListener: jest.fn(),
         }))
 
         const widget = new widgetClass({ url, widgetContainer })
+
+        await waitFor(() => !!widgetContainer?.getElementsByTagName("iframe")[0]?.src)
+
         widget.unmount()
 
         expect(window.removeEventListener).toHaveBeenCalledWith("message", expect.anything(), false)
