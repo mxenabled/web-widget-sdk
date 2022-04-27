@@ -114,7 +114,9 @@ export abstract class Widget<
    * Removes iframe and container from DOM
    */
   private teardownIframe() {
-    this.widgetContainer.removeChild(this.iframe)
+    if (this.widgetContainer.contains(this.iframe)) {
+      this.widgetContainer.removeChild(this.iframe)
+    }
   }
 
   /**
