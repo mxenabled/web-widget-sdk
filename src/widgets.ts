@@ -27,11 +27,14 @@ export abstract class Widget<
   protected iframe: HTMLIFrameElement
   protected widgetContainer: Element
   protected style: Partial<CSSStyleDeclaration>
+  protected isUnmounting: boolean
 
   // Filters for 'mx' events before dispatching to proper handlers
   protected messageCallback: (event: MessageEvent) => void
 
   constructor(options: WidgetOptions<Configuration, CallbackProps>) {
+    this.isUnmounting = false
+
     this.options = options
     this.iframe = document.createElement("iframe")
     this.style = options.style || {
@@ -84,6 +87,8 @@ export abstract class Widget<
    * Public method to tear down our post message listener and iframe container
    */
   unmount() {
+    this.isUnmounting = true
+
     this.teardownListener()
     this.teardownIframe()
   }
@@ -96,17 +101,19 @@ export abstract class Widget<
       ...this.options,
       widgetType: this.widgetType,
     }).then((url) => {
-      if (url) {
-        this.iframe.setAttribute("data-test-id", "mx-widget-iframe")
-        this.iframe.setAttribute("title", this.options.iframeTitle || "Widget Iframe")
-        this.iframe.setAttribute("src", url)
-
-        Object.keys(this.style).forEach((prop) => {
-          this.iframe.style[prop] = this.style[prop]
-        })
-
-        this.widgetContainer.appendChild(this.iframe)
+      if (this.isUnmounting || !url) {
+        return
       }
+
+      this.iframe.setAttribute("data-test-id", "mx-widget-iframe")
+      this.iframe.setAttribute("title", this.options.iframeTitle || "Widget Iframe")
+      this.iframe.setAttribute("src", url)
+
+      Object.keys(this.style).forEach((prop) => {
+        this.iframe.style[prop] = this.style[prop]
+      })
+
+      this.widgetContainer.appendChild(this.iframe)
     })
   }
 

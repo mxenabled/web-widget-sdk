@@ -114,6 +114,14 @@ widgets.forEach((widgetClass) => {
         expect(widgetContainer?.children.length).toBe(0)
       })
 
+      test("it prevents from appending the iframe if unmount was called early", async () => {
+        const widget = new widgetClass({ url, widgetContainer })
+
+        widget.unmount()
+
+        expect(widgetContainer?.children.length).toBe(0)
+      })
+
       test("post message event listener is removed", async () => {
         const spy = jest.spyOn(window, "removeEventListener").mockImplementation(() => ({
           removeEventListener: jest.fn(),
