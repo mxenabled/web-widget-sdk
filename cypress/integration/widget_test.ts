@@ -2,7 +2,7 @@ const tests = {
   "amd (local)": "Widget SDK loaded via local AMD module",
   "cjs (local)": "Widget SDK loaded via local CommonJs module",
   "es (local)": "Widget SDK loaded via local ES module",
-  "umd (cdn)": "Widget SDK loaded via UMD module from CDN",
+  // "umd (cdn)": "Widget SDK loaded via UMD module from CDN",
   "umd (local)": "Widget SDK loaded via local UMD module",
 }
 
