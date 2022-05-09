@@ -56,7 +56,7 @@ the `@mxenabled/web-widget-sdk` package and render them in your application:
 <script>
   requirejs(["@mxenabled/web-widget-sdk"], function (sdk) {
     const options = {
-      widgetContainer: "#widget",
+      container: "#widget",
       proxy: "http://localhost:8089/{widget_type}/{user_guid}",
       onMessage: (event) => {
         logEvent(event.data)
