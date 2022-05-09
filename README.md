@@ -32,19 +32,6 @@ Portal](https://dashboard.mx.com) site.
 TODO: Install via es6 module system instructions.
 TODO: Install via AMD module system instructions.
 
-### Generating your Widget SSO URL
-
-See [SSO Widget URL documentation][api_request_widget_url] for instructions. If
-loading the Connect Widget, follow the instructions located in [Connect SSO
-Widget URL documentation][api_request_connect_url]. The SSO URL should be
-passed to a Widget class via the `url` option.
-
-#### Proxy server
-
-The SDK also has the option of making the SSO request on your behalf to your
-backend service that is able to make requests to our API. If used, the proxy
-URL should passed to a Widget class via the `proxy` option.
-
 ### Incorporating the SDK into your application
 
 The Widget SDK provides multiple modules that you can import and use in your
@@ -106,6 +93,20 @@ file is available, you can import and use it like so:
 const widget = new widgetSdk.ConnectWidget({ /* options */ })
 </script>
 ```
+
+### Generating your Widget SSO URL
+
+See [SSO Widget URL documentation][api_request_widget_url] for instructions. If
+loading the Connect Widget, follow the instructions located in [Connect SSO
+Widget URL documentation][api_request_connect_url]. The SSO URL should be
+passed to a Widget class via the `url` option.
+
+#### Proxy server
+
+The SDK also has the option of making the SSO request on your behalf to your
+backend service that is able to make requests to our API. If used, the proxy
+URL should passed to a Widget class via the `proxy` option.
+
 ### Interacting with the widget
 
 You can listen to post message events by passing callback functions in the widget
