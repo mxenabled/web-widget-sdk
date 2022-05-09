@@ -132,10 +132,27 @@ const options = {
 }
 ```
 
+### Mounting and Unmounting the widget
+When you instantiate a widget with options, it will mount itself in the DOM, and set up various event listeners.
+You'll need to call the `unmount` method before creating a new instance.
+
+```js
+const options = {
+  container: "#widget",
+  widgetURL: "https://int-widgets.moneydesktop.com/md/connect/...."
+}
+
+// Calling `new sdk.ConnectWidget(...)` here will mount the widget in the DOM
+const widget = new sdk.ConnectWidget(options)
+
+// When you are ready to close the widget, you'll want to call `unmount`. This
+// will remove the element and any event listeners added.
+widget.unmount()
+```
+
 ### Importing the SDK into your project and rendering a widget using modules with Asynchronous Module Definition (AMD)
 
-Once the steps above have been completed, you will be able to import 
-the `@mxenabled/web-widget-sdk` package and render them in your application:
+The SDK supports many module systems. Here is an example of loading the sdk with AMD:
 
 ```html
 <script src="mx-web-widget-sdk-amd.js"></script>
@@ -155,23 +172,6 @@ the `@mxenabled/web-widget-sdk` package and render them in your application:
 </script>
 ```
 
-### Mounting and Unmounting the widget
-When you instantiate a widget with options, it will mount itself in the DOM, and set up various event listeners.
-You'll need to call the `unmount` method before creating a new instance.
-
-```js
-const options = {
-  container: "#widget",
-  widgetURL: "https://int-widgets.moneydesktop.com/md/connect/...."
-}
-
-// Calling `new sdk.ConnectWidget(...)` here will mount the widget in the DOM
-const widget = new sdk.ConnectWidget(options)
-
-// When you are ready to close the widget, you'll want to call `unmount`. This
-// will remove the element and any event listeners added.
-widget.unmount()
-```
 
 ### Interacting with the widget
 
