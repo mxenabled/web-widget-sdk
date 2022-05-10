@@ -29,8 +29,20 @@ Portal](https://dashboard.mx.com) site.
 
 ### Installing the SDK
 
-TODO: Install via es6 module system instructions.
-TODO: Install via AMD module system instructions.
+Open a terminal and run the commands below at the root of your project to
+install the SDK:
+
+Using npm
+
+```
+npm install --save @mxenabled/web-widget-sdk
+```
+
+Using yarn
+
+```
+yarn add @mxenabled/web-widget-sdk
+```
 
 ### Incorporating the SDK into your application
 
