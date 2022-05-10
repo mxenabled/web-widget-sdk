@@ -29,6 +29,6 @@ for src in dist/*/*; do
     continue
   fi
 
-  hash=$(cat "$src" | openssl dgst -sha384 -binary | openssl base64 -A)
+  hash="sha384-$(cat "$src" | openssl dgst -sha384 -binary | openssl base64 -A)"
   printf "%-30s %s\n" "$src" "$hash"
 done
