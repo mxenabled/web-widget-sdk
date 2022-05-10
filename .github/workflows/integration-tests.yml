@@ -17,6 +17,7 @@ jobs:
     - run: npm run build
     - run: npm run test:integration
       env:
+        CYPRESS_ENVIRONMENT: staging
         INTEGRATION_TEST_CLIENT_ID: ${{ secrets.INTEGRATION_TEST_CLIENT_ID }}
         INTEGRATION_TEST_API_KEY: ${{ secrets.INTEGRATION_TEST_API_KEY }}
         INTEGRATION_TEST_API_HOST: ${{ secrets.INTEGRATION_TEST_API_HOST }}
