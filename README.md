@@ -29,8 +29,82 @@ Portal](https://dashboard.mx.com) site.
 
 ### Installing the SDK
 
-TODO: Install via es6 module system instructions.
-TODO: Install via AMD module system instructions.
+Open a terminal and run the commands below at the root of your project to
+install the SDK:
+
+Using npm
+
+```
+npm install --save @mxenabled/web-widget-sdk
+```
+
+Using yarn
+
+```
+yarn add @mxenabled/web-widget-sdk
+```
+
+### Incorporating the SDK into your application
+
+The Widget SDK provides multiple modules that you can import and use in your
+application. There is currently a [CommonJS module][commonjs_module], an ES
+module, an [AMD module][amd_module], and an [UMD module][umd_module] that you
+can use depending on your build process.
+
+#### CommonJS module
+
+The CommonJS module is available in `@mxenabled/web-widget-sdk/dist/cjs`.
+Import this module and build your project with a build tool that supports
+CommonJS modules (such as [browserify][browserify]):
+
+```js
+const widgetSdk = require("@mxenabled/web-widget-sdk/dist/cjs")
+const widget = new widgetSdk.ConnectWidget({ /* options */ })
+```
+
+#### ES module
+
+The ES module is available in `@mxenabled/web-widget-sdk/dist/es`. Import this
+module and build your project with a build tool that supports ES modules (such
+as [webpack][webpack]):
+
+```js
+import * as widgetSdk from "@mxenabled/web-widget-sdk/dist/es"
+const widget = new widgetSdk.ConnectWidget({ /* options */ })
+```
+
+#### AMD module
+
+The AMD module can be found in
+`node_modules/@mxenabled/web-widget-sdk/dist/amd/index.js`. In order to serve
+this file in your application, you will have to host it yourself. Transfer this
+file into any location where it can be made publicly available from. Once the
+file is available, you can import and use it like so:
+
+```html
+<script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+<script>
+requirejs(["<path to MX Web Widget SDK AMD JavaScript file>"], function (widgetSdk) {
+  const widget = new widgetSdk.ConnectWidget({ /* options */ })
+})
+</script>
+```
+
+#### UMD module
+
+The UMD module can be found in
+`node_modules/@mxenabled/web-widget-sdk/dist/umd/index.js`. In order to serve
+this file in your application, you will have to host it yourself. Transfer this
+file into any location where it can be made publicly available from. Once the
+file is available, you can import and use it like so:
+
+```html
+<div id="container"></div>
+<script src="<path to MX Web Widget SDK UMD JavaScript file>"></script>
+<script>
+const widget = new widgetSdk.ConnectWidget({ /* options */ })
+</script>
+```
 
 ### Generating your Widget SSO URL
 
@@ -45,28 +119,6 @@ The SDK also has the option of making the SSO request on your behalf to your
 backend service that is able to make requests to our API. If used, the proxy
 URL should passed to a Widget class via the `proxy` option.
 
-### Importing the SDK into your project and rendering a widget using modules with Asynchronous Module Definition (AMD)
-
-Once the steps above have been completed, you will be able to import 
-the `@mxenabled/web-widget-sdk` package and render them in your application:
-
-```html
-<script src="mx-web-widget-sdk-amd.js"></script>
-
-<script>
-  requirejs(["@mxenabled/web-widget-sdk"], function (sdk) {
-    const options = {
-      widgetContainer: "#widget",
-      proxy: "http://localhost:8089/{widget_type}/{user_guid}",
-      onMessage: (event) => {
-        logEvent(event.data)
-      },
-    }
-
-    const widget = new sdk.ConnectWidget(options)
-  })
-</script>
-```
 ### Interacting with the widget
 
 You can listen to post message events by passing callback functions in the widget
@@ -91,6 +143,7 @@ class options:
   for additional information.
 - `proxy`: SSO proxy server URL.
 - `style`: Styles applied to the view containing the widget.
+- `iframeTitle`: Allows for the title attribute of the iframe to be set.
 - `url`: Widget SSO URL. See [Generating your Widget SSO
   URL](#generating-your-widget-sso-url) for additional information. **This prop
   is required.**
@@ -156,6 +209,11 @@ This SDK exposes the following classes:
 [![Integration Tests](https://github.com/mxenabled/web-widget-sdk/actions/workflows/integration-tests.yml/badge.svg)](https://github.com/mxenabled/web-widget-sdk/actions/workflows/integration-tests.yml)
 [![Package Audit](https://github.com/mxenabled/web-widget-sdk/actions/workflows/package-audit.yml/badge.svg)](https://github.com/mxenabled/web-widget-sdk/actions/workflows/package-audit.yml)
 
-[api_request_widget_url]: https://docs.mx.com/api#widgets_mx_widgets_request_widget_url "Request a widget URL"
+[amd_module]: https://requirejs.org/docs/whyamd.html "AMD modules"
 [api_request_connect_url]: https://docs.mx.com/api#connect_request_a_url "Request a Connect URL"
+[api_request_widget_url]: https://docs.mx.com/api#widgets_mx_widgets_request_widget_url "Request a widget URL"
+[browserify]: https://browserify.org/ "Browserify"
+[commonjs_module]: https://nodejs.org/api/modules.html "CommonJS modules"
 [react_native_style]: https://reactnative.dev/docs/style "React Native Style"
+[umd_module]: https://github.com/umdjs/umd "UMD modules"
+[webpack]: https://webpack.js.org/ "webpack"

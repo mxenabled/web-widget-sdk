@@ -13,7 +13,7 @@ const show = (id, obj) => {
 }
 
 const config = {
-  widgetContainer: "#widget",
+  container: "#widget",
   proxy: "/get-sso-url",
   style: {
     height: "600px",

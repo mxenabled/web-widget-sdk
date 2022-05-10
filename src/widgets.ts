@@ -10,7 +10,8 @@ import {
 } from "@mxenabled/widget-post-message-definitions"
 
 type BaseOptions = {
-  widgetContainer: string | Element
+  container: string | Element
+  iframeTitle?: string
   style?: Partial<CSSStyleDeclaration>
 }
 
@@ -24,13 +25,16 @@ export abstract class Widget<
 > {
   protected options: WidgetOptions<unknown, WidgetPostMessageCallbackProps<MessageEvent>>
   protected iframe: HTMLIFrameElement
-  protected widgetContainer: Element
+  protected container: Element
   protected style: Partial<CSSStyleDeclaration>
+  protected isUnmounting: boolean
 
   // Filters for 'mx' events before dispatching to proper handlers
   protected messageCallback: (event: MessageEvent) => void
 
   constructor(options: WidgetOptions<Configuration, CallbackProps>) {
+    this.isUnmounting = false
+
     this.options = options
     this.iframe = document.createElement("iframe")
     this.style = options.style || {
@@ -45,19 +49,19 @@ export abstract class Widget<
       }
     }
 
-    if (typeof options.widgetContainer === "string") {
-      const widgetContainer = document.querySelector(options.widgetContainer)
-      if (!widgetContainer) {
+    if (typeof options.container === "string") {
+      const container = document.querySelector(options.container)
+      if (!container) {
         throw new Error(
-          `Unable to find widget container. Ensure that an element matching a selector for '${this.options.widgetContainer}' is available in the DOM before you initialize the widget.`,
+          `Unable to find widget container. Ensure that an element matching a selector for '${this.options.container}' is available in the DOM before you initialize the widget.`,
         )
       }
-      this.widgetContainer = widgetContainer
-    } else if (options.widgetContainer instanceof Element) {
-      this.widgetContainer = options.widgetContainer
+      this.container = container
+    } else if (options.container instanceof Element) {
+      this.container = options.container
     } else {
       throw new Error(
-        "Invalid or missing value for widgetContainer property, expecting a query selector string or a DOM Element.",
+        "Invalid or missing value for container property, expecting a query selector string or a DOM Element.",
       )
     }
 
@@ -83,6 +87,8 @@ export abstract class Widget<
    * Public method to tear down our post message listener and iframe container
    */
   unmount() {
+    this.isUnmounting = true
+
     this.teardownListener()
     this.teardownIframe()
   }
@@ -91,29 +97,33 @@ export abstract class Widget<
    * Construct and append iframe to DOM using id
    */
   private setupIframe() {
-    this.iframe.setAttribute("data-test-id", "mx-widget-iframe")
-
     getSsoUrl({
       ...this.options,
       widgetType: this.widgetType,
     }).then((url) => {
-      if (url) {
-        this.iframe.src = url
+      if (this.isUnmounting || !url) {
+        return
       }
-    })
 
-    Object.keys(this.style).forEach((prop) => {
-      this.iframe.style[prop] = this.style[prop]
-    })
+      this.iframe.setAttribute("data-test-id", "mx-widget-iframe")
+      this.iframe.setAttribute("title", this.options.iframeTitle || "Widget Iframe")
+      this.iframe.setAttribute("src", url)
 
-    this.widgetContainer.appendChild(this.iframe)
+      Object.keys(this.style).forEach((prop) => {
+        this.iframe.style[prop] = this.style[prop]
+      })
+
+      this.container.appendChild(this.iframe)
+    })
   }
 
   /**
    * Removes iframe and container from DOM
    */
   private teardownIframe() {
-    this.widgetContainer.removeChild(this.iframe)
+    if (this.container.contains(this.iframe)) {
+      this.container.removeChild(this.iframe)
+    }
   }
 
   /**

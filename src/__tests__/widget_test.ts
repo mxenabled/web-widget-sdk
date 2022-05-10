@@ -29,10 +29,10 @@ const apiKey = "myveryownapikey"
 const userGuid = "USR-777"
 const environment = "production"
 
-let widgetContainer = document.createElement("div")
+let container = document.createElement("div")
 beforeEach(() => {
-  widgetContainer = document.createElement("div")
-  document.body.appendChild(widgetContainer)
+  container = document.createElement("div")
+  document.body.appendChild(container)
 })
 
 afterEach(() => {
@@ -66,25 +66,29 @@ widgets.forEach((widgetClass) => {
     describe("initialization", () => {
       test("an error is thrown when the container element is not found", () => {
         expect(() => {
-          new widgetClass({ url, widgetContainer: "#notfound" })
+          new widgetClass({ url, container: "#notfound" })
         }).toThrow(
           "Unable to find widget container. Ensure that an element matching a selector for '#notfound' is available in the DOM before you initialize the widget.",
         )
       })
 
-      test("it appends the iframe to the widget container element when widgetContainer is a DOM element", () => {
-        new widgetClass({ url, widgetContainer })
+      test("it appends the iframe to the widget container element when container is a DOM element", async () => {
+        new widgetClass({ url, container })
 
-        expect(widgetContainer?.children.length).toBe(1)
-        expect(widgetContainer?.children[0].tagName).toBe("IFRAME")
+        await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
+
+        expect(container?.children.length).toBe(1)
+        expect(container?.children[0].tagName).toBe("IFRAME")
       })
 
-      test("it appends the iframe to the widget container element when widgetContainer is a CSS selector", () => {
-        widgetContainer.id = "widget"
-        new widgetClass({ url, widgetContainer: "#widget" })
+      test("it appends the iframe to the widget container element when container is a CSS selector", async () => {
+        container.id = "widget"
+        new widgetClass({ url, container: "#widget" })
 
-        expect(widgetContainer?.children.length).toBe(1)
-        expect(widgetContainer?.children[0].tagName).toBe("IFRAME")
+        await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
+
+        expect(container?.children.length).toBe(1)
+        expect(container?.children[0].tagName).toBe("IFRAME")
       })
 
       test("post message event listener is added", () => {
@@ -92,7 +96,7 @@ widgets.forEach((widgetClass) => {
           addEventListener: jest.fn(),
         }))
 
-        new widgetClass({ url, widgetContainer })
+        new widgetClass({ url, container })
 
         expect(window.addEventListener).toHaveBeenCalledWith("message", expect.anything(), false)
         spy.mockRestore()
@@ -100,19 +104,33 @@ widgets.forEach((widgetClass) => {
     })
 
     describe("unmount", () => {
-      test("it removes the iframe from the container element", () => {
-        const widget = new widgetClass({ url, widgetContainer })
+      test("it removes the iframe from the container element", async () => {
+        const widget = new widgetClass({ url, container })
+
+        await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
+
         widget.unmount()
 
-        expect(widgetContainer?.children.length).toBe(0)
+        expect(container?.children.length).toBe(0)
       })
 
-      test("post message event listener is removed", () => {
+      test("it prevents from appending the iframe if unmount was called early", async () => {
+        const widget = new widgetClass({ url, container })
+
+        widget.unmount()
+
+        expect(container?.children.length).toBe(0)
+      })
+
+      test("post message event listener is removed", async () => {
         const spy = jest.spyOn(window, "removeEventListener").mockImplementation(() => ({
           removeEventListener: jest.fn(),
         }))
 
-        const widget = new widgetClass({ url, widgetContainer })
+        const widget = new widgetClass({ url, container })
+
+        await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
+
         widget.unmount()
 
         expect(window.removeEventListener).toHaveBeenCalledWith("message", expect.anything(), false)
@@ -123,7 +141,7 @@ widgets.forEach((widgetClass) => {
     describe("Post Message Dispatching", () => {
       test("message is dispatched to the appropriate callback", () => {
         const onLoad = jest.fn()
-        new widgetClass({ url, widgetContainer, onLoad })
+        new widgetClass({ url, container, onLoad })
 
         window.dispatchEvent(
           new MessageEvent("message", {
@@ -140,7 +158,7 @@ widgets.forEach((widgetClass) => {
 
       test("message payload is included", () => {
         const onPing = jest.fn()
-        new widgetClass({ url, widgetContainer, onPing })
+        new widgetClass({ url, container, onPing })
 
         window.dispatchEvent(
           new MessageEvent("message", {
@@ -171,12 +189,12 @@ widgets.forEach((widgetClass) => {
             clientId,
             environment,
             userGuid,
-            widgetContainer,
+            container,
           })
 
-          await waitFor(() => !!widgetContainer?.getElementsByTagName("iframe")[0]?.src)
+          await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
 
-          expect(widgetContainer?.getElementsByTagName("iframe")[0]?.src).toBe(
+          expect(container?.getElementsByTagName("iframe")[0]?.src).toBe(
             `https://widgets.moneydesktop.com/md/${widget.widgetType}/$ssotoken$`,
           )
         })
@@ -195,7 +213,7 @@ widgets.forEach((widgetClass) => {
             clientId,
             environment,
             userGuid,
-            widgetContainer,
+            container,
             onSsoUrlLoadError: (_error) => {
               expect(true).toBe(true)
               done()
@@ -209,7 +227,7 @@ widgets.forEach((widgetClass) => {
             clientId,
             environment,
             userGuid,
-            widgetContainer,
+            container,
             ssoRequestPreprocess: (req) => {
               const body = JSON.parse(req.options.body?.toString() || "")
               body.widget_url.widget_type = "something_else"
@@ -218,9 +236,9 @@ widgets.forEach((widgetClass) => {
             },
           })
 
-          await waitFor(() => !!widgetContainer?.getElementsByTagName("iframe")[0]?.src)
+          await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
 
-          expect(widgetContainer?.getElementsByTagName("iframe")[0]?.src).toContain(
+          expect(container?.getElementsByTagName("iframe")[0]?.src).toContain(
             "https://widgets.moneydesktop.com/md/something_else/",
           )
         })
@@ -228,11 +246,11 @@ widgets.forEach((widgetClass) => {
 
       describe("Proxy server", () => {
         test("it is able to load the widget url when proxy props are passed in", async () => {
-          const widget = new widgetClass({ proxy, widgetContainer })
+          const widget = new widgetClass({ proxy, container })
 
-          await waitFor(() => !!widgetContainer?.getElementsByTagName("iframe")[0]?.src)
+          await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
 
-          expect(widgetContainer?.getElementsByTagName("iframe")[0]?.src).toBe(
+          expect(container?.getElementsByTagName("iframe")[0]?.src).toBe(
             `https://widgets.moneydesktop.com/md/${widget.widgetType}/$ssotoken$`,
           )
         })
@@ -248,7 +266,7 @@ widgets.forEach((widgetClass) => {
 
           new widgetClass({
             proxy,
-            widgetContainer,
+            container,
             onSsoUrlLoadError: (_error) => {
               expect(true).toBe(true)
               done()
@@ -259,7 +277,7 @@ widgets.forEach((widgetClass) => {
         test("it passes the request back to the host before execution via the ssoRequestPreprocess callback", async () => {
           new widgetClass({
             proxy,
-            widgetContainer,
+            container,
             ssoRequestPreprocess: (req) => {
               const body = JSON.parse(req.options.body?.toString() || "")
               body.widget_url.widget_type = "something_else"
@@ -268,9 +286,9 @@ widgets.forEach((widgetClass) => {
             },
           })
 
-          await waitFor(() => !!widgetContainer?.getElementsByTagName("iframe")[0]?.src)
+          await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
 
-          expect(widgetContainer?.getElementsByTagName("iframe")[0]?.src).toContain(
+          expect(container?.getElementsByTagName("iframe")[0]?.src).toContain(
             "https://widgets.moneydesktop.com/md/something_else/",
           )
         })
@@ -280,12 +298,12 @@ widgets.forEach((widgetClass) => {
         test("it is able to get the widget url from props when a url prop is passed in", async () => {
           new widgetClass({
             url: "https://widgets.moneydesktop.com/md/hi/tototoken",
-            widgetContainer,
+            container,
           })
 
-          await waitFor(() => !!widgetContainer?.getElementsByTagName("iframe")[0]?.src)
+          await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
 
-          expect(widgetContainer?.getElementsByTagName("iframe")[0]?.src).toBe(
+          expect(container?.getElementsByTagName("iframe")[0]?.src).toBe(
             "https://widgets.moneydesktop.com/md/hi/tototoken",
           )
         })
@@ -300,7 +318,7 @@ widgets.forEach((widgetClass) => {
         expect(() => {
           /* eslint @typescript-eslint/ban-ts-comment: "off" */
           /* @ts-ignore: see [1] for details */
-          new widgetClass({ widgetContainer })
+          new widgetClass({ container })
         }).toThrow()
       })
     })
@@ -311,7 +329,7 @@ describe("ConnectWidget", () => {
   describe("post message dispatching", () => {
     test("message payload is included", () => {
       const onLoaded = jest.fn()
-      new ConnectWidget({ url, widgetContainer, onLoaded })
+      new ConnectWidget({ url, container, onLoaded })
 
       window.dispatchEvent(
         new MessageEvent("message", {
