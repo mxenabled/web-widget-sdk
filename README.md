@@ -134,7 +134,7 @@ const options = {
 
 ### Mounting and Unmounting the widget
 When you instantiate a widget with options, it will mount itself in the DOM, and set up various event listeners.
-You'll need to call the `unmount` method before creating a new instance.
+You'll need to call the `unmount` method when closing the widget and before creating a new instance.
 
 ```js
 const options = {
@@ -143,35 +143,12 @@ const options = {
 }
 
 // Calling `new sdk.ConnectWidget(...)` here will mount the widget in the DOM
-const widget = new sdk.ConnectWidget(options)
+const widget = new widgetSdk.ConnectWidget(options)
 
 // When you are ready to close the widget, you'll want to call `unmount`. This
 // will remove the element and any event listeners added.
 widget.unmount()
 ```
-
-### Importing the SDK into your project and rendering a widget using modules with Asynchronous Module Definition (AMD)
-
-The SDK supports many module systems. Here is an example of loading the sdk with AMD:
-
-```html
-<script src="mx-web-widget-sdk-amd.js"></script>
-
-<script>
-  requirejs(["@mxenabled/web-widget-sdk"], function (sdk) {
-    const options = {
-      widgetContainer: "#widget",
-      proxy: "http://localhost:8089/{widget_type}/{user_guid}",
-      onMessage: (event) => {
-        logEvent(event.data)
-      },
-    }
-
-    const widget = new sdk.ConnectWidget(options)
-  })
-</script>
-```
-
 
 ### Interacting with the widget
 
