@@ -3,11 +3,10 @@
 ## Introduction
 
 The purpose of this project is to help simplify your integration experience.
-Giving you as few steps as possible to get up and running with an MX React
-Native widget.
+Giving you as few steps as possible to get up and running with an MX web widget.
 
 After following the Getting Started instructions below, you will be able to
-import and load MX widgets in your React Native application, and configure them
+import and load MX widgets in your web applications, and configure them
 for your specific needs.
 
 ## Getting Started
