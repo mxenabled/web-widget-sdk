@@ -63,12 +63,12 @@ const widget = new widgetSdk.ConnectWidget({ /* options */ })
 
 #### ES module
 
-The ES module is available in `@mxenabled/web-widget-sdk/dist/es`. Import this
+The ES module is available in `@mxenabled/web-widget-sdk/dist/esm`. Import this
 module and build your project with a build tool that supports ES modules (such
 as [webpack][webpack]):
 
 ```js
-import * as widgetSdk from "@mxenabled/web-widget-sdk/dist/es"
+import * as widgetSdk from "@mxenabled/web-widget-sdk/dist/esm"
 const widget = new widgetSdk.ConnectWidget({ /* options */ })
 ```
 

@@ -1,7 +1,7 @@
 let tests: Record<string, string> = {
   "amd (local)": "Widget SDK loaded via local AMD module",
   "cjs (local)": "Widget SDK loaded via local CommonJs module",
-  "es (local)": "Widget SDK loaded via local ES module",
+  "esm (local)": "Widget SDK loaded via local ES module",
   "umd (local)": "Widget SDK loaded via local UMD module",
 }
 
