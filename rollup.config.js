@@ -6,12 +6,12 @@ export default {
   input: "build/src/index.js",
   output: [
     {
-      file: "dist/es/index.js",
-      format: "es",
+      file: "dist/esm/index.js",
+      format: "esm",
     },
     {
-      file: "dist/es/index.min.js",
-      format: "es",
+      file: "dist/esm/index.min.js",
+      format: "esm",
       plugins: [terser()],
     },
     {
