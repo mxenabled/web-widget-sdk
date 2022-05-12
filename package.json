@@ -2,7 +2,6 @@
   "name": "@mxenabled/web-widget-sdk",
   "version": "0.0.6",
   "description": "MX Web Widget SDK",
-  "type": "module",
   "main": "./dist/cjs/index.js",
   "exports": {
     ".": {
