@@ -112,11 +112,43 @@ loading the Connect Widget, follow the instructions located in [Connect SSO
 Widget URL documentation][api_request_connect_url]. The SSO URL should be
 passed to a Widget class via the `url` option.
 
+```js
+const options = {
+  container: "#widget",
+  url: "https://int-widgets.moneydesktop.com/md/connect/..."
+}
+```
+
 #### Proxy server
 
 The SDK also has the option of making the SSO request on your behalf to your
 backend service that is able to make requests to our API. If used, the proxy
 URL should passed to a Widget class via the `proxy` option.
+
+```js
+const options = {
+  container: "#widget",
+  proxy: "http://localhost:8089/{widget_type}/{user_guid}",
+}
+```
+
+### Mounting and Unmounting the widget
+When you instantiate a widget with options, it will mount itself in the DOM, and set up various event listeners.
+You'll need to call the `unmount` method when closing the widget and before creating a new instance.
+
+```js
+const options = {
+  container: "#widget",
+  widgetURL: "https://int-widgets.moneydesktop.com/md/connect/...."
+}
+
+// Calling `new sdk.ConnectWidget(...)` here will mount the widget in the DOM
+const widget = new widgetSdk.ConnectWidget(options)
+
+// When you are ready to close the widget, you'll want to call `unmount`. This
+// will remove the element and any event listeners added.
+widget.unmount()
+```
 
 ### Interacting with the widget
 
