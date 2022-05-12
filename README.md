@@ -52,23 +52,23 @@ can use depending on your build process.
 
 #### CommonJS module
 
-The CommonJS module is available in `@mxenabled/web-widget-sdk/dist/cjs`.
-Import this module and build your project with a build tool that supports
-CommonJS modules (such as [browserify][browserify]):
+A CommonJS module is exported by this package and available by requiring
+`@mxenabled/web-widget-sdk`. Require this module and build your project with a
+build tool that supports CommonJS modules (such as [browserify][browserify]):
 
 ```js
-const widgetSdk = require("@mxenabled/web-widget-sdk/dist/cjs")
+const widgetSdk = require("@mxenabled/web-widget-sdk")
 const widget = new widgetSdk.ConnectWidget({ /* options */ })
 ```
 
 #### ES module
 
-The ES module is available in `@mxenabled/web-widget-sdk/dist/esm`. Import this
-module and build your project with a build tool that supports ES modules (such
-as [webpack][webpack]):
+An ES module is exported by this package and available by importing
+`@mxenabled/web-widget-sdk`. Import this module and build your project with a
+build tool that supports ES modules (such as [webpack][webpack]):
 
 ```js
-import * as widgetSdk from "@mxenabled/web-widget-sdk/dist/esm"
+import * as widgetSdk from "@mxenabled/web-widget-sdk"
 const widget = new widgetSdk.ConnectWidget({ /* options */ })
 ```
 
