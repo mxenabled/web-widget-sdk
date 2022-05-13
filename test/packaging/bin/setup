@@ -3,16 +3,18 @@
 set -eo pipefail
 
 cd ../..
-echo "Building latest version of SDK ..."
+echo -n "Building latest version of SDK ... "
 tmp=$(mktemp)
 npm pack &> "$tmp"
 if (( $? )); then
   cat "$tmp"
   exit 1
 fi
+echo "done"
 rm "$tmp"
 cp mxenabled-web-widget-sdk-$(npm view . version).tgz mxenabled-web-widget-sdk-latest.tgz
 
 cd - > /dev/null
-echo "Installing latest version of SDK ..."
+echo -n "Installing latest version of SDK ... "
 npm i ../../mxenabled-web-widget-sdk-latest.tgz --silent
+echo "done"
