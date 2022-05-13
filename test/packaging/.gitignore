@@ -1,1 +1,7 @@
 /build
+
+# Since the integrity hashes of the SDK are going to change frequency and we
+# don't actually care to track those changes, ignore further changes to the
+# lock file after the required dependencies have been installed and detailed in
+# it.
+/package-lock.json
