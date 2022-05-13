@@ -1,0 +1,17 @@
+{
+  "name": "web-widget-sdk-package-testing-application",
+  "scripts": {
+    "clean": "[ -d build ] && rm -r build",
+    "setup": "./bin/setup",
+    "check": "./bin/check",
+    "build": "./bin/build"
+  },
+  "dependencies": {
+    "@mxenabled/web-widget-sdk": "file:mxenabled-web-widget-sdk-latest.tgz"
+  },
+  "devDependencies": {
+    "browserify": "^17.0.0",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2"
+  }
+}

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -eo pipefail
+
+cd cypress/application
+npm run check
+cd - &> /dev/null
+
+npx start-server-and-test test:server ${PORT:-8089} test:cypress
