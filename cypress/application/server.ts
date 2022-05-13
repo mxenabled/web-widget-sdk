@@ -20,6 +20,7 @@ if (!apiHost || !apiKey || !clientId || !userGuid) {
 const app = express()
 app.use(express.static(__dirname))
 app.use("/dist", express.static(`${__dirname}/../../dist/`))
+app.use("/src", express.static(`${__dirname}/src/`))
 app.use(express.json())
 
 app.use((req, res, next) => {

@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>MX Web Widget SDK UMD Integration Test</title>
+  </head>
+  <body>
+    <div id="widget"></div>
+    <div id="output"></div>
 
     <script src="/dist/umd/index.js"></script>
-
-    <script src="/config.js"></script>
+    <script src="/src/config.js"></script>
     <script>
       document.addEventListener(
         "DOMContentLoaded",
@@ -19,9 +22,5 @@
         false,
       )
     </script>
-  </head>
-  <body>
-    <div id="widget"></div>
-    <div id="output"></div>
   </body>
 </html>

@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-var-requires: "off" */
 const path = require("path")
 
 module.exports = {
@@ -6,5 +7,5 @@ module.exports = {
   output: {
     filename: "esm.js",
     path: path.join(__dirname, "..", "build"),
-  }
+  },
 }

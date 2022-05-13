@@ -6,17 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>MX Web Widget SDK CJS Integration Test</title>
-
-    <script src="https://unpkg.com/browser-cjs/require.min.js"></script>
-
-    <script src="/config.js"></script>
-    <script type="module">
-      const sdk = require("/dist/cjs/index.js")
-      const widget = new sdk.ConnectWidget(config)
-    </script>
   </head>
   <body>
     <div id="widget"></div>
     <div id="output"></div>
+
+    <script src="/src/config.js"></script>
+    <script src="/build/cjs.js"></script>
   </body>
 </html>

@@ -12,7 +12,7 @@ declare global {
 }
 
 Cypress.Commands.add("loadAndWaitForWidget", (module) => {
-  cy.visit(`${Cypress.config("baseUrl")}/${module}.html`)
+  cy.visit(`${Cypress.config("baseUrl")}/static/${module}.html`)
   cy.intercept("/raja/data*").as("rajaDataRequest")
   return cy.wait("@rajaDataRequest")
 })

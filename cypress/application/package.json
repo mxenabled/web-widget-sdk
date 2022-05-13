@@ -5,7 +5,7 @@
     "build": "./bin/build"
   },
   "dependencies": {
-    "@mxenabled/web-widget-sdk": "file:../../mxenabled-web-widget-sdk-latest.tgz"
+    "@mxenabled/web-widget-sdk": "file:mxenabled-web-widget-sdk-latest.tgz"
   },
   "devDependencies": {
     "browserify": "^17.0.0",
