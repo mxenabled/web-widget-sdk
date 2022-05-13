@@ -238,6 +238,7 @@ This SDK exposes the following classes:
 
 [![Build SDK](https://github.com/mxenabled/web-widget-sdk/actions/workflows/build-sdk.yml/badge.svg)](https://github.com/mxenabled/web-widget-sdk/actions/workflows/build-sdk.yml)
 [![Integration Tests](https://github.com/mxenabled/web-widget-sdk/actions/workflows/integration-tests.yml/badge.svg)](https://github.com/mxenabled/web-widget-sdk/actions/workflows/integration-tests.yml)
+[![Packaging Tests](https://github.com/mxenabled/web-widget-sdk/actions/workflows/packaging-tests.yml/badge.svg)](https://github.com/mxenabled/web-widget-sdk/actions/workflows/packaging-tests.yml)
 [![Package Audit](https://github.com/mxenabled/web-widget-sdk/actions/workflows/package-audit.yml/badge.svg)](https://github.com/mxenabled/web-widget-sdk/actions/workflows/package-audit.yml)
 
 [amd_module]: https://requirejs.org/docs/whyamd.html "AMD modules"
