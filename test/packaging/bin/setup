@@ -24,7 +24,7 @@ echo "done"
 
 cd - > /dev/null
 echo -n "Installing latest version of SDK ... "
-print_and_kill_on_error "npm i ../../mxenabled-web-widget-sdk-latest.tgz --silent"
+print_and_kill_on_error "npm i mxenabled-web-widget-sdk-latest.tgz --silent"
 echo "done"
 
 echo -n "Cleaning up ... "
