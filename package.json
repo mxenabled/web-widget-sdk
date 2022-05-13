@@ -32,8 +32,8 @@
     "prettier": "prettier src example jest cypress --ignore-path .gitignore",
     "lint": "eslint src example jest cypress",
     "test": "jest --verbose --coverage",
-    "test:build": "cd cypress/application && npm run setup && npm run build",
-    "test:integration": "start-server-and-test test:server ${PORT:-8089} test:cypress",
+    "test:build": "./bin/test-build",
+    "test:integration": "./bin/test-integration",
     "test:cypress": "cypress run",
     "test:server": "ts-node -O {\\\"module\\\":\\\"commonjs\\\"} cypress/application/server.ts",
     "watch": "npm-watch"

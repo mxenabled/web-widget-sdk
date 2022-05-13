@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -eo pipefail
+
+echo -n "Checking application located in $(pwd) has been built ... "
+
+files=(
+  build/cjs.js
+  build/esm.js
+  ../../dist/umd/index.js
+  ../../dist/amd/index.js
+)
+
+for file in "${files[@]}"; do
+  if [ ! -f "$file" ]; then
+    echo
+    echo "Error due to missing build file: $file"
+    echo "Exiting, please run 'npm run test:build' and try again"
+    exit 1
+  fi
+done
+
+echo "done"

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -eo pipefail
+
+cd cypress/application
+npm run setup
+npm run build

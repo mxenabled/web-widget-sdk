@@ -1,7 +1,9 @@
 {
   "name": "web-widget-sdk-package-testing-application",
   "scripts": {
+    "clean": "[ -d build ] && rm -r build",
     "setup": "./bin/setup",
+    "check": "./bin/check",
     "build": "./bin/build"
   },
   "dependencies": {
