@@ -14,13 +14,26 @@ print_and_kill_on_error() {
   rm "$tmp"
 }
 
+root=$(pwd)
+
 cd ../..
 echo -n "Building latest version of SDK ... "
 print_and_kill_on_error "npm pack"
-cp mxenabled-web-widget-sdk-$(npm view . version).tgz mxenabled-web-widget-sdk-latest.tgz
+mv mxenabled-web-widget-sdk-$(npm view . version).tgz "$root/mxenabled-web-widget-sdk-latest.tgz"
 echo "done"
 
 cd - > /dev/null
 echo -n "Installing latest version of SDK ... "
 print_and_kill_on_error "npm i ../../mxenabled-web-widget-sdk-latest.tgz --silent"
+echo "done"
+
+echo -n "Cleaning up ... "
+rm mxenabled-web-widget-sdk-latest.tgz
+# Since the integrity hashes of the SDK are going to change frequency and we
+# don't actually care to track those changes, ignore further changes to the
+# lock file after the required dependencies have been installed and detailed in
+# it.
+if command -v git &> /dev/null; then
+  print_and_kill_on_error "git checkout package-lock.json"
+fi
 echo "done"
