@@ -1,4 +1,4 @@
-name: Integration Tests
+name: Packaging Tests
 
 on: pull_request
 
