@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -eo pipefail
+
+cd ../..
+echo "Building latest version of SDK ..."
+tmp=$(mktemp)
+npm pack &> "$tmp"
+if (( $? )); then
+  cat "$tmp"
+  exit 1
+fi
+rm "$tmp"
+cp mxenabled-web-widget-sdk-$(npm view . version).tgz mxenabled-web-widget-sdk-latest.tgz
+
+cd - > /dev/null
+echo "Installing latest version of SDK ..."
+npm i ../../mxenabled-web-widget-sdk-latest.tgz --silent

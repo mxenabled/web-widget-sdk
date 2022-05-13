@@ -32,6 +32,7 @@
     "prettier": "prettier src example jest cypress",
     "lint": "eslint src example jest cypress",
     "test": "jest --verbose --coverage",
+    "test:packaging": "cd test/packaging && npm run setup && npm run build",
     "test:integration": "start-server-and-test test:server ${PORT:-8089} test:cypress",
     "test:cypress": "cypress run",
     "test:server": "ts-node -O {\\\"module\\\":\\\"commonjs\\\"} cypress/application/server.ts",
