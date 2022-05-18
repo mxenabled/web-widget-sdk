@@ -16,13 +16,18 @@
     <script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/prism.min.js"></script>
     <script src="shared.js"></script>
-
     <script>
+
+      window.addEventListener("message", function(event) {
+        console.log('local event', event);
+      });
+
+      // proxy: "http://localhost:8089/connect_widget/USR-a335343e-896d-4f84-a8af-7173025d27d7",
       requirejs(["../dist/amd/index.js"], function (sdk) {
         const options = {
           container: "#widget",
           iframeTitle: "Example Widget",
-          proxy: "http://localhost:8089/connect_widget/USR-a335343e-896d-4f84-a8af-7173025d27d7",
+          url: "http://localhost:3000/md/connect/6h75p7dtl2gct3dzq80q14nqh7Z00dd9m5mj0ygjflj5rqy69A9jp70zwbcg418q9vcjz1jstqd0dAf6ncc6Aq0mrxwph3fgAxhwy9rvdAnjllqfzm0jndf86Ajmmcn96xyt211t7vp9vs59hjlsnsysb1ghvb5bkr6ztzy37lp7rq1vj4lnp7rpyywzkx2Ajpht0mngsr744dpyqjc5cdhgrz893zmmq7yr52q36x4ntb0lc148cfj1v3pqp3smcth97f23d7kps0rxAr6dA4gf58346mkczrp5hf15sfwg8prgrx4jt1yf788t80wsc1q1xmcm1jAl3y4kl8qj2qhdfAjf8x8yrlj54bg9/eyJ1aV9tZXNzYWdlX3ZlcnNpb24iOjQsInVpX21lc3NhZ2Vfd2Vidmlld191cmxfc2NoZW1lIjoibXgiLCJtb2RlIjoidGF4IiwibG9jYWxlIjoiZW4tVVMifQ%3D%3D",
           onMessage: (event) => {
             logEvent(event.data)
           },
@@ -32,6 +37,10 @@
             console.log(`Previous: ${payload.previous}`)
             console.log(`Current: ${payload.current}`)
           },
+          onNavigation: (event) => {
+            logEvent(event.data)
+            console.log('called onNavivgation', event);
+          }
         }
 
         const widget = new sdk.ConnectWidget(options)
@@ -43,6 +52,7 @@
       <tr>
         <td>
           <h1>Widget</h1>
+          <button onClick="back();">back</button>
         </td>
         <td>
           <h1>Post Message Events</h1>
