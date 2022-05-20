@@ -55,8 +55,3 @@ function highlightJSON(obj) {
 
   return Prism.highlight(str, Prism.languages.javascript, "javascript")
 }
-
-function back(a) {
-  console.log("back called", a)
-  window.postMessage("mx/navigate", "*")
-}

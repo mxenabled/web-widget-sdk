@@ -18,9 +18,13 @@
     <script src="shared.js"></script>
     <script>
 
-      window.addEventListener("message", function(event) {
-        console.log('local event', event);
-      });
+      const goBack = () => {
+        const child = document.getElementById('widget').children
+        const win = child[0].contentWindow;
+
+        const data = { mx: true, type: `mx/navigation` }
+        win.postMessage(data, '*');
+      }
 
       // proxy: "http://localhost:8089/connect_widget/USR-a335343e-896d-4f84-a8af-7173025d27d7",
       requirejs(["../dist/amd/index.js"], function (sdk) {
@@ -38,12 +42,13 @@
             console.log(`Current: ${payload.current}`)
           },
           onNavigation: (event) => {
-            logEvent(event.data)
             console.log('called onNavivgation', event);
           }
         }
 
         const widget = new sdk.ConnectWidget(options)
+
+        console.log('wiget', widget);
       })
     </script>
   </head>
@@ -52,7 +57,7 @@
       <tr>
         <td>
           <h1>Widget</h1>
-          <button onClick="back();">back</button>
+          <button onClick="goBack();">back</button>
         </td>
         <td>
           <h1>Post Message Events</h1>
