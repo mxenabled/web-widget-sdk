@@ -95,7 +95,7 @@ export abstract class Widget<
     const data = { mx: true, type: "mx/navigation", payload: { action: "back" } }
 
     if (iframeElement) {
-      iframeElement.postMessage(data, "http://localhost:3000")
+      iframeElement.postMessage(data, "*")
     }
   }
 
