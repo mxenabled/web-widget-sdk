@@ -270,6 +270,7 @@ const widget = widgetSdk.ConnectWidget({
 - Payload fields:
     - `user_guid` (`string`)
     - `session_guid` (`string`)
+    - `member_guid` (optional) (`string`)
 
 <details>
 <summary>Click here to view a sample usage of <code>onOAuthError</code>.</summary>
@@ -281,6 +282,7 @@ const widget = widgetSdk.ConnectWidget({
   onOAuthError: (payload) => {
     console.log(`User guid: ${payload.user_guid}`)
     console.log(`Session guid: ${payload.session_guid}`)
+    console.log(`Member guid: ${payload.member_guid}`)
   }
 })
 ```
@@ -295,7 +297,7 @@ default behaviour of the SDK which is to load the OAuth URL in a new
 browser tab.
 
 If you override this functionality, you must use the device's browser
-to authenticate the user with OAuth. You cannot use  WebViews or
+to authenticate the user with OAuth. You cannot use WebViews or
 iframes. Not only does this approach result in better security, it
 also can leverage saved passwords and password managers that the user
 has installed. It is also worth noting that many OAuth providers

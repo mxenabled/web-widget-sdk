@@ -84,6 +84,22 @@ export abstract class Widget<
   }
 
   /**
+   * Public method to communicate with iframe widget about navigation events
+   * Can be called when the host has a 'back' event happen.
+   * This will send a post message event to the iframe widget, which if it's
+   * listening for the 'mx/navigation' event, it can make its changes and then
+   * send its own post message event back to the SDK for the 'onNavigation' callback
+   */
+  navigateBack() {
+    const iframeElement = this.iframe.contentWindow
+    const data = { mx: true, type: "mx/navigation", payload: { action: "back" } }
+
+    if (iframeElement) {
+      iframeElement.postMessage(data, "http://localhost:3000")
+    }
+  }
+
+  /**
    * Public method to tear down our post message listener and iframe container
    */
   unmount() {
