@@ -17,7 +17,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/prism.min.js"></script>
     <script src="shared.js"></script>
     <script>
-
       requirejs(["../dist/amd/index.js"], function (sdk) {
         const options = {
           container: "#widget",
@@ -32,9 +31,6 @@
             console.log(`Previous: ${payload.previous}`)
             console.log(`Current: ${payload.current}`)
           },
-          onNavigation: (event) => {
-            console.log('called onNavivgation', event);
-          }
         }
 
         const widget = new sdk.ConnectWidget(options)
