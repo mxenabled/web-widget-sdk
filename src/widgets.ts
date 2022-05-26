@@ -13,6 +13,8 @@ type BaseOptions = {
   container: string | Element
   iframeTitle?: string
   style?: Partial<CSSStyleDeclaration>
+  url?: string
+  proxy?: string
 }
 
 export type WidgetOptions<Configuration, CallbackProps> = BaseOptions &
@@ -94,8 +96,19 @@ export abstract class Widget<
     const iframeElement = this.iframe.contentWindow
     const data = { mx: true, type: "mx/navigation", payload: { action: "back" } }
 
+    const baseUrlPattern = /^https?:\/\/[^\/]+/i
+    let widgetBaseUrl
+
+    if (this.options.url && this.options.url.match(baseUrlPattern)) {
+      widgetBaseUrl = this.options.url.match(baseUrlPattern)?.[0]
+    } else if (this.options.proxy && this.options.proxy.match(baseUrlPattern)) {
+      widgetBaseUrl = this.options.proxy.match(baseUrlPattern)?.[0]
+    }
+
+    const targetOrigin = widgetBaseUrl || "https://widgets.moneydesktop.com"
+
     if (iframeElement) {
-      iframeElement.postMessage(data, "*")
+      iframeElement.postMessage(data, targetOrigin)
     }
   }
 
