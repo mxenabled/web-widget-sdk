@@ -94,9 +94,8 @@ export abstract class Widget<
    */
   navigateBack() {
     const iframeElement = this.iframe.contentWindow
-    const data = { mx: true, type: "mx/navigation", payload: { action: "back" } }
-
     const baseUrlPattern = /^https?:\/\/[^/]+/i
+
     let widgetBaseUrl
 
     if (this.options.url && this.options.url.match(baseUrlPattern)) {
@@ -108,6 +107,8 @@ export abstract class Widget<
     const targetOrigin = widgetBaseUrl || "https://widgets.moneydesktop.com"
 
     if (iframeElement) {
+      const data = { mx: true, type: "mx/navigation", payload: { action: "back" } }
+
       iframeElement.postMessage(data, targetOrigin)
     }
   }
