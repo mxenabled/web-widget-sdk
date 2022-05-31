@@ -94,23 +94,21 @@ export abstract class Widget<
    */
   navigateBack() {
     const iframeElement = this.iframe.contentWindow
+
+    if (!iframeElement) {
+      throw new Error("Unable to navigate back, iframe element is not available.")
+    }
+
+    let targetOrigin
     const baseUrlPattern = /^https?:\/\/[^/]+/i
 
-    let widgetBaseUrl
-
     if (this.options.url && this.options.url.match(baseUrlPattern)) {
-      widgetBaseUrl = this.options.url.match(baseUrlPattern)?.[0]
-    } else if (this.options.proxy && this.options.proxy.match(baseUrlPattern)) {
-      widgetBaseUrl = this.options.proxy.match(baseUrlPattern)?.[0]
+      targetOrigin = this.options.url.match(baseUrlPattern)?.[0]
     }
 
-    const targetOrigin = widgetBaseUrl || "https://widgets.moneydesktop.com"
+    const data = { mx: true, type: "mx/navigation", payload: { action: "back" } }
 
-    if (iframeElement) {
-      const data = { mx: true, type: "mx/navigation", payload: { action: "back" } }
-
-      iframeElement.postMessage(data, targetOrigin)
-    }
+    iframeElement.postMessage(data, targetOrigin || "https://widgets.moneydesktop.com")
   }
 
   /**
