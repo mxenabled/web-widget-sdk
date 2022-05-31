@@ -96,7 +96,7 @@ export abstract class Widget<
     const iframeElement = this.iframe.contentWindow
     const data = { mx: true, type: "mx/navigation", payload: { action: "back" } }
 
-    const baseUrlPattern = /^https?:\/\/[^\/]+/i
+    const baseUrlPattern = /^https?:\/\/[^/]+/i
     let widgetBaseUrl
 
     if (this.options.url && this.options.url.match(baseUrlPattern)) {
