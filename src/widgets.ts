@@ -86,29 +86,36 @@ export abstract class Widget<
   }
 
   /**
-   * Public method to communicate with iframe widget about navigation events
+   * Public method to communicate with the iframe widget about navigation events
    * Can be called when the host has a 'back' event happen.
    * This will send a post message event to the iframe widget, which if it's
    * listening for the 'mx/navigation' event, it can make its changes and then
-   * send its own post message event back to the SDK for the 'onNavigation' callback
+   * send its own post message event back with a `did_go_back` properity.
    */
   navigateBack() {
-    const iframeElement = this.iframe.contentWindow
+    return new Promise((resolve) => {
+      const iframeElement = this.iframe.contentWindow
 
-    if (!iframeElement) {
-      throw new Error("Unable to navigate back, iframe element is not available.")
-    }
+      if (!iframeElement) {
+        throw new Error("Unable to navigate back, iframe element is not available.")
+      }
 
-    let targetOrigin
-    const baseUrlPattern = /^https?:\/\/[^/]+/i
+      // If we get a navigation event back, resolve the promise with the value `did_go_back`
+      const handleIncomingNavigationEvent = (e: MessageEvent) => {
+        if (e.data.type === "mx/navigation") {
+          window.removeEventListener("message", handleIncomingNavigationEvent)
+          resolve(e.data.metadata.did_go_back)
+        }
+      }
 
-    if (this.options.url && this.options.url.match(baseUrlPattern)) {
-      targetOrigin = this.options.url.match(baseUrlPattern)?.[0]
-    }
+      // Set up temporary listener to listen for navigation events from the iframe widget
+      window.addEventListener("message", handleIncomingNavigationEvent, false)
 
-    const data = { mx: true, type: "mx/navigation", payload: { action: "back" } }
+      const data = { mx: true, type: "mx/navigation", payload: { action: "back" } }
 
-    iframeElement.postMessage(data, targetOrigin || "https://widgets.moneydesktop.com")
+      // Send post message event to iframe widget, which can trigger a navigation event back
+      iframeElement.postMessage(data, this.getTargetOrigin())
+    })
   }
 
   /**
@@ -119,6 +126,20 @@ export abstract class Widget<
 
     this.teardownListener()
     this.teardownIframe()
+  }
+
+  /**
+   * Uses matching to get our url targetOrigin, or falls back to our widgets url
+   */
+  private getTargetOrigin() {
+      let targetOrigin
+      const baseUrlPattern = /^https?:\/\/[^/]+/i
+
+      if (this.options.url && this.options.url.match(baseUrlPattern)) {
+        targetOrigin = this.options.url.match(baseUrlPattern)?.[0]
+      }
+
+      return targetOrigin || "https://widgets.moneydesktop.com"
   }
 
   /**
