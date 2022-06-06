@@ -132,14 +132,14 @@ export abstract class Widget<
    * Uses matching to get our url targetOrigin, or falls back to our widgets url
    */
   private getTargetOrigin() {
-      let targetOrigin
-      const baseUrlPattern = /^https?:\/\/[^/]+/i
+    let targetOrigin
+    const baseUrlPattern = /^https?:\/\/[^/]+/i
 
-      if (this.options.url && this.options.url.match(baseUrlPattern)) {
-        targetOrigin = this.options.url.match(baseUrlPattern)?.[0]
-      }
+    if (this.options.url && this.options.url.match(baseUrlPattern)) {
+      targetOrigin = this.options.url.match(baseUrlPattern)?.[0]
+    }
 
-      return targetOrigin || "https://widgets.moneydesktop.com"
+    return targetOrigin || "https://widgets.moneydesktop.com"
   }
 
   /**
