@@ -11,17 +11,17 @@ for your specific needs.
 
 ## Getting Started
 
-Please refer to the offical [MX Docs](https://docs.mx.com/) for an in-depth
+Please refer to the official [MX Docs](https://docs.mx.com/) for an in-depth
 explanation of the MX platform. The general outline for incorporating the
 `web-widget-sdk` into your project is as follow:
 
-- Signup for a developer account at the developer portal.
+- Sign up for a developer account at the developer portal.
 - Install and setup the SDK via `npm` or `yarn`.
 - Generate an authenticated SSO widget url.
 - Import the widget into your project providing it with the needed
   configuration object.
 
-###  Aquire your developer account
+### Acquire your developer account
 
 A developer account can be obtained by signing up on our [Client
 Portal](https://dashboard.mx.com) site.
@@ -165,7 +165,7 @@ payloads.
 
 ### Widget options
 
-You can configure the state and behaviour of the widget with the following
+You can configure the state and behavior of the widget with the following
 class options:
 
 - `language`: Load the widget in the specified language. Defaults to `en-US`.
@@ -192,7 +192,7 @@ class options:
   over `currentInstitutionCode`.
 - `disableInstitutionSearch`: When set to true, the institution search feature
   will be disabled and end users will not be able to navigate to it. Must be
-  used with `currentInstitutionCode`, `currentInstituionGuid`, or
+  used with `currentInstitutionCode`, `currentInstitutionGuid`, or
   `currentMemberGuid`.
 - `includeTransactions`: When set to false while creating or updating a member,
   transaction data will not be automatically aggregated. Future manual or

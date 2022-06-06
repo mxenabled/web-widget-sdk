@@ -18,7 +18,7 @@ information:
 Clone this repo and install [Node v16](https://nodejs.org/en/download/). Below
 are commands we use to perform various tasks:
 
-- `npm install`, install depedencies.
+- `npm install`, install dependencies.
 - `npm run compile`, run compiler.
 - `npm run build`, run compiler and bundle all modules.
 - `npm run test`, run unit tests.
@@ -32,7 +32,7 @@ are commands we use to perform various tasks:
 1. Update `CHANGELOG.md` with any changes that need to be communicated to a
    user of the SDK. See https://keepachangelog.com/en/1.1.0/ for details on
    what and how content should be included.
-2. Run `npm version <newversion>` to set the new SDK version and create the git
+2. Run `npm version <new version>` to set the new SDK version and create the git
    tag.
 3. [Publish new version to npm.](#publishing-to-npm)
 
