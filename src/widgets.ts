@@ -133,7 +133,7 @@ export abstract class Widget<
     let targetOrigin
     const baseUrlPattern = /^https?:\/\/[^/]+/i
 
-    if(isSsoUrlMethodUrl(this.options)) {
+    if (isSsoUrlMethodUrl(this.options)) {
       if (this.options.url && this.options.url.match(baseUrlPattern)) {
         targetOrigin = this.options.url.match(baseUrlPattern)?.[0]
       }
