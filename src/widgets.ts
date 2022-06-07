@@ -1,4 +1,5 @@
 import { getSsoUrl, Props as UrlLoadingProps, Type, ConnectWidgetConfigurationProps } from "./sso"
+import { isSsoUrlMethodUrl } from "./sso/properties"
 
 import {
   ConnectPostMessageCallbackProps,
@@ -13,8 +14,6 @@ type BaseOptions = {
   container: string | Element
   iframeTitle?: string
   style?: Partial<CSSStyleDeclaration>
-  url?: string
-  proxy?: string
 }
 
 export type WidgetOptions<Configuration, CallbackProps> = BaseOptions &
@@ -113,7 +112,7 @@ export abstract class Widget<
       window.addEventListener("message", handleIncomingNavigationEvent, false)
 
       // Send post message event to iframe widget, which can trigger a navigation event back
-      iframeElement.postMessage(data, this.targetOrigin)
+      iframeElement.postMessage(JSON.stringify(data), this.targetOrigin)
     })
   }
 
@@ -134,8 +133,10 @@ export abstract class Widget<
     let targetOrigin
     const baseUrlPattern = /^https?:\/\/[^/]+/i
 
-    if (this.options.url && this.options.url.match(baseUrlPattern)) {
-      targetOrigin = this.options.url.match(baseUrlPattern)?.[0]
+    if(isSsoUrlMethodUrl(this.options)) {
+      if (this.options.url && this.options.url.match(baseUrlPattern)) {
+        targetOrigin = this.options.url.match(baseUrlPattern)?.[0]
+      }
     }
 
     return targetOrigin || "https://widgets.moneydesktop.com"
