@@ -86,15 +86,16 @@ export abstract class Widget<
   }
 
   /**
-   * Public method to communicate with the iframe widget about navigation events
+   * Public method to communicate with the iframe widget about a navigation event
    * Can be called when the host has a 'back' event happen.
-   * This will send a post message event to the iframe widget, which if it's
-   * listening for the 'mx/navigation' event, it can make its changes and then
-   * send its own post message event back with a `did_go_back` properity.
+   * This will send a post message event to the iframe widget
+   * The iframe widget can listen for the 'mx/navigation' event
+   * And send its own post message event back with a `did_go_back` properity.
    */
-  navigateBack() {
+  navigateBack(): Promise<boolean> {
     return new Promise((resolve) => {
       const iframeElement = this.iframe.contentWindow
+      const data = { mx: true, type: "mx/navigation", payload: { action: "back" } }
 
       if (!iframeElement) {
         throw new Error("Unable to navigate back, iframe element is not available.")
@@ -111,10 +112,8 @@ export abstract class Widget<
       // Set up temporary listener to listen for navigation events from the iframe widget
       window.addEventListener("message", handleIncomingNavigationEvent, false)
 
-      const data = { mx: true, type: "mx/navigation", payload: { action: "back" } }
-
       // Send post message event to iframe widget, which can trigger a navigation event back
-      iframeElement.postMessage(data, this.getTargetOrigin())
+      iframeElement.postMessage(data, this.targetOrigin)
     })
   }
 
@@ -131,7 +130,7 @@ export abstract class Widget<
   /**
    * Uses matching to get our url targetOrigin, or falls back to our widgets url
    */
-  private getTargetOrigin() {
+  private get targetOrigin(): string {
     let targetOrigin
     const baseUrlPattern = /^https?:\/\/[^/]+/i
 
