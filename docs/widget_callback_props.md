@@ -293,11 +293,11 @@ const widget = widgetSdk.ConnectWidget({
 ### OAuth requested (`mx/connect/oauthRequested`)
 
 **Warning**: By passing your own method to this prop, you are overriding the
-default behaviour of the SDK which is to load the OAuth URL in a new
+default behavior of the SDK which is to load the OAuth URL in a new
 browser tab.
 
 If you override this functionality, you must use the device's browser
-to authenticate the user with OAuth. You cannot use  WebViews or
+to authenticate the user with OAuth. You cannot use WebViews or
 iframes. Not only does this approach result in better security, it
 also can leverage saved passwords and password managers that the user
 has installed. It is also worth noting that many OAuth providers
