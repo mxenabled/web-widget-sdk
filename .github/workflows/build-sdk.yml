@@ -16,6 +16,13 @@ jobs:
       with:
         node-version: 16
         cache: npm
+    - uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
 
     - run: npm install
     - run: npm run prettier -- --check
