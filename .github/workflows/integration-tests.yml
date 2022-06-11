@@ -20,15 +20,15 @@ jobs:
         cache: npm
     - uses: actions/cache@v3
       with:
-        path: node_modules
+        path: |
+          cypress/application/node_modules
+          ~/.cache/Cypress
         key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
     - uses: actions/cache@v3
       with:
-        path: |
-          cypress/application/node_modules
-          ~/.cache/Cypress
+        path: cypress/application/node_modules
         key: ${{ runner.os }}-node-${{ hashFiles('cypress/application/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
