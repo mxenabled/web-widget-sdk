@@ -21,7 +21,7 @@ jobs:
     - uses: actions/cache@v3
       with:
         path: |
-          cypress/application/node_modules
+          node_modules
           ~/.cache/Cypress
         key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
         restore-keys: |
