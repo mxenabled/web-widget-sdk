@@ -24,8 +24,8 @@ import { rest, server } from "../../jest/server"
 
 const url = "https://widgets.moneydesktop.com/md/..."
 const proxy = "https://client.com/mx-sso-proxy"
-const clientId = "myveryownclientid"
-const apiKey = "myveryownapikey"
+const clientId = "myVeryOwnClientId"
+const apiKey = "myVeryOwnApiKey"
 const userGuid = "USR-777"
 const environment = "production"
 

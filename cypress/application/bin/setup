@@ -19,7 +19,8 @@ root=$(pwd)
 cd ../..
 echo -n "Building latest version of SDK ... "
 print_and_kill_on_error "npm pack"
-mv mxenabled-web-widget-sdk-$(npm view . version).tgz "$root/mxenabled-web-widget-sdk-latest.tgz"
+tarfile=$(ls mxenabled-web-widget-sdk-*.tgz | sort --version-sort -r | head -n1)
+mv "$tarfile" "$root/mxenabled-web-widget-sdk-latest.tgz"
 echo "done"
 
 cd - > /dev/null

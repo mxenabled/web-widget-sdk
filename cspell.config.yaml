@@ -1,0 +1,11 @@
+words:
+  - camelize
+  - finstrong
+  - focustrap
+  - mxenabled
+
+ignorePaths:
+  - bin/*
+  - cspell.config.yaml
+  - cypress/application/bin/*
+  - docs/widget_callback_props.md
