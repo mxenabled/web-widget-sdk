@@ -90,7 +90,7 @@ export abstract class Widget<
    * Can be called when the host has a 'back' event happen.
    * This will send a post message event to the iframe widget
    * The iframe widget can listen for the 'mx/navigation' event
-   * And send its own post message event back with a `did_go_back` properity.
+   * And send its own post message event back with a `did_go_back` property.
    */
   navigateBack(): Promise<boolean> {
     return new Promise((resolve) => {
