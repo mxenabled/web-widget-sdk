@@ -1,5 +1,4 @@
 import { getSsoUrl, Props as UrlLoadingProps, Type, ConnectWidgetConfigurationProps } from "./sso"
-import { isSsoUrlMethodUrl } from "./sso/properties"
 
 import {
   ConnectPostMessageCallbackProps,
@@ -29,12 +28,14 @@ export abstract class Widget<
   protected container: Element
   protected style: Partial<CSSStyleDeclaration>
   protected isUnmounting: boolean
+  protected ssoUrl: string
 
   // Filters for 'mx' events before dispatching to proper handlers
   protected messageCallback: (event: MessageEvent) => void
 
   constructor(options: WidgetOptions<Configuration, CallbackProps>) {
     this.isUnmounting = false
+    this.ssoUrl = ""
 
     this.options = options
     this.iframe = document.createElement("iframe")
@@ -133,9 +134,9 @@ export abstract class Widget<
     let targetOrigin
     const baseUrlPattern = /^https?:\/\/[^/]+/i
 
-    if (isSsoUrlMethodUrl(this.options)) {
-      if (this.options.url && this.options.url.match(baseUrlPattern)) {
-        targetOrigin = this.options.url.match(baseUrlPattern)?.[0]
+    if (this.ssoUrl && typeof this.ssoUrl === "string") {
+      if (this.ssoUrl.match(baseUrlPattern)) {
+        targetOrigin = this.ssoUrl.match(baseUrlPattern)?.[0]
       }
     }
 
@@ -153,6 +154,8 @@ export abstract class Widget<
       if (this.isUnmounting || !url) {
         return
       }
+
+      this.ssoUrl = url
 
       this.iframe.setAttribute("data-test-id", "mx-widget-iframe")
       this.iframe.setAttribute("title", this.options.iframeTitle || "Widget Iframe")
