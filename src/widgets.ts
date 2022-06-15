@@ -7,6 +7,8 @@ import {
   dispatchConnectPostMessageEvent,
   dispatchPulsePostMessageEvent,
   dispatchWidgetPostMessageEvent,
+  NavigationPayload,
+  Type as PostMessageTypes,
 } from "@mxenabled/widget-post-message-definitions"
 
 type BaseOptions = {
@@ -15,11 +17,9 @@ type BaseOptions = {
   style?: Partial<CSSStyleDeclaration>
 }
 
-type PostMessageData = {
-  type: string
-  metadata: {
-    did_go_back: boolean
-  }
+type PostMessageData<T> = {
+  type: PostMessageTypes
+  metadata: T
 }
 
 export type WidgetOptions<Configuration, CallbackProps> = BaseOptions &
@@ -101,15 +101,15 @@ export abstract class Widget<
   navigateBack(): Promise<boolean> {
     return new Promise((resolve) => {
       const iframeElement = this.iframe.contentWindow
-      const data = { mx: true, type: "mx/navigation", payload: { action: "back" } }
+      const data = { mx: true, type: PostMessageTypes.Navigation, payload: { action: "back" } }
 
       if (!iframeElement) {
         throw new Error("Unable to navigate back, iframe element is not available.")
       }
 
       // If we get a navigation event back, resolve the promise with the value `did_go_back`
-      const handleIncomingNavigationEvent = (e: MessageEvent<PostMessageData>) => {
-        if (e.data.type === "mx/navigation") {
+      const handleIncomingNavigationEvent = (e: MessageEvent<PostMessageData<NavigationPayload>>) => {
+        if (e.data.type === PostMessageTypes.Navigation) {
           window.removeEventListener("message", handleIncomingNavigationEvent)
           resolve(e.data.metadata.did_go_back)
         }
