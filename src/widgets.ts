@@ -28,14 +28,13 @@ export abstract class Widget<
   protected container: Element
   protected style: Partial<CSSStyleDeclaration>
   protected isUnmounting: boolean
-  protected ssoUrl: string
+  protected ssoUrl?: string
 
   // Filters for 'mx' events before dispatching to proper handlers
   protected messageCallback: (event: MessageEvent) => void
 
   constructor(options: WidgetOptions<Configuration, CallbackProps>) {
     this.isUnmounting = false
-    this.ssoUrl = ""
 
     this.options = options
     this.iframe = document.createElement("iframe")
@@ -86,11 +85,11 @@ export abstract class Widget<
   }
 
   /**
-   * Public method to communicate with the iframe widget about a navigation event
+   * Public method to communicate with the iframe widget about a navigation event.
    * Can be called when the host has a 'back' event happen.
-   * This will send a post message event to the iframe widget
-   * The iframe widget can listen for the 'mx/navigation' event
-   * And send its own post message event back with a `did_go_back` property.
+   * This will send a post message event to the iframe widget.
+   * The iframe widget can listen for the 'mx/navigation' event.
+   * Which sends its own post message event back with a `did_go_back` property.
    */
   navigateBack(): Promise<boolean> {
     return new Promise((resolve) => {
@@ -131,13 +130,11 @@ export abstract class Widget<
    * Uses matching to get our url targetOrigin, or falls back to our widgets url
    */
   private get targetOrigin(): string {
-    let targetOrigin
     const baseUrlPattern = /^https?:\/\/[^/]+/i
+    let targetOrigin
 
-    if (this.ssoUrl && typeof this.ssoUrl === "string") {
-      if (this.ssoUrl.match(baseUrlPattern)) {
+    if (this.ssoUrl && this.ssoUrl.match(baseUrlPattern)) {
         targetOrigin = this.ssoUrl.match(baseUrlPattern)?.[0]
-      }
     }
 
     return targetOrigin || "https://widgets.moneydesktop.com"
