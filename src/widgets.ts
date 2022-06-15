@@ -7,12 +7,19 @@ import {
   dispatchConnectPostMessageEvent,
   dispatchPulsePostMessageEvent,
   dispatchWidgetPostMessageEvent,
+  NavigationPayload,
+  Type as PostMessageTypes,
 } from "@mxenabled/widget-post-message-definitions"
 
 type BaseOptions = {
   container: string | Element
   iframeTitle?: string
   style?: Partial<CSSStyleDeclaration>
+}
+
+type PostMessageData<T> = {
+  type: PostMessageTypes
+  metadata: T
 }
 
 export type WidgetOptions<Configuration, CallbackProps> = BaseOptions &
@@ -28,6 +35,7 @@ export abstract class Widget<
   protected container: Element
   protected style: Partial<CSSStyleDeclaration>
   protected isUnmounting: boolean
+  protected ssoUrl?: string
 
   // Filters for 'mx' events before dispatching to proper handlers
   protected messageCallback: (event: MessageEvent) => void
@@ -84,6 +92,40 @@ export abstract class Widget<
   }
 
   /**
+   * Public method to communicate with the iframe widget about a navigation event.
+   * Can be called when the host has a 'back' event happen.
+   * This will send a post message event to the iframe widget.
+   * The iframe widget can listen for the 'mx/navigation' event.
+   * Which sends its own post message event back with a `did_go_back` property.
+   */
+  navigateBack(): Promise<boolean> {
+    return new Promise((resolve) => {
+      const iframeElement = this.iframe.contentWindow
+      const data = { mx: true, type: PostMessageTypes.Navigation, payload: { action: "back" } }
+
+      if (!iframeElement) {
+        throw new Error("Unable to navigate back, iframe element is not available.")
+      }
+
+      // If we get a navigation event back, resolve the promise with the value `did_go_back`
+      const handleIncomingNavigationEvent = (
+        e: MessageEvent<PostMessageData<NavigationPayload>>,
+      ) => {
+        if (e.data.type === PostMessageTypes.Navigation) {
+          window.removeEventListener("message", handleIncomingNavigationEvent)
+          resolve(e.data.metadata.did_go_back)
+        }
+      }
+
+      // Set up temporary listener to listen for navigation events from the iframe widget
+      window.addEventListener("message", handleIncomingNavigationEvent, false)
+
+      // Send post message event to iframe widget, which can trigger a navigation event back
+      iframeElement.postMessage(JSON.stringify(data), this.targetOrigin)
+    })
+  }
+
+  /**
    * Public method to tear down our post message listener and iframe container
    */
   unmount() {
@@ -91,6 +133,20 @@ export abstract class Widget<
 
     this.teardownListener()
     this.teardownIframe()
+  }
+
+  /**
+   * Uses matching to get our url targetOrigin, or falls back to our widgets url
+   */
+  private get targetOrigin(): string {
+    const baseUrlPattern = /^https?:\/\/[^/]+/i
+    let targetOrigin
+
+    if (this.ssoUrl && this.ssoUrl.match(baseUrlPattern)) {
+      targetOrigin = this.ssoUrl.match(baseUrlPattern)?.[0]
+    }
+
+    return targetOrigin || "https://widgets.moneydesktop.com"
   }
 
   /**
@@ -104,6 +160,8 @@ export abstract class Widget<
       if (this.isUnmounting || !url) {
         return
       }
+
+      this.ssoUrl = url
 
       this.iframe.setAttribute("data-test-id", "mx-widget-iframe")
       this.iframe.setAttribute("title", this.options.iframeTitle || "Widget Iframe")
