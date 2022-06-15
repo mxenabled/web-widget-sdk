@@ -134,7 +134,7 @@ export abstract class Widget<
     let targetOrigin
 
     if (this.ssoUrl && this.ssoUrl.match(baseUrlPattern)) {
-        targetOrigin = this.ssoUrl.match(baseUrlPattern)?.[0]
+      targetOrigin = this.ssoUrl.match(baseUrlPattern)?.[0]
     }
 
     return targetOrigin || "https://widgets.moneydesktop.com"
