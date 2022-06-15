@@ -108,7 +108,9 @@ export abstract class Widget<
       }
 
       // If we get a navigation event back, resolve the promise with the value `did_go_back`
-      const handleIncomingNavigationEvent = (e: MessageEvent<PostMessageData<NavigationPayload>>) => {
+      const handleIncomingNavigationEvent = (
+        e: MessageEvent<PostMessageData<NavigationPayload>>,
+      ) => {
         if (e.data.type === PostMessageTypes.Navigation) {
           window.removeEventListener("message", handleIncomingNavigationEvent)
           resolve(e.data.metadata.did_go_back)
