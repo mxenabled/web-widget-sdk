@@ -15,6 +15,13 @@ type BaseOptions = {
   style?: Partial<CSSStyleDeclaration>
 }
 
+type PostMessageData = {
+  type: string
+  metadata: {
+    did_go_back: boolean
+  }
+}
+
 export type WidgetOptions<Configuration, CallbackProps> = BaseOptions &
   UrlLoadingProps<Configuration> &
   CallbackProps
@@ -101,7 +108,7 @@ export abstract class Widget<
       }
 
       // If we get a navigation event back, resolve the promise with the value `did_go_back`
-      const handleIncomingNavigationEvent = (e: MessageEvent) => {
+      const handleIncomingNavigationEvent = (e: MessageEvent<PostMessageData>) => {
         if (e.data.type === "mx/navigation") {
           window.removeEventListener("message", handleIncomingNavigationEvent)
           resolve(e.data.metadata.did_go_back)
