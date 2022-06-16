@@ -3,6 +3,7 @@
   "version": "0.0.7",
   "description": "MX Web Widget SDK",
   "main": "./dist/cjs/index.js",
+  "types": "./dist/types/src/index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -22,10 +23,11 @@
     "clean": "npm run clean:build && npm run clean:dist",
     "clean:build": "[ -d build ] && rm -r build || true",
     "clean:dist": "[ -d dist ] && rm -r dist || true",
-    "compile": "npm run compile:sdk && npm run compile:cypress && npm run compile:jest",
+    "compile": "npm run compile:sdk && npm run compile:types && npm run compile:cypress && npm run compile:jest",
     "compile:cypress": "tsc --noEmit --types cypress,node $(find cypress -not -path 'cypress/application/*' -type f -name *.ts)",
     "compile:jest": "tsc --noEmit --types jest,node $(find jest -type f -name *.ts)",
     "compile:sdk": "tsc --outDir build",
+    "compile:types": "tsc --declaration --emitDeclarationOnly --outDir dist/types",
     "documentation": "cp node_modules/@mxenabled/widget-post-message-definitions/docs/web-sdk-generated.md docs/widget_callback_props.md",
     "format": "npm run prettier -- -w",
     "lint": "eslint src example jest cypress",
