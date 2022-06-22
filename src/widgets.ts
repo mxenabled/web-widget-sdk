@@ -53,6 +53,9 @@ export abstract class Widget<
 
     this.messageCallback = (event) => {
       if (event.data.mx) {
+        if (event.data.type === "mx/client/oauthRedirect") {
+          this.handleOAuthRedirect(event.data.metadata.url)
+        }
         this.dispatcher(event, this.options)
       }
     }
@@ -123,6 +126,24 @@ export abstract class Widget<
       // Send post message event to iframe widget, which can trigger a navigation event back
       iframeElement.postMessage(JSON.stringify(data), this.targetOrigin)
     })
+  }
+
+  handleOAuthRedirect(redirectURL: string): void {
+    const urlStruct = new URL(redirectURL)
+    const status = urlStruct.searchParams.get("status")
+    const memberGuid = urlStruct.searchParams.get("member_guid")
+
+    const message = {
+      mx: true,
+      type: `oauthComplete/${status}`,
+      metadata: {
+        member_guid: memberGuid
+      }
+    }
+
+    const iframeElement = this.iframe.contentWindow
+
+    iframeElement?.postMessage(message, this.targetOrigin)
   }
 
   /**
