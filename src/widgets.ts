@@ -164,7 +164,7 @@ export abstract class Widget<
   /**
    * Uses matching to get our url targetOrigin, or falls back to our widgets url
    */
-  private get targetOrigin(): string {
+  get targetOrigin(): string {
     const baseUrlPattern = /^https?:\/\/[^/]+/i
     let targetOrigin
 
