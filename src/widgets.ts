@@ -129,21 +129,26 @@ export abstract class Widget<
   }
 
   handleOAuthRedirect(redirectURL: string): void {
-    const urlStruct = new URL(redirectURL)
-    const status = urlStruct.searchParams.get("status")
-    const memberGuid = urlStruct.searchParams.get("member_guid")
+    try {
+      const urlStruct = new URL(redirectURL)
+      const status = urlStruct.searchParams.get("status")
+      const memberGuid = urlStruct.searchParams.get("member_guid")
 
-    const message = {
-      mx: true,
-      type: `oauthComplete/${status}`,
-      metadata: {
-        member_guid: memberGuid
+      const message = {
+        mx: true,
+        type: `oauthComplete/${status}`,
+        metadata: {
+          member_guid: memberGuid
+        }
       }
+
+      const iframeElement = this.iframe.contentWindow
+
+      iframeElement?.postMessage(message, this.targetOrigin)
+    } catch (error) {
+      console.error("Unable to postMessage OAuth URL: ", redirectURL)
+      throw error
     }
-
-    const iframeElement = this.iframe.contentWindow
-
-    iframeElement?.postMessage(message, this.targetOrigin)
   }
 
   /**
