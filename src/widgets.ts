@@ -55,8 +55,9 @@ export abstract class Widget<
       if (event.data.mx) {
         if (event.data.type === "mx/client/oauthRedirect") {
           this.handleOAuthRedirect(event.data.metadata.url)
+        } else {
+          this.dispatcher(event, this.options)
         }
-        this.dispatcher(event, this.options)
       }
     }
 
@@ -138,8 +139,8 @@ export abstract class Widget<
         mx: true,
         type: `oauthComplete/${status}`,
         metadata: {
-          member_guid: memberGuid
-        }
+          member_guid: memberGuid,
+        },
       }
 
       const iframeElement = this.iframe.contentWindow

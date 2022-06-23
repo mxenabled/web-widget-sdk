@@ -326,6 +326,43 @@ widgets.forEach((widgetClass) => {
 })
 
 describe("ConnectWidget", () => {
+  describe("handleOAuthRedirect", () => {
+    test("should throw with a bad URL", async () => {
+      expect(() => {
+        const widget = new ConnectWidget({ url, container })
+
+        widget.handleOAuthRedirect("")
+      }).toThrow()
+    })
+
+    test("success URL", async () => {
+      const widget = new ConnectWidget({ url, container })
+
+      await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
+
+      const iframeElement = container?.getElementsByTagName("iframe")[0]?.contentWindow
+
+      if (!iframeElement) {
+        throw new Error("Unable to find widget iframe")
+      }
+
+      const postMessageSpy = jest.spyOn(iframeElement, "postMessage")
+
+      widget.handleOAuthRedirect("com.testapp://oauth_complete?status=error&member_guid=MBR-123")
+
+      expect(postMessageSpy).toHaveBeenCalledWith(
+        {
+          mx: true,
+          type: "oauthComplete/error",
+          metadata: {
+            member_guid: "MBR-123",
+          },
+        },
+        widget.targetOrigin,
+      )
+    })
+  })
+
   describe("post message dispatching", () => {
     test("message payload is included", () => {
       const onLoaded = jest.fn()
