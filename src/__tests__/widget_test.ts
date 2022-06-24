@@ -327,15 +327,7 @@ widgets.forEach((widgetClass) => {
 
 describe("ConnectWidget", () => {
   describe("handleOAuthRedirect", () => {
-    test("should throw with a bad URL", async () => {
-      expect(() => {
-        const widget = new ConnectWidget({ url, container })
-
-        widget.handleOAuthRedirect("")
-      }).toThrow()
-    })
-
-    test("success URL", async () => {
+    test("will parse a URL and postmessage error to the widget", async () => {
       const widget = new ConnectWidget({ url, container })
 
       await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
@@ -348,7 +340,18 @@ describe("ConnectWidget", () => {
 
       const postMessageSpy = jest.spyOn(iframeElement, "postMessage")
 
-      widget.handleOAuthRedirect("com.testapp://oauth_complete?status=error&member_guid=MBR-123")
+
+      window.dispatchEvent(
+        new MessageEvent("message", {
+          data: {
+              mx: true,
+              type: "mx/client/oauthComplete",
+              metadata: {
+                  url: "com.testapp://oauth_complete?status=error&member_guid=MBR-123&error_reason=CANCELLED"
+              }
+          }
+        })
+      )
 
       expect(postMessageSpy).toHaveBeenCalledWith(
         {
@@ -356,6 +359,46 @@ describe("ConnectWidget", () => {
           type: "oauthComplete/error",
           metadata: {
             member_guid: "MBR-123",
+            error_reason: "CANCELLED"
+          },
+        },
+        widget.targetOrigin,
+      )
+    })
+
+    test("will parse a URL and postmessage success to the widget", async () => {
+      const widget = new ConnectWidget({ url, container })
+
+      await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
+
+      const iframeElement = container?.getElementsByTagName("iframe")[0]?.contentWindow
+
+      if (!iframeElement) {
+        throw new Error("Unable to find widget iframe")
+      }
+
+      const postMessageSpy = jest.spyOn(iframeElement, "postMessage")
+
+
+      window.dispatchEvent(
+        new MessageEvent("message", {
+          data: {
+              mx: true,
+              type: "mx/client/oauthComplete",
+              metadata: {
+                  url: "com.testapp://oauth_complete?status=success&member_guid=MBR-123"
+              }
+          }
+        })
+      )
+
+      expect(postMessageSpy).toHaveBeenCalledWith(
+        {
+          mx: true,
+          type: "oauthComplete/success",
+          metadata: {
+            member_guid: "MBR-123",
+            error_reason: null,
           },
         },
         widget.targetOrigin,

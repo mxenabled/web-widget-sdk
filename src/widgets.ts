@@ -53,8 +53,8 @@ export abstract class Widget<
 
     this.messageCallback = (event) => {
       if (event.data.mx) {
-        if (event.data.type === "mx/client/oauthRedirect") {
-          this.handleOAuthRedirect(event.data.metadata.url)
+        if (event.data.type === "mx/client/oauthComplete") {
+          this.handleOAuthComplete(event.data.metadata.url)
         } else {
           this.dispatcher(event, this.options)
         }
@@ -129,28 +129,6 @@ export abstract class Widget<
     })
   }
 
-  handleOAuthRedirect(redirectURL: string): void {
-    try {
-      const urlStruct = new URL(redirectURL)
-      const status = urlStruct.searchParams.get("status")
-      const memberGuid = urlStruct.searchParams.get("member_guid")
-
-      const message = {
-        mx: true,
-        type: `oauthComplete/${status}`,
-        metadata: {
-          member_guid: memberGuid,
-        },
-      }
-
-      const iframeElement = this.iframe.contentWindow
-
-      iframeElement?.postMessage(message, this.targetOrigin)
-    } catch (error) {
-      console.error("Unable to postMessage OAuth URL: ", redirectURL)
-      throw error
-    }
-  }
 
   /**
    * Public method to tear down our post message listener and iframe container
@@ -174,6 +152,28 @@ export abstract class Widget<
     }
 
     return targetOrigin || "https://widgets.moneydesktop.com"
+  }
+
+  private handleOAuthComplete(redirectURL: string): void {
+    try {
+      const urlStruct = new URL(redirectURL)
+      const status = urlStruct.searchParams.get("status")
+      const memberGuid = urlStruct.searchParams.get("member_guid")
+      const errorReason = urlStruct.searchParams.get("error_reason")
+
+      const message = {
+        mx: true,
+        type: `oauthComplete/${status}`,
+        metadata: {
+          member_guid: memberGuid,
+          error_reason: errorReason
+        },
+      }
+
+      this.iframe.contentWindow?.postMessage(message, this.targetOrigin)
+    } catch (error) {
+      console.error(`Unable to postMessage OAuth URL: ${redirectURL}`, error)
+    }
   }
 
   /**
