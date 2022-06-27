@@ -129,7 +129,6 @@ export abstract class Widget<
     })
   }
 
-
   /**
    * Public method to tear down our post message listener and iframe container
    */
@@ -166,7 +165,7 @@ export abstract class Widget<
         type: `oauthComplete/${status}`,
         metadata: {
           member_guid: memberGuid,
-          error_reason: errorReason
+          error_reason: errorReason,
         },
       }
 
