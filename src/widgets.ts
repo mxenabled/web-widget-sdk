@@ -53,7 +53,7 @@ export abstract class Widget<
 
     this.messageCallback = (event) => {
       if (event.data.mx) {
-        if (event.data.type === "mx/client/oauthComplete") {
+        if (event.data.type === PostMessageTypes.ClientOAuthComplete) {
           this.handleOAuthComplete(event.data.metadata.url)
         } else {
           this.dispatcher(event, this.options)
