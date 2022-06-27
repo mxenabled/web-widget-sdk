@@ -25,6 +25,44 @@ describe("ConnectWidget", () => {
   })
 
   describe("handleOAuthRedirect", () => {
+    test("will work with clientRedirect URL", async () => {
+      await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
+
+      const iframeElement = container?.getElementsByTagName("iframe")[0]?.contentWindow
+
+      if (!iframeElement) {
+        throw new Error("Unable to find widget iframe")
+      }
+
+      const postMessageSpy = jest.spyOn(iframeElement, "postMessage")
+
+      window.dispatchEvent(
+        new MessageEvent("message", {
+          data: {
+            mx: true,
+            type: "mx/client/oauthComplete",
+            metadata: {
+              url: "https://testApp.com/some/path?status=error&member_guid=MBR-123&error_reason=CANCELLED",
+            },
+          },
+        }),
+      )
+
+      expect(postMessageSpy).toHaveBeenCalledWith(
+        {
+          mx: true,
+          type: "oauthComplete/error",
+          metadata: {
+            member_guid: "MBR-123",
+            error_reason: "CANCELLED",
+          },
+        },
+        widget.targetOrigin,
+      )
+
+      postMessageSpy.mockRestore()
+    })
+
     test("will parse a URL and postmessage error to the widget", async () => {
       await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
 
