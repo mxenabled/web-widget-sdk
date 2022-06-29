@@ -24,8 +24,8 @@ describe("ConnectWidget", () => {
     widget.unmount()
   })
 
-  describe("handleOAuthRedirect", () => {
-    test("will work with clientRedirect URL", async () => {
+  describe("OAuth post messaging", () => {
+    test("when using client_redirect_url with success status", async () => {
       await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
 
       const iframeElement = container?.getElementsByTagName("iframe")[0]?.contentWindow
@@ -63,7 +63,7 @@ describe("ConnectWidget", () => {
       postMessageSpy.mockRestore()
     })
 
-    test("will parse a URL and postmessage error to the widget", async () => {
+    test("when using ui_message_webview_url_scheme with error status", async () => {
       await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
 
       const iframeElement = container?.getElementsByTagName("iframe")[0]?.contentWindow
@@ -101,7 +101,7 @@ describe("ConnectWidget", () => {
       postMessageSpy.mockRestore()
     })
 
-    test("will parse a URL and postmessage success to the widget", async () => {
+    test("when using ui_message_webview_url_scheme with success status", async () => {
       await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
 
       const iframeElement = container?.getElementsByTagName("iframe")[0]?.contentWindow
@@ -142,7 +142,7 @@ describe("ConnectWidget", () => {
   describe("post message dispatching", () => {
     test("message payload is included", () => {
       const onLoaded = jest.fn()
-      new ConnectWidget({ url, container, onLoaded })
+      const connectWidget = new ConnectWidget({ url, container, onLoaded })
 
       window.dispatchEvent(
         new MessageEvent("message", {
@@ -164,6 +164,8 @@ describe("ConnectWidget", () => {
         type: "mx/connect/loaded",
         user_guid: "USR-123",
       })
+
+      connectWidget.unmount()
     })
   })
 })

@@ -22,7 +22,11 @@
         const options = {
           container: "#widget",
           iframeTitle: "Example Widget",
-          proxy: "http://localhost:8089/connect_widget/USR-a335343e-896d-4f84-a8af-7173025d27d7",
+          url: "https://int-widgets.moneydesktop.com/md/connect/1q4t98nvt5tbxhmybz15wtcqqqZl6cxrh82q38tc8q7ss07gt0tx9tv06n3rrwft915whnd27y0f6vn4yAg5s97dcl7y1fq9c7j770j8gkszw5k2jcp102zdn6lb8cdqmkkdvtpq9hn25bxcx13171xgjz1dsrxllAldnn4wj008xht9f5jfp4bsn9lv2wj2ycdA9sgf92yj670ptpjhk3s6x2nbg458mb3fz9qrnwysw2kdy7hhk8qg07kl74y34Ayngz46fmlA0yy60f8kcq7sw2zpmlf3kbwjA9vy1wl0zwjjh2yyzmfw21pm6rv1w3k5gwc2mshy4qjtmf53Akkql07l6vkAv6s8xjys/eyJ1aV9tZXNzYWdlX3ZlcnNpb24iOjQsInVpX21lc3NhZ2Vfd2Vidmlld191cmxfc2NoZW1lIjoibXgiLCJjdXJyZW50X2luc3RpdHV0aW9uX2NvZGUiOiJteF9iYW5rX29hdXRoIiwib2F1dGhfcmVmZXJyYWxfc291cmNlIjoiQVBQIiwibG9jYWxlIjoiZW4tVVMifQ%3D%3D",
+          onOAuthRequested: (event) => {
+            console.log("onOAuthRequested", event)
+            window.open(event.url)
+          },
           onMessage: (event) => {
             logEvent(event.data)
           },
