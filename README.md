@@ -125,10 +125,47 @@ The SDK also has the option of making the SSO request on your behalf to your
 backend service that is able to make requests to our API. If used, the proxy
 URL should passed to a Widget class via the `proxy` option.
 
+##### Connect Widget configuration
+
+When you are not using the `proxy` setting, you must pass the widget
+configuration in the SSO request that generates the SSO URL. However, when
+using the `proxy` setting with the Connect Widget, those configuration settings
+may be passed directly to the widget class.
+
+- `colorScheme`: Load the widget in the specified colorScheme; options are
+  `light` and `dark`. Defaults to `light`.
+- `currentInstitutionCode`: Load the widget into the credential view for the
+  specified institution.
+- `currentInstitutionGuid`: Load the widget into the credential view for the
+  specified institution.
+- `currentMemberGuid`: Load to a specific member that contains an error or
+  requires MFA from the most recent job. `currentMemberGuid` takes precedence
+  over `currentInstitutionCode`.
+- `disableInstitutionSearch`: When set to true, the institution search feature
+  will be disabled and end users will not be able to navigate to it. Must be
+  used with `currentInstitutionCode`, `currentInstitutionGuid`, or
+  `currentMemberGuid`.
+- `includeTransactions`: When set to false while creating or updating a member,
+  transaction data will not be automatically aggregated. Future manual or
+  background aggregations will not be affected. Defaults to true.
+- `uiMessageWebviewUrlScheme`: Used as the scheme that MX will redirect to at
+  the end of OAuth. This must be a scheme that your application responds to.
+  See [OAuth redirects](#oauth-redirects) for additional information.
+- `updateCredentials`: Loads widget to the update credential view of a current
+  member. Optionally used with `currentMemberGuid`. This option should be used
+  sparingly. The best practice is to use `currentMemberGuid` and let the widget
+  resolve the issue.
+- `waitForFullAggregation`: Loads Connect, but forces the widget to wait until
+  any aggregation-type process is complete in order to fire a member connected
+  postMessage. This allows clients to have transactional data by the time the
+  widget is closed.
+
 ```js
 const options = {
   container: "#widget",
-  proxy: "http://localhost:8089/{widget_type}/{user_guid}",
+  proxy: "https://server.com/mx-sso-proxy",
+  colorScheme: "dark",
+  disableInstitutionSearch: true
 }
 ```
 
@@ -178,36 +215,6 @@ class options:
 - `url`: Widget SSO URL. See [Generating your Widget SSO
   URL](#generating-your-widget-sso-url) for additional information. **This prop
   is required.**
-
-#### Connect specific options
-
-- `colorScheme`: Load the widget in the specified colorScheme; options are
-  `light` and `dark`. Defaults to `light`.
-- `currentInstitutionCode`: Load the widget into the credential view for the
-  specified institution.
-- `currentInstitutionGuid`: Load the widget into the credential view for the
-  specified institution.
-- `currentMemberGuid`: Load to a specific member that contains an error or
-  requires MFA from the most recent job. `currentMemberGuid` takes precedence
-  over `currentInstitutionCode`.
-- `disableInstitutionSearch`: When set to true, the institution search feature
-  will be disabled and end users will not be able to navigate to it. Must be
-  used with `currentInstitutionCode`, `currentInstitutionGuid`, or
-  `currentMemberGuid`.
-- `includeTransactions`: When set to false while creating or updating a member,
-  transaction data will not be automatically aggregated. Future manual or
-  background aggregations will not be affected. Defaults to true.
-- `uiMessageWebviewUrlScheme`: Used as the scheme that MX will redirect to at
-  the end of OAuth. This must be a scheme that your application responds to.
-  See [OAuth redirects](#oauth-redirects) for additional information.
-- `updateCredentials`: Loads widget to the update credential view of a current
-  member. Optionally used with `currentMemberGuid`. This option should be used
-  sparingly. The best practice is to use `currentMemberGuid` and let the widget
-  resolve the issue.
-- `waitForFullAggregation`: Loads Connect, but forces the widget to wait until
-  any aggregation-type process is complete in order to fire a member connected
-  postMessage. This allows clients to have transactional data by the time the
-  widget is closed.
 
 ### Available widget classes
 
