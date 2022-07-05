@@ -127,8 +127,10 @@ URL should passed to a Widget class via the `proxy` option.
 
 ##### Connect Widget configuration
 
-When using the `proxy` option with the Connect Widget, you may pass the widget
-settings directly to the widget class.
+When you are not using the `proxy` setting, you must pass the widget
+configuration in the SSO request that generates the SSO URL. However, when
+using the `proxy` setting with the Connect Widget, those configuration settings
+may be passed directly to the widget class.
 
 - `colorScheme`: Load the widget in the specified colorScheme; options are
   `light` and `dark`. Defaults to `light`.
@@ -166,10 +168,6 @@ const options = {
   disableInstitutionSearch: true
 }
 ```
-
-Note that if you are not using the `proxy` setting, then all widget
-configuration must be included in the SSO request and passed to the class via
-the SSO URL.
 
 ### Mounting and Unmounting the widget
 When you instantiate a widget with options, it will mount itself in the DOM, and set up various event listeners.
