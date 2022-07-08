@@ -176,7 +176,7 @@ You'll need to call the `unmount` method when closing the widget and before crea
 ```js
 const options = {
   container: "#widget",
-  widgetURL: "https://int-widgets.moneydesktop.com/md/connect/...."
+  url: "https://int-widgets.moneydesktop.com/md/connect/...."
 }
 
 // Calling `new sdk.ConnectWidget(...)` here will mount the widget in the DOM
