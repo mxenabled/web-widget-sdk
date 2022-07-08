@@ -324,33 +324,3 @@ widgets.forEach((widgetClass) => {
     })
   })
 })
-
-describe("ConnectWidget", () => {
-  describe("post message dispatching", () => {
-    test("message payload is included", () => {
-      const onLoaded = jest.fn()
-      new ConnectWidget({ url, container, onLoaded })
-
-      window.dispatchEvent(
-        new MessageEvent("message", {
-          data: {
-            mx: true,
-            type: "mx/connect/loaded",
-            metadata: {
-              user_guid: "USR-123",
-              session_guid: "SES-123",
-              initial_step: "mfa",
-            },
-          },
-        }),
-      )
-
-      expect(onLoaded).toHaveBeenCalledWith({
-        initial_step: "mfa",
-        session_guid: "SES-123",
-        type: "mx/connect/loaded",
-        user_guid: "USR-123",
-      })
-    })
-  })
-})

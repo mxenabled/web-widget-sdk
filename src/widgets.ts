@@ -53,7 +53,11 @@ export abstract class Widget<
 
     this.messageCallback = (event) => {
       if (event.data.mx) {
-        this.dispatcher(event, this.options)
+        if (event.data.type === PostMessageTypes.ClientOAuthComplete) {
+          this.handleOAuthComplete(event.data.metadata.url)
+        } else {
+          this.dispatcher(event, this.options)
+        }
       }
     }
 
@@ -138,7 +142,7 @@ export abstract class Widget<
   /**
    * Uses matching to get our url targetOrigin, or falls back to our widgets url
    */
-  private get targetOrigin(): string {
+  get targetOrigin(): string {
     const baseUrlPattern = /^https?:\/\/[^/]+/i
     let targetOrigin
 
@@ -147,6 +151,28 @@ export abstract class Widget<
     }
 
     return targetOrigin || "https://widgets.moneydesktop.com"
+  }
+
+  private handleOAuthComplete(redirectURL: string): void {
+    try {
+      const urlStruct = new URL(redirectURL)
+      const status = urlStruct.searchParams.get("status")
+      const memberGuid = urlStruct.searchParams.get("member_guid")
+      const errorReason = urlStruct.searchParams.get("error_reason")
+
+      const message = {
+        mx: true,
+        type: `oauthComplete/${status}`,
+        metadata: {
+          member_guid: memberGuid,
+          error_reason: errorReason,
+        },
+      }
+
+      this.iframe.contentWindow?.postMessage(message, this.targetOrigin)
+    } catch (error) {
+      console.error(`Unable to postMessage OAuth URL: ${redirectURL}`, error)
+    }
   }
 
   /**
