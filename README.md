@@ -258,13 +258,11 @@ widget instantiation but they are not being triggered:
   loading it from your file system.
 - Check your application's [`Referrer-Policy`][referrer_policy]. Due to the
   nature of post message, we recommend using the default Referrer Policy, which
-  is `strict-origin-when-cross-origin`.
-
-  If you are unable to use the default policy, then you may use
-  `target_origin_referrer` to specify your application's domain in the SSO
-  request. For example, if your domain is `https://www.mx.com/`, then you
-  should include `target_origin_referrer: "https://www.mx.com/"` in your SSO
-  request.
+  is `strict-origin-when-cross-origin`. If you are unable to use the default
+  policy, then you may use `target_origin_referrer` to specify your
+  application's domain in the SSO request. For example, if your domain is
+  `https://www.mx.com/`, then you should include `target_origin_referrer:
+  "https://www.mx.com/"` in your SSO request.
 
 ---
 
