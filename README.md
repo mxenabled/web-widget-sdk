@@ -254,7 +254,7 @@ triggered in your application.
 - Ensure you are using the corresponding widget class for the `widget_type`
   used in the SSO request. For example, if you set `widget_type` to
   `connect_widget`, then you should use the `ConnectWidget` class.
-- Ensure you are serving your application's HTML file from a web server and not
+- Ensure you are serving your application's HTML from a web server and not
   loading it from your file system.
 - Check your application's [`Referrer-Policy`][referrer_policy]. Due to the
   nature of post message, we recommend using the default Referrer Policy, which
