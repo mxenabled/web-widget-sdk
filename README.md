@@ -253,8 +253,7 @@ widget instantiation but they are not being triggered:
     - `is_mobile_webview` should be set to `false`.
 - Ensure you the appropriate widget class for the `widget_type` used when
   making the SSO request. For example, if you set `widget_type` to be
-  `connect_widget`, then you should use the `ConnectWidget` class expected by
-  the SDK.
+  `connect_widget`, then you should use the `ConnectWidget` class.
 - Ensure you are serving your application's HTML file from a web server and not
   loading it from your file system.
 - Check your application's [`Referrer-Policy`][referrer_policy]. Due to the
