@@ -241,6 +241,32 @@ This SDK exposes the following classes:
 - `TransactionsWidget`
 - `TrendsWidget`
 
+### Troubleshooting
+
+#### Post messages not working
+
+Check the following items if you have passed post message callbacks in your
+widget instantiation but they are not being triggered:
+
+- Ensure your SSO request is correctly configured for the Web SDK:
+    - `ui_message_version` should be set to `4`.
+    - `is_mobile_webview` should be set to `true`.
+- Ensure you the appropriate widget class for the `widget_type` used when
+  making the SSO request. For example, if you set `widget_type` to be
+  `connect_widget`, then you should use the `ConnectWidget` class expected by
+  the SDK.
+- Ensure you are serving your application's HTML file from a web server and not
+  loading it from your file system.
+- Check your application's [`Referrer-Policy`][referrer_policy]. Due to the
+  nature of post message, we recommend using the default Referrer Policy, which
+  is `strict-origin-when-cross-origin`.
+
+  If you are unable to use the default policy, then you may use
+  `target_origin_referrer` to specify your application's domain in the SSO
+  request. For example, if your domain is `https://www.mx.com/`, then you
+  should include `target_origin_referrer: "https://www.mx.com/"` in your SSO
+  request.
+
 ---
 
 [![Build SDK](https://github.com/mxenabled/web-widget-sdk/actions/workflows/build-sdk.yml/badge.svg)](https://github.com/mxenabled/web-widget-sdk/actions/workflows/build-sdk.yml)
@@ -255,3 +281,4 @@ This SDK exposes the following classes:
 [react_native_style]: https://reactnative.dev/docs/style "React Native Style"
 [umd_module]: https://github.com/umdjs/umd "UMD modules"
 [webpack]: https://webpack.js.org/ "webpack"
+[referrer_policy]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy "Referrer-Policy"
