@@ -256,13 +256,8 @@ triggered in your application.
   `connect_widget`, then you should use the `ConnectWidget` class.
 - Ensure you are serving your application's HTML from a web server and not
   loading it from your file system.
-- Check your application's [`Referrer-Policy`][referrer_policy]. Due to the
-  nature of post message, we recommend using the default Referrer Policy, which
-  is `strict-origin-when-cross-origin`. If you are unable to use the default
-  policy, then you may use `target_origin_referrer` to specify your
-  application's domain in the SSO request. For example, if your domain is
-  `https://www.mx.com/`, then you should include `target_origin_referrer:
-  "https://www.mx.com/"` in your SSO request.
+- Ensure your application's [`Referrer-Policy`][referrer_policy] is one that
+  allows origin information to be passed to the widget.
 
 ---
 
