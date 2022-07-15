@@ -245,8 +245,8 @@ This SDK exposes the following classes:
 
 #### Post messages not working
 
-Check the following items if you have passed post message callbacks in your
-widget instantiation but they are not being triggered:
+Check the following items if widget post message callbacks are not being
+triggered in your application.
 
 - Ensure your SSO request is correctly configured for the Web SDK:
     - `ui_message_version` should be set to `4`.
