@@ -241,6 +241,25 @@ This SDK exposes the following classes:
 - `TransactionsWidget`
 - `TrendsWidget`
 
+### Troubleshooting
+
+#### Post messages not working
+
+Check the following items if widget post message callbacks are not being
+triggered in your application.
+
+- Ensure your SSO request is correctly configured for the Web SDK:
+    - `ui_message_version` should be set to `4`.
+    - `is_mobile_webview` should be set to `false`.
+- Ensure you are using the corresponding widget class for the `widget_type`
+  used in the SSO request. For example, if you set `widget_type` to
+  `connect_widget`, then you should use the `ConnectWidget` class.
+- Ensure you are serving your application's HTML from a web server and not
+  loading it from your file system.
+- Ensure your application's [`Referrer-Policy`][referrer_policy] is one that
+  allows origin information to be passed to the widget. We recommend using
+  the default, which is `strict-origin-when-cross-origin`.
+
 ---
 
 [![Build SDK](https://github.com/mxenabled/web-widget-sdk/actions/workflows/build-sdk.yml/badge.svg)](https://github.com/mxenabled/web-widget-sdk/actions/workflows/build-sdk.yml)
@@ -255,3 +274,4 @@ This SDK exposes the following classes:
 [react_native_style]: https://reactnative.dev/docs/style "React Native Style"
 [umd_module]: https://github.com/umdjs/umd "UMD modules"
 [webpack]: https://webpack.js.org/ "webpack"
+[referrer_policy]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy "Referrer-Policy"
