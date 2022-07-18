@@ -257,7 +257,8 @@ triggered in your application.
 - Ensure you are serving your application's HTML from a web server and not
   loading it from your file system.
 - Ensure your application's [`Referrer-Policy`][referrer_policy] is one that
-  allows origin information to be passed to the widget.
+  allows origin information to be passed to the widget. We recommend using
+  the default, which is `strict-origin-when-cross-origin`.
 
 ---
 
