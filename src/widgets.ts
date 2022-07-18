@@ -17,7 +17,12 @@ type BaseOptions = {
   style?: Partial<CSSStyleDeclaration>
 }
 
-type PostMessageData<T> = {
+type SdkPostMessage<T> = {
+  type: PostMessageTypes | "ping" | "logout"
+  metadata?: T
+}
+
+type WidgetPostMessage<T> = {
   type: PostMessageTypes
   metadata: T
 }
@@ -109,7 +114,7 @@ export abstract class Widget<
 
       // If we get a navigation event back, resolve the promise with the value `did_go_back`
       const handleIncomingNavigationEvent = (
-        e: MessageEvent<PostMessageData<NavigationPayload>>,
+        e: MessageEvent<WidgetPostMessage<NavigationPayload>>,
       ) => {
         if (e.data.type === PostMessageTypes.Navigation) {
           window.removeEventListener("message", handleIncomingNavigationEvent)
@@ -125,6 +130,14 @@ export abstract class Widget<
     })
   }
 
+  ping() {
+    this.postMessageToWidget({ type: "ping" })
+  }
+
+  logout() {
+    this.postMessageToWidget({ type: "logout" })
+  }
+
   /**
    * Public method to tear down our post message listener and iframe container
    */
@@ -138,7 +151,7 @@ export abstract class Widget<
   /**
    * Uses matching to get our url targetOrigin, or falls back to our widgets url
    */
-  private get targetOrigin(): string {
+  get targetOrigin(): string {
     const baseUrlPattern = /^https?:\/\/[^/]+/i
     let targetOrigin
 
@@ -147,6 +160,14 @@ export abstract class Widget<
     }
 
     return targetOrigin || "https://widgets.moneydesktop.com"
+  }
+
+  private postMessageToWidget<T>(payload: SdkPostMessage<T>) {
+    if (!this.iframe.contentWindow) {
+      throw new Error("Unable to postMessage to widget, iframe doesn't exist")
+    }
+
+    this.iframe.contentWindow.postMessage(JSON.stringify(payload), this.targetOrigin)
   }
 
   /**
