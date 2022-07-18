@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updating @mxenabled/widget-post-message-definitions to v1.0.10.
-- Doumenting widget loader lifecycles methods.
+- Documenting widget loader lifecycle methods.
 - Documenting callback properties.
 
 ## [0.0.6] - 2022-05-10
