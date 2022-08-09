@@ -35,6 +35,12 @@
         }
 
         const widget = new sdk.ConnectWidget(options)
+
+        const testPingButton = document.getElementById("test-ping")
+
+        testPingButton.addEventListener("click", (event) => {
+          widget.ping()
+        })
       })
     </script>
   </head>
@@ -43,6 +49,7 @@
       <tr>
         <td>
           <h1>Widget</h1>
+          <button id="test-ping">Test Ping</button>
         </td>
         <td>
           <h1>Post Message Events</h1>
