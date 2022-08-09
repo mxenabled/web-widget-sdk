@@ -18,7 +18,7 @@ type BaseOptions = {
 }
 
 type SdkPostMessage<T> = {
-  type: PostMessageTypes | "ping" | "logout"
+  type: PostMessageTypes | "ping"
   metadata?: T
 }
 
