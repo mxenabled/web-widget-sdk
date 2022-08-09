@@ -134,10 +134,6 @@ export abstract class Widget<
     this.postMessageToWidget({ type: "ping" })
   }
 
-  logout() {
-    this.postMessageToWidget({ type: "logout" })
-  }
-
   /**
    * Public method to tear down our post message listener and iframe container
    */
