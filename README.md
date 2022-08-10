@@ -155,10 +155,6 @@ may be passed directly to the widget class.
   member. Optionally used with `currentMemberGuid`. This option should be used
   sparingly. The best practice is to use `currentMemberGuid` and let the widget
   resolve the issue.
-- `waitForFullAggregation`: Loads Connect, but forces the widget to wait until
-  any aggregation-type process is complete in order to fire a member connected
-  postMessage. This allows clients to have transactional data by the time the
-  widget is closed.
 
 ```js
 const options = {
