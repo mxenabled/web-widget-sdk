@@ -107,10 +107,12 @@ const widget = new widgetSdk.ConnectWidget({ /* options */ })
 
 ### Generating your Widget SSO URL
 
-See [SSO Widget URL documentation][api_request_widget_url] for instructions. If
-loading the Connect Widget, follow the instructions located in [Connect SSO
-Widget URL documentation][api_request_connect_url]. The SSO URL should be
-passed to a Widget class via the `url` option.
+Refer to our [authentication][authentication_and_security] and [SSO Widget URL
+documentation][api_request_widget_url] for instructions and information related
+to making an SSO URL request. If loading the Connect Widget, follow the
+instructions located in [Connect SSO Widget URL
+documentation][api_request_connect_url]. The SSO URL should be passed to a
+Widget class via the `url` option.
 
 ```js
 const options = {
@@ -262,6 +264,7 @@ triggered in your application.
 [![Integration Tests](https://github.com/mxenabled/web-widget-sdk/actions/workflows/integration-tests.yml/badge.svg)](https://github.com/mxenabled/web-widget-sdk/actions/workflows/integration-tests.yml)
 [![Package Audit](https://github.com/mxenabled/web-widget-sdk/actions/workflows/package-audit.yml/badge.svg)](https://github.com/mxenabled/web-widget-sdk/actions/workflows/package-audit.yml)
 
+[authentication_and_security]: https://docs.mx.com/api#authentication_and_security "Authentication and security"
 [amd_module]: https://requirejs.org/docs/whyamd.html "AMD modules"
 [api_request_connect_url]: https://docs.mx.com/api#connect_request_a_url "Request a Connect URL"
 [api_request_widget_url]: https://docs.mx.com/api#widgets_mx_widgets_request_widget_url "Request a widget URL"
