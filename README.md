@@ -208,7 +208,10 @@ class options:
   options](https://docs.mx.com/api#connect_configuring_connect_language_options)
   for additional information.
 - `proxy`: SSO proxy server URL.
-- `style`: Styles applied to the view containing the widget.
+- `style`: Styles applied to the view containing the widget. The default styles are:
+    - `border: "none"`
+    - `height: "550px"`
+    - `width: "320px"`
 - `iframeTitle`: Allows for the title attribute of the iframe to be set.
 - `url`: Widget SSO URL. See [Generating your Widget SSO
   URL](#generating-your-widget-sso-url) for additional information. **This prop

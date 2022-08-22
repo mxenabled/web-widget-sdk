@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 ### Changed
+
+- Updating default height/width to minimum recommended dimentions
+
 ### Fixed
 
 ## [0.0.8] - 2022-06-16
