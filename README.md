@@ -58,7 +58,11 @@ build tool that supports CommonJS modules (such as [browserify][browserify]):
 
 ```js
 const widgetSdk = require("@mxenabled/web-widget-sdk")
-const widget = new widgetSdk.ConnectWidget({ /* options */ })
+const widget = new widgetSdk.ConnectWidget({
+  container: "<CONTAINER SELECTOR>",
+  url: "<SSO URL>"
+  // additional widget options
+})
 ```
 
 #### ES module
@@ -69,7 +73,11 @@ build tool that supports ES modules (such as [webpack][webpack]):
 
 ```js
 import * as widgetSdk from "@mxenabled/web-widget-sdk"
-const widget = new widgetSdk.ConnectWidget({ /* options */ })
+const widget = new widgetSdk.ConnectWidget({
+  container: "<CONTAINER SELECTOR>",
+  url: "<SSO URL>"
+  // additional widget options
+})
 ```
 
 #### AMD module
@@ -81,10 +89,16 @@ file into any location where it can be made publicly available from. Once the
 file is available, you can import and use it like so:
 
 ```html
+<div id="container"></div>
+
 <script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
 <script>
-requirejs(["<path to MX Web Widget SDK AMD JavaScript file>"], function (widgetSdk) {
-  const widget = new widgetSdk.ConnectWidget({ /* options */ })
+requirejs(["node_modules/@mxenabled/web-widget-sdk/dist/amd/index.js"], function (widgetSdk) {
+  const widget = new widgetSdk.ConnectWidget({
+    container: "#container",
+    url: "<SSO URL>"
+    // additional widget options
+  })
 })
 </script>
 ```
@@ -99,9 +113,14 @@ file is available, you can import and use it like so:
 
 ```html
 <div id="container"></div>
-<script src="<path to MX Web Widget SDK UMD JavaScript file>"></script>
+
+<script src="node_modules/@mxenabled/web-widget-sdk/dist/umd/index.js"></script>
 <script>
-const widget = new widgetSdk.ConnectWidget({ /* options */ })
+const widget = new widgetSdk.ConnectWidget({
+  container: "#container",
+  url: "<SSO URL>"
+  // additional widget options
+})
 </script>
 ```
 
