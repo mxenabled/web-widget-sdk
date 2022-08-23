@@ -52,8 +52,8 @@ export abstract class Widget<
     this.iframe = document.createElement("iframe")
     this.style = options.style || {
       border: "none",
-      height: "100%",
-      width: "100%",
+      height: "550px",
+      width: "320px",
     }
 
     this.messageCallback = (event) => {
