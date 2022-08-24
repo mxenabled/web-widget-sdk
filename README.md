@@ -222,6 +222,9 @@ payloads.
 You can configure the state and behavior of the widget with the following
 class options:
 
+- `container`: The CSS selector of node reference to the element the widget
+  iframe should be mounted to.
+- `iframeTitle`: Allows for the title attribute of the iframe to be set.
 - `language`: Load the widget in the specified language. Defaults to `en-US`.
   See [language
   options](https://docs.mx.com/api#connect_configuring_connect_language_options)
@@ -231,7 +234,6 @@ class options:
     - `border: "none"`
     - `height: "550px"`
     - `width: "320px"`
-- `iframeTitle`: Allows for the title attribute of the iframe to be set.
 - `url`: Widget SSO URL. See [Generating your Widget SSO
   URL](#generating-your-widget-sso-url) for additional information. **This prop
   is required.**
