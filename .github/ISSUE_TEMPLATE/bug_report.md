@@ -43,6 +43,7 @@ assignees: ''
  - Device: [e.g. iPhone6 or MacBook Pro]
  - OS version: [e.g. iOS8.1]
  - SDK version: [e.g. 22]
+ - Node and npm version: [e.g. v16.11.1, v8.0.0]
 
 
 **Additional context**
