@@ -8,6 +8,7 @@
 4. Navigate to http://localhost:8000/ or wherever your server is running.
 
 ## Testing the widget via the `url` option
+
 Follow the same steps as above but also:
 
 1. Open `examples/index.html`
@@ -17,6 +18,7 @@ Follow the same steps as above but also:
 5. visit http://localhost:8000/example/
 
 For example:
+
 ```
 const options = {
   container: "#widget",
