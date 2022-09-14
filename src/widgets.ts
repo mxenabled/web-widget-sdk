@@ -1,7 +1,9 @@
 import { getSsoUrl, Props as UrlLoadingProps, Type, ConnectWidgetConfigurationProps } from "./sso"
+import { sdkVersion } from "./version"
 
 import {
   ConnectPostMessageCallbackProps,
+  MessageEventData,
   PulsePostMessageCallbackProps,
   WidgetPostMessageCallbackProps,
   dispatchConnectPostMessageEvent,
@@ -18,7 +20,7 @@ type BaseOptions = {
 }
 
 type SdkPostMessage<T> = {
-  type: PostMessageTypes | "ping"
+  type: PostMessageTypes | "ping" | "mx/sdk/info"
   metadata?: T
 }
 
@@ -42,7 +44,10 @@ export abstract class Widget<
   protected isUnmounting: boolean
   protected ssoUrl?: string
 
-  // Filters for 'mx' events before dispatching to proper handlers
+  /**
+   * Needed so we have a single reference to the message callback function so
+   * that we can correctly remove the event listener.
+   */
   protected messageCallback: (event: MessageEvent) => void
 
   constructor(options: WidgetOptions<Configuration, CallbackProps>) {
@@ -57,9 +62,7 @@ export abstract class Widget<
     }
 
     this.messageCallback = (event) => {
-      if (event.data.mx) {
-        this.dispatcher(event, this.options)
-      }
+      this.handleMXPostMessage(event)
     }
 
     if (typeof options.container === "string") {
@@ -156,6 +159,27 @@ export abstract class Widget<
     }
 
     return targetOrigin || "https://widgets.moneydesktop.com"
+  }
+
+  /**
+   * Filters for 'mx' events before dispatching to proper handlers
+   */
+  private handleMXPostMessage(event: MessageEvent<MessageEventData>) {
+    if (!event.data.mx) {
+      return
+    }
+
+    this.dispatcher(event, this.options)
+
+    if (event.data.type === PostMessageTypes.Load) {
+      this.postMessageToWidget({
+        type: "mx/sdk/info",
+        metadata: {
+          sdk: "web",
+          version: sdkVersion,
+        },
+      })
+    }
   }
 
   private postMessageToWidget<T>(payload: SdkPostMessage<T>) {
