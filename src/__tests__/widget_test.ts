@@ -139,23 +139,6 @@ widgets.forEach((widgetClass) => {
     })
 
     describe("Post Message Dispatching", () => {
-      test("message is dispatched to the appropriate callback", () => {
-        const onLoad = jest.fn()
-        new widgetClass({ url, container, onLoad })
-
-        window.dispatchEvent(
-          new MessageEvent("message", {
-            data: {
-              mx: true,
-              type: "mx/load",
-              metadata: {},
-            },
-          }),
-        )
-
-        expect(onLoad).toHaveBeenCalledWith({ type: "mx/load" })
-      })
-
       test("message payload is included", () => {
         const onPing = jest.fn()
         new widgetClass({ url, container, onPing })
