@@ -13,6 +13,6 @@ const contents = `/**
 export const sdkVersion = "${version}"
 `
 
-stdout.write(`Writing contents bytes to ${file} ... `)
+stdout.write(`Writing content to ${file} ... `)
 writeFileSync(file, contents)
 stdout.write("done\n")
