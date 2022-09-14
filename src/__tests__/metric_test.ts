@@ -1,11 +1,12 @@
 import { ConnectWidget } from "../../src"
 import { sdkVersion } from "../../src/version"
-import { wait, waitFor } from "../../jest/utils"
+import { waitFor } from "../../jest/utils"
 
 const url = "https://widgets.moneydesktop.com/md/..."
 
 let container = document.createElement("div")
 let widget: ConnectWidget
+let loaded: boolean
 
 beforeAll(() => {
   container = document.createElement("div")
@@ -18,7 +19,14 @@ afterAll(() => {
 
 describe("Widget SDK metrics", () => {
   beforeEach(() => {
-    widget = new ConnectWidget({ url, container })
+    loaded = false
+    widget = new ConnectWidget({
+      url,
+      container,
+      onLoad: () => {
+        loaded = true
+      },
+    })
   })
 
   afterEach(() => {
@@ -53,7 +61,7 @@ describe("Widget SDK metrics", () => {
       }),
     )
 
-    await wait(100)
+    await waitFor(() => loaded)
     expect(postMessageSpy).toHaveBeenCalledWith(expectedPayload, widget.targetOrigin)
 
     postMessageSpy.mockRestore()
