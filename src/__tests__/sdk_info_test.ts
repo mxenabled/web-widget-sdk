@@ -17,7 +17,7 @@ afterAll(() => {
   document.body.removeChild(container)
 })
 
-describe("Widget SDK metrics", () => {
+describe("Widget SDK info", () => {
   beforeEach(() => {
     loaded = false
     widget = new ConnectWidget({
@@ -33,7 +33,7 @@ describe("Widget SDK metrics", () => {
     widget.unmount()
   })
 
-  test("should send metrics to the widget after the widget loads", async () => {
+  test("should send SDK info to the widget after the widget loads", async () => {
     await waitFor(() => !!container?.getElementsByTagName("iframe")[0]?.src)
 
     const iframeElement = container?.getElementsByTagName("iframe")[0]?.contentWindow
@@ -44,7 +44,7 @@ describe("Widget SDK metrics", () => {
 
     const postMessageSpy = jest.spyOn(iframeElement, "postMessage")
     const expectedPayload = JSON.stringify({
-      type: "mx/sdk/metrics",
+      type: "mx/sdk/info",
       metadata: {
         sdk: "web",
         version: sdkVersion,

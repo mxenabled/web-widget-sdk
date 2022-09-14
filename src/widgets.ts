@@ -20,7 +20,7 @@ type BaseOptions = {
 }
 
 type SdkPostMessage<T> = {
-  type: PostMessageTypes | "ping" | "mx/sdk/metrics"
+  type: PostMessageTypes | "ping" | "mx/sdk/info"
   metadata?: T
 }
 
@@ -173,7 +173,7 @@ export abstract class Widget<
 
     if (event.data.type === PostMessageTypes.Load) {
       this.postMessageToWidget({
-        type: "mx/sdk/metrics",
+        type: "mx/sdk/info",
         metadata: {
           sdk: "web",
           version: sdkVersion,
