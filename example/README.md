@@ -16,6 +16,5 @@ order to run. This configuration is then saved locally. See [this
 page][sso_api_proxy_config] for more information on how to configure
 `@mxenabled/sso-api-proxy`.
 
-
 [sso_api_proxy]: https://www.npmjs.com/package/@mxenabled/sso-api-proxy "@mxenabled/sso-api-proxy"
 [sso_api_proxy_config]: https://github.com/mxenabled/sso-api-proxy#configuration "Configuration"
