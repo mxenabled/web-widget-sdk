@@ -18,11 +18,11 @@
     <script src="shared.js"></script>
 
     <script>
-      requirejs(["../dist/amd/index.js"], function (sdk) {
+      requirejs(["/dist/amd/index.js"], function (sdk) {
         const options = {
           container: "#widget",
           iframeTitle: "Example Widget",
-          proxy: "http://localhost:8089/connect_widget/USR-081ff65e-3087-4cc2-a2c4-365354e1e6cb",
+          proxy: "/user/widget_urls",
           onMessage: (event) => {
             logEvent(event.data)
           },
@@ -49,7 +49,6 @@
       <tr>
         <td>
           <h1>Widget</h1>
-          <button id="test-ping">Test Ping</button>
         </td>
         <td>
           <h1>Post Message Events</h1>
@@ -65,24 +64,7 @@
       </tr>
       <tr>
         <td colspan="2">
-          <h1>AMD Example</h1>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <pre
-            id="code"
-          ><code class="language-javascript">requirejs(["../dist/amd/index.js"], function (sdk) {
-  const options = {
-    id: "#widget",
-    proxy: "http://localhost:8089/connect_widget/USR-081ff65e-3087-4cc2-a2c4-365354e1e6cb",
-    onMessage: (event) => {
-      logEvent(event)
-    }
-  }
-
-  const widget = new sdk.ConnectWidget(options)
-})</code></pre>
+          <button id="test-ping">Test Ping</button>
         </td>
       </tr>
     </table>

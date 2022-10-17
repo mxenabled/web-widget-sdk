@@ -4,25 +4,17 @@
 
 1. Clone this repo.
 2. Cd into newly created directory, or if using the defaults `cd web-widget-sdk`.
-3. Start a static file server, `python -m SimpleHTTPServer`, or `python3 -m http.server`.
-4. Navigate to http://localhost:8000/ or wherever your server is running.
+3. Run `npm install`.
+4. Run `npm run example` and enter your API and user settings when asked for
+   them. This command will start a proxy server for the MX Platform API and
+   open your default browser and navigate to the example application after.
 
-## Testing the widget via the `url` option
+The example application uses [`@mxenabled/sso-api-proxy`][sso_api_proxy] to run
+a proxy server that talks to MX's Platform API. When the proxy server first
+starts up, it will prompt you to enter the necessary API and user settings in
+order to run. This configuration is then saved locally. See [this
+page][sso_api_proxy_config] for more information on how to configure
+`@mxenabled/sso-api-proxy`.
 
-Follow the same steps as above but also:
-
-1. Open `examples/index.html`
-2. Run `npm run watch`
-3. Comment out the `proxy` configuration option
-4. Add a `url` configuration option that is a widget URL
-5. visit http://localhost:8000/example/
-
-For example:
-
-```
-const options = {
-  container: "#widget",
-  iframeTitle: "Example Widget",
-  url: "https://widgets.moneydesktop.com.mx/md/connect/...",
-}
-```
+[sso_api_proxy]: https://www.npmjs.com/package/@mxenabled/sso-api-proxy "@mxenabled/sso-api-proxy"
+[sso_api_proxy_config]: https://github.com/mxenabled/sso-api-proxy#configuration "Configuration"

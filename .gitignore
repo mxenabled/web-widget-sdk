@@ -6,4 +6,5 @@ cypress/downloads
 cypress/screenshots
 cypress/videos
 dist
+mx-sso-api-proxy-rc.yaml
 node_modules

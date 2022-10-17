@@ -19,6 +19,7 @@
   ],
   "scripts": {
     "build": "npm run clean && npm run compile && npm run bundle && npm run documentation",
+    "build:optional": "[ ! -d build ] && npm run build || true",
     "bundle": "rollup -c",
     "clean": "npm run clean:build && npm run clean:dist",
     "clean:build": "[ -d build ] && rm -r build || true",
@@ -30,6 +31,7 @@
     "compile:types": "tsc --declaration --emitDeclarationOnly --outDir dist/types",
     "compile:version": "ts-node bin/generate-version-file.ts",
     "documentation": "cp node_modules/@mxenabled/widget-post-message-definitions/docs/web-sdk-generated.md docs/widget_callback_props.md",
+    "example": "npm run build:optional && mx-sso-api-proxy run --serve-local-files --open-path example",
     "format": "npm run prettier -- -w",
     "lint": "eslint src example jest cypress",
     "prepack": "npm run build",
@@ -63,6 +65,7 @@
     "@babel/core": "^7.17.8",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
+    "@mxenabled/sso-api-proxy": "^1.2.0",
     "@rollup/plugin-node-resolve": "^13.1.3",
     "@rollup/plugin-typescript": "^8.3.1",
     "@types/axios": "^0.14.0",
