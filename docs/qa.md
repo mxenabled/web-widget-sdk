@@ -7,15 +7,18 @@ suite.
 
 ## Prerequisites
 
-You will need to setup the [example application](./../example/README.md).
+- Tests should be ran in the [browsers
+  supported](https://docs.mx.com/api#connect_browser_support) by our widgets.
+- The Web Widget SDK can be used with all of our widgets, but the primary one
+  is the Connect widget, so the Connect widget should be used in the following
+  tests.
+- Tests should be ran using the example application that is included in the Web
+  Widget SDK repo. Run `npm run example` to start the example application.
+  Refer to [this document](./../example/README.md) for additional information
+  on how to setup and configure the example application.
 
 
 ## Full test suite
-
-Tests should be ran in the [browsers
-supported](https://docs.mx.com/api#connect_browser_support) by our widgets. The
-tests should also be performed on the Connect widget, which is loaded in the
-example application by default.
 
 - **Loading Connect**: there are two ways of loading a widget in the SDK: using
   a proxy server and using a hard-coded URL. Both methods can be used in the
@@ -67,10 +70,10 @@ example application by default.
 ## No-harm test suite
 
 We should run through the following tests (which are outlined in the section
-above) When doing no-harm testing:
+above) when doing no-harm testing:
 
-- **Loading Connect** using any loading method: see section above for
-  instructions.
+- **Loading Connect**: use the proxy method of loading a widget. See section
+  above for instructions.
 - **Post message integration**: see section above for instructions.
-- **OAuth new member authorize flow** *or* **OAuth existing member authorize
-  flow**: see section above for instructions.
+- **OAuth**: we should test both the new member flow and the existing member
+  flow. See section above for instructions.
