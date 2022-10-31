@@ -13,9 +13,21 @@ suite.
   is the Connect widget, so the Connect widget should be used in the following
   tests.
 - Tests should be ran using the example application that is included in the Web
-  Widget SDK repo. Run `npm run example` to start the example application.
-  Refer to [this document](./../example/README.md) for additional information
-  on how to setup and configure the example application.
+  Widget SDK repo. Run `npm run example` to build the SDK (if needed) and start
+  the example application. Refer to [this document](./../example/README.md) for
+  additional information on how to setup and configure the example application,
+  and [this document][sso_api_proxy_config] for how to configure the
+  `mx-sso-api-proxy-rc.yaml` file for the proxy server that powers the example
+  application.
+- Before testing an update, make sure to pull the latest changes and clean up
+  the current build:
+  ```bash
+  git checkout .          # Reset all local changes
+  git pull origin master  # Pull latest updates
+  npm install             # Install latest versions of all dependencies
+  npm run clean           # Delete previous build
+  npm run example         # Start the example application
+  ```
 
 
 ## Full test suite
@@ -77,3 +89,6 @@ above) when doing no-harm testing:
 - **Post message integration**: see section above for instructions.
 - **OAuth**: we should test both the new member flow and the existing member
   flow. See section above for instructions.
+
+
+[sso_api_proxy_config]: https://github.com/mxenabled/sso-api-proxy#configuration "Configuration"
