@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- onBackToSearch callback for backToSearch postmessage.
+- onBackToSearch callback for backToSearch post message.
 
 ## [0.0.10] - 2022-09-20
 
