@@ -32,7 +32,7 @@ Object.keys(tests).forEach((testFile) => {
       })
 
       it("dispatches mx/connect/selectedInstitution", () => {
-        cy.widgetIframe().find("[data-test=institution-tile]").its("0").click()
+        cy.widgetIframe().find("button[data-test]").its("0").click()
         cy.get("[data-log-id=onSelectedInstitution]").should("exist")
       })
     })
