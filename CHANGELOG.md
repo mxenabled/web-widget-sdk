@@ -6,26 +6,39 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
 ### Added
+
 ### Changed
+
 ### Fixed
 
+## [0.0.11] - 2023-11-27
+
+### Added
+
+- onBackToSearch callback for backToSearch postmessage.
+
 ## [0.0.10] - 2022-09-20
+
 ### Added
 
 - Sending SDK information to widget.
 
 ## [0.0.9] - 2022-08-23
+
 ### Changed
 
 - Updating default height/width to minimum recommended dimensions
 
 ## [0.0.8] - 2022-06-16
+
 ### Fixed
 
 - Distributing TypeScript type definitions.
 
 ## [0.0.7] - 2022-06-09
+
 ### Changed
 
 - Updating @mxenabled/widget-post-message-definitions to v1.0.10.
@@ -33,11 +46,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Documenting callback properties.
 
 ## [0.0.6] - 2022-05-10
+
 ### Changed
 
 - Rename widgetContainer property to container.
 
 ## [0.0.5] - 2022-04-28
+
 ### Fixed
 
 - Fixing iframe element `src` bug in Safari.
@@ -47,12 +62,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adding iframeTitle widget option.
 
 ## [0.0.4] - 2022-04-21
+
 ### Changed
 
 - Exporting base widget class.
 
-
 ## [0.0.3] - 2022-04-20
+
 ### Changed
 
 - Distributing minified assets.
@@ -60,6 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Making error messages more verbose.
 
 ## [0.0.2] - 2022-04-07
+
 ### Adding
 
 - Allow widgetContainer property to accept a reference to a DOM node.
