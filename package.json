@@ -58,7 +58,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@mxenabled/widget-post-message-definitions": "^1.0.8"
+    "@mxenabled/widget-post-message-definitions": "^1.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",

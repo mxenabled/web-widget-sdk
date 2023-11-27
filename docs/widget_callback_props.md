@@ -19,14 +19,6 @@ project.
     - `user_guid` (`string`)
     - `session_guid` (`string`)
     - `initial_step` (`string`)
-        - One of:
-            - `"search"`
-            - `"selectMember"`
-            - `"enterCreds"`
-            - `"mfa"`
-            - `"connected"`
-            - `"loginError"`
-            - `"disclosure"`
 
 <details>
 <summary>Click here to view a sample usage of <code>onLoaded</code>.</summary>
@@ -410,6 +402,32 @@ const widget = widgetSdk.ConnectWidget({
     console.log(`Session guid: ${payload.session_guid}`)
     console.log(`Member guid: ${payload.member_guid}`)
     console.log(`Institution: ${payload.institution}`)
+  }
+})
+```
+
+</details>
+
+---
+### Back to search (`mx/connect/backToSearch`)
+
+- Widget callback prop name: `onBackToSearch`
+- Payload fields:
+    - `user_guid` (`string`)
+    - `session_guid` (`string`)
+    - `context` (`string`)
+
+<details>
+<summary>Click here to view a sample usage of <code>onBackToSearch</code>.</summary>
+
+```javascript
+const widget = widgetSdk.ConnectWidget({
+  url: "https://widgets.moneydesktop.com/md/connect/...",
+
+  onBackToSearch: (payload) => {
+    console.log(`User guid: ${payload.user_guid}`)
+    console.log(`Session guid: ${payload.session_guid}`)
+    console.log(`Context: ${payload.context}`)
   }
 })
 ```
