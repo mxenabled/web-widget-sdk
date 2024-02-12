@@ -13,6 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [0.0.12] - 2024-2-12
+
+### Changed
+
+- @mxenabled/widget-post-message-definitions to v1.3.0
+- Context payload on backToSearch to optional
+
 ## [0.0.11] - 2023-11-27
 
 ### Added
