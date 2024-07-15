@@ -161,6 +161,26 @@ export abstract class Widget<
     return targetOrigin || "https://widgets.moneydesktop.com"
   }
 
+  private waitForIframe(maxWaitTime = 500, checkInterval = 100): Promise<Window> {
+    return new Promise((resolve, reject) => {
+      let elapsed = 0
+
+      const checkIframe = () => {
+        if (this.iframe.contentWindow) {
+          resolve(this.iframe.contentWindow)
+        } else if (elapsed >= maxWaitTime) {
+          reject(new Error("iframe.contentWindow is not ready within the specified time"))
+        } else {
+          elapsed += checkInterval
+          setTimeout(checkIframe, checkInterval)
+        }
+      }
+
+      // Initial call to check immediately
+      checkIframe()
+    })
+  }
+
   /**
    * Filters for 'mx' events before dispatching to proper handlers
    */
@@ -183,11 +203,15 @@ export abstract class Widget<
   }
 
   private postMessageToWidget<T>(payload: SdkPostMessage<T>) {
-    if (!this.iframe.contentWindow) {
-      throw new Error("Unable to postMessage to widget, iframe doesn't exist")
-    }
-
-    this.iframe.contentWindow.postMessage(JSON.stringify(payload), this.targetOrigin)
+    this.waitForIframe()
+      .then(() => {
+        // waitForIframe ensures that this.iframe.contentWindow is not null.
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        this.iframe.contentWindow!.postMessage(JSON.stringify(payload), this.targetOrigin)
+      })
+      .catch(() => {
+        throw new Error("Unable to postMessage to widget, iframe doesn't exist")
+      })
   }
 
   /**
