@@ -8,7 +8,7 @@ suite.
 ## Prerequisites
 
 - Tests should be ran in the [browsers
-  supported](https://docs.mx.com/api#connect_browser_support) by our widgets.
+  supported](https://docs.mx.com/connect#browser-support) by our widget.
 - The Web Widget SDK can be used with all of our widgets, but the primary one
   is the Connect widget, so the Connect widget should be used in the following
   tests.
