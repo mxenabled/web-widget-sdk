@@ -65,6 +65,7 @@ export type WidgetConfiguration = {
 
 export type ConnectWidgetConfigurationProps = Camelize<ConnectWidgetConfiguration>
 export type ConnectWidgetConfiguration = WidgetConfiguration & {
+  additional_product_option?: "account_verification" | "transactions"
   client_redirect_url?: string
   current_institution_code?: string
   current_institution_guid?: string
@@ -73,6 +74,7 @@ export type ConnectWidgetConfiguration = WidgetConfiguration & {
   include_transactions?: boolean
   mode?: ConnectWidgetMode
   update_credentials?: boolean
+  use_cases?: Array<"MONEY_MOVEMENT" | "PFM">
 }
 
 export function getWidgetConfigurationFromProps(
