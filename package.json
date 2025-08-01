@@ -1,6 +1,6 @@
 {
   "name": "@mxenabled/web-widget-sdk",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "MX Web Widget SDK",
   "main": "./dist/cjs/index.js",
   "types": "./dist/types/src/index.d.ts",
