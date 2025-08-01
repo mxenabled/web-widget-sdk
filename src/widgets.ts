@@ -1,4 +1,10 @@
-import { getSsoUrl, Props as UrlLoadingProps, Type, ConnectWidgetConfigurationProps } from "./sso"
+import {
+  getSsoUrl,
+  Props as UrlLoadingProps,
+  Type,
+  ConnectWidgetConfigurationProps,
+  ConnectionsWidgetConfigurationProps,
+} from "./sso"
 import { sdkVersion } from "./version"
 
 import {
@@ -265,7 +271,7 @@ export class ConnectWidget extends Widget<
   }
 }
 
-export class ConnectionsWidget extends Widget {
+export class ConnectionsWidget extends Widget<ConnectionsWidgetConfigurationProps> {
   get widgetType() {
     return Type.ConnectionsWidget
   }

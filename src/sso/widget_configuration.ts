@@ -65,6 +65,7 @@ export type WidgetConfiguration = {
 
 export type ConnectWidgetConfigurationProps = Camelize<ConnectWidgetConfiguration>
 export type ConnectWidgetConfiguration = WidgetConfiguration & {
+  additional_product_option?: "account_verification" | "transactions"
   client_redirect_url?: string
   current_institution_code?: string
   current_institution_guid?: string
@@ -73,14 +74,26 @@ export type ConnectWidgetConfiguration = WidgetConfiguration & {
   include_transactions?: boolean
   mode?: ConnectWidgetMode
   update_credentials?: boolean
+  use_cases?: Array<"MONEY_MOVEMENT" | "PFM">
+}
+
+export type ConnectionsWidgetConfigurationProps = Camelize<ConnectionsWidgetConfiguration>
+export type ConnectionsWidgetConfiguration = WidgetConfiguration & {
+  additional_product_option?: "account_verification" | "transactions"
+  connections_use_case_filter?: boolean
+  use_cases?: Array<"MONEY_MOVEMENT" | "PFM">
 }
 
 export function getWidgetConfigurationFromProps(
-  props: ConnectWidgetConfigurationProps & InternalWidgetConfigurationProps,
+  props: ConnectWidgetConfigurationProps &
+    InternalWidgetConfigurationProps &
+    ConnectionsWidgetConfigurationProps,
 ) {
   return {
+    additional_product_option: props.additionalProductOption,
     client_redirect_url: props.clientRedirectUrl,
     color_scheme: props.colorScheme,
+    connections_use_case_filter: props.connectionsUseCaseFilter, // Connections specific
     current_institution_code: props.currentInstitutionCode,
     current_institution_guid: props.currentInstitutionGuid,
     current_member_guid: props.currentMemberGuid,
@@ -92,6 +105,7 @@ export function getWidgetConfigurationFromProps(
     ui_message_version: props.uiMessageVersion || 4,
     ui_message_webview_url_scheme: props.uiMessageWebviewUrlScheme,
     update_credentials: props.updateCredentials,
+    use_cases: props.useCases,
     widget_type: props.widgetType,
   }
 }

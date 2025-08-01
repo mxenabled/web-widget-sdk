@@ -5,13 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.0.14] - 2025-08-01
 
 ### Added
 
+- Support for `additional_product_option` in Connect Widget configuration.
+- Support for `use_cases` in Connect Widget configuration.
+- Support for `connections_use_case_filter` in Connections Widget configuration.
+
+## [0.0.13] - 2024-3-11
+
 ### Changed
 
-### Fixed
+- @mxenabled/widget-post-message-definitions to v1.4.0
 
 ## [0.0.12] - 2024-2-12
 
