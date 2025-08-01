@@ -4,41 +4,41 @@ on:
   pull_request:
   push:
     branches:
-    - master
-  schedule:
-  - cron: "0 */6 * * *" # every 6 hours
+      - master
+  # schedule:
+  # - cron: "0 */6 * * *" # every 6 hours
 
 jobs:
   Tests:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 16
-        cache: npm
-    - uses: actions/cache@v3
-      with:
-        path: |
-          node_modules
-          ~/.cache/Cypress
-        key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-    - uses: actions/cache@v3
-      with:
-        path: cypress/application/node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('cypress/application/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16
+          cache: npm
+      - uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - uses: actions/cache@v4
+        with:
+          path: cypress/application/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('cypress/application/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-    - run: npm install
-    - run: npm run test:build
-    - run: npm run test:integration
-      env:
-        CYPRESS_ENVIRONMENT: "${{ github.ref_name == 'master' && 'production' || 'staging' }}"
-        INTEGRATION_TEST_CLIENT_ID: ${{ secrets.INTEGRATION_TEST_CLIENT_ID }}
-        INTEGRATION_TEST_API_KEY: ${{ secrets.INTEGRATION_TEST_API_KEY }}
-        INTEGRATION_TEST_API_HOST: ${{ secrets.INTEGRATION_TEST_API_HOST }}
-        INTEGRATION_TEST_USER_GUID: ${{ secrets.INTEGRATION_TEST_USER_GUID }}
+      - run: npm install
+      - run: npm run test:build
+      - run: npm run test:integration
+        env:
+          CYPRESS_ENVIRONMENT: "${{ github.ref_name == 'master' && 'production' || 'staging' }}"
+          INTEGRATION_TEST_CLIENT_ID: ${{ secrets.INTEGRATION_TEST_CLIENT_ID }}
+          INTEGRATION_TEST_API_KEY: ${{ secrets.INTEGRATION_TEST_API_KEY }}
+          INTEGRATION_TEST_API_HOST: ${{ secrets.INTEGRATION_TEST_API_HOST }}
+          INTEGRATION_TEST_USER_GUID: ${{ secrets.INTEGRATION_TEST_USER_GUID }}
