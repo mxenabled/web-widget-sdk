@@ -4,13 +4,16 @@
   "description": "MX Web Widget SDK",
   "main": "./dist/cjs/index.js",
   "types": "./dist/types/src/index.d.ts",
+  "typings": "./dist/types/src/index.d.ts",
   "exports": {
     ".": {
       "import": {
-        "default": "./dist/esm/index.js"
+        "default": "./dist/esm/index.js",
+        "types": "./dist/types/src/index.d.ts"
       },
       "require": {
-        "default": "./dist/cjs/index.js"
+        "default": "./dist/cjs/index.js",
+        "types": "./dist/types/src/index.d.ts"
       }
     }
   },
