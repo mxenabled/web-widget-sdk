@@ -7,6 +7,9 @@
   "typings": "./dist/types/src/index.d.ts",
   "exports": {
     ".": {
+      "types": {
+        "default": "./dist/types/src/index.d.ts"
+      },
       "import": {
         "types": "./dist/types/src/index.d.ts",
         "default": "./dist/esm/index.js"
